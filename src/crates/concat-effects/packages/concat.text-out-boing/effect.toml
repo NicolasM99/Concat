@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-out-boing"
+name = "Boing"
+kind = "animation"
+category = "Text Out"
+order = 63
+description = "The title squashes, stretches and leaps away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(-0.3 * pow(1 - (1 - t), 3))"
+sx = "(1 - (0.3 * sin((1 - t) * 25) * (1 - (1 - t))))"
+sy = "(1 + (0.4 * sin((1 - t) * 25) * (1 - (1 - t))))"

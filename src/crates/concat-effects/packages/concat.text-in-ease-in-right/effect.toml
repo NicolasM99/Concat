@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-ease-in-right"
+name = "Ease In Right"
+kind = "animation"
+category = "Text In"
+order = 73
+description = "The title eases in from the right."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+x = "(0.25 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "t"

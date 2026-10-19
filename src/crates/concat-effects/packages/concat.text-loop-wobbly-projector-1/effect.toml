@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wobbly-projector-1"
+name = "Wobbly Projector 1"
+kind = "animation"
+category = "Text Loop"
+order = 11
+description = "The title wobbles like a slide in an old projector."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.01 * sin((t * 2 * pi) * 3))"
+y = "(0.008 * cos((t * 2 * pi) * 2))"
+opacity = "(0.9 + 0.1 * sin((t * 2 * pi) * 5))"

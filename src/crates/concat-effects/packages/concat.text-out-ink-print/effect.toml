@@ -1,0 +1,20 @@
+format = 2
+
+[effect]
+id = "concat.text-out-ink-print"
+name = "Ink Print"
+kind = "animation"
+category = "Text Out"
+order = 37
+description = "The title blots and fades like wet ink."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 + 0.05 * t)"
+opacity = "(1 - t)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 6 * t" }

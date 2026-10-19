@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-slide-down"
+name = "Slide Down"
+kind = "animation"
+category = "Text In"
+order = 68
+description = "The title slides down into place."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(-0.3 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "t"

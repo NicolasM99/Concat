@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-flipping"
+name = "Flipping"
+kind = "animation"
+category = "Text Out"
+order = 47
+description = "The title flips over out of view."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+sy = "abs(cos((1 - (1 - pow(1 - (1 - t), 3))) * pi))"

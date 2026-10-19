@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wobble"
+name = "Wobble"
+kind = "animation"
+category = "Text Loop"
+order = 40
+description = "The title wobbles side to side."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.02 * sin((t * 2 * pi)))"
+rotation = "(5 * sin((t * 2 * pi)))"

@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-in-spiral"
+name = "Spiral"
+kind = "animation"
+category = "Text In"
+order = 16
+description = "The title spirals in from the middle."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "(1 - pow(1 - t, 3))"
+rotation = "(-540 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "min(1, t * 2)"

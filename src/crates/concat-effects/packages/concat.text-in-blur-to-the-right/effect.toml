@@ -1,0 +1,20 @@
+format = 2
+
+[effect]
+id = "concat.text-in-blur-to-the-right"
+name = "Blur to the right"
+kind = "animation"
+category = "Text In"
+order = 25
+description = "The title slides right into place out of a blur."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+x = "(-0.15 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "t"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 20 * (1 - t)" }

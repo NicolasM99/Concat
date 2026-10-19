@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-fade-in"
+name = "Fade In"
+kind = "animation"
+category = "Text In"
+order = 4
+description = "The title fades in."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+opacity = "t"

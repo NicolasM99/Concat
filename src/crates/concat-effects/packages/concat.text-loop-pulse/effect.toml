@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-pulse"
+name = "Pulse"
+kind = "animation"
+category = "Text Loop"
+order = 18
+description = "The title pulses on a steady beat."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+scale = "(1 + 0.08 * (0.5 + 0.5 * sin((t * 2 * pi))))"

@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-in-glitch"
+name = "Glitch"
+kind = "animation"
+category = "Text In"
+order = 5
+description = "The title glitches into being."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+opacity = "min(1, t * 2)"
+
+[animation.effect]
+id = "concat.glitch"
+params = { range = "100 * (1 - t)" }

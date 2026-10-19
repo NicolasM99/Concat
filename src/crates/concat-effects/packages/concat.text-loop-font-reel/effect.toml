@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-font-reel"
+name = "Font Reel"
+kind = "animation"
+category = "Text Loop"
+order = 22
+description = "The title rolls over and over like a reel."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+sy = "abs(cos((t * 2 * pi) / 2))"

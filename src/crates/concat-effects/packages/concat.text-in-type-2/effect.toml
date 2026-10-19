@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-type-2"
+name = "Type 2"
+kind = "animation"
+category = "Text In"
+order = 18
+description = "The title types out with soft edges."
+
+[animation]
+slot = "in"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * t", softness = "40" }

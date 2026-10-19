@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-turn-horizontal"
+name = "Turn Horizontal"
+kind = "animation"
+category = "Text In"
+order = 74
+description = "The title turns round on its vertical axis into view."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+sx = "sin((1 - pow(1 - t, 3)) * pi / 2)"

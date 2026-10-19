@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-float-down"
+name = "Float Down"
+kind = "animation"
+category = "Text In"
+order = 21
+description = "The title floats down into place."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(-0.15 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "t"

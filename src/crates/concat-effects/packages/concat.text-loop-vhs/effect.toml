@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-vhs"
+name = "VHS"
+kind = "animation"
+category = "Text Loop"
+order = 23
+description = "The title wears a worn tape's bleed and lines."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.vhs"
+params = { bleed = "70", lines = "60" }

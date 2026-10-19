@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-pixel-bounce"
+name = "Pixel Bounce"
+kind = "animation"
+category = "Text Loop"
+order = 41
+description = "The title bounces in pixelated steps."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(-0.03 * floor(abs(sin((t * 2 * pi))) * 4) / 4)"

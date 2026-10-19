@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wobbly-projector-2"
+name = "Wobbly Projector 2"
+kind = "animation"
+category = "Text Loop"
+order = 12
+description = "The title jumps and flickers like a worn projector."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(0.015 * (floor(t * 4) - floor(t * 4 / 2) * 2))"
+opacity = "(0.85 + 0.15 * sin((t * 2 * pi) * 7))"

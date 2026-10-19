@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-in-boing"
+name = "Boing"
+kind = "animation"
+category = "Text In"
+order = 71
+description = "The title lands with a squash and a stretch."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(-0.3 * pow(1 - t, 3))"
+sx = "(1 - (0.3 * sin(t * 25) * (1 - t)))"
+sy = "(1 + (0.4 * sin(t * 25) * (1 - t)))"

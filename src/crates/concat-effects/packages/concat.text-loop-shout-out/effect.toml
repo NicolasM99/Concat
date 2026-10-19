@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-shout-out"
+name = "Shout Out"
+kind = "animation"
+category = "Text Loop"
+order = 17
+description = "The title thumps out on a beat, like a shout."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+scale = "(1 + 0.2 * exp(-t * 8))"

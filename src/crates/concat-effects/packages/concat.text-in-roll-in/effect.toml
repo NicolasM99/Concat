@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-roll-in"
+name = "Roll In"
+kind = "animation"
+category = "Text In"
+order = 46
+description = "The title rolls in from the left."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+x = "(-0.5 * (1 - (1 - pow(1 - t, 3))))"
+rotation = "(-360 * (1 - (1 - pow(1 - t, 3))))"

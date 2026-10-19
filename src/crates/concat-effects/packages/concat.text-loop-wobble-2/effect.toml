@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wobble-2"
+name = "Wobble 2"
+kind = "animation"
+category = "Text Loop"
+order = 2
+description = "The title wobbles back and forth."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+rotation = "(8 * sin((t * 2 * pi)))"

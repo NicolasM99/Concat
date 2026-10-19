@@ -1,0 +1,20 @@
+format = 2
+
+[effect]
+id = "concat.text-out-dissolve-up"
+name = "Dissolve Up"
+kind = "animation"
+category = "Text Out"
+order = 6
+description = "The title drifts up as it dissolves."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(-0.08 * t)"
+opacity = "(1 - t)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 10 * t" }

@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-gushing"
+name = "Gushing"
+kind = "animation"
+category = "Text Loop"
+order = 10
+description = "The title gushes upward and settles, again and again."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+scale = "(1 + 0.05 * abs(sin((t * 2 * pi))))"
+y = "(-0.04 * abs(sin((t * 2 * pi))))"

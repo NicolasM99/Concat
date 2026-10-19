@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-random-bounce"
+name = "Random Bounce"
+kind = "animation"
+category = "Text Loop"
+order = 28
+description = "The title bounces about restlessly."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.02 * sin((t * 2 * pi) * 3))"
+y = "(-0.03 * abs(sin((t * 2 * pi) * 2)))"

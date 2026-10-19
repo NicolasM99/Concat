@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-out-wipe-up"
+name = "Wipe Up"
+kind = "animation"
+category = "Text Out"
+order = 51
+description = "The title is wiped off upward."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * (1 - t)", direction = "2", softness = "20" }

@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-in-flip-verbatim"
+name = "Flip Verbatim"
+kind = "animation"
+category = "Text In"
+order = 38
+description = "The title flips round as its words appear."
+
+[animation]
+slot = "in"
+duration = 1
+text = true
+sx = "sin((1 - pow(1 - t, 3)) * pi / 2)"
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * t", softness = "20" }

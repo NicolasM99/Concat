@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-top-arch"
+name = "Top Arch"
+kind = "animation"
+category = "Text Loop"
+order = 26
+description = "The title arches up and over."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(-0.04 * sin(t * pi))"
+rotation = "(6 * cos(t * pi))"

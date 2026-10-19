@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-space-type"
+name = "Space Type"
+kind = "animation"
+category = "Text Loop"
+order = 24
+description = "The title floats weightless, turning slightly."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(0.02 * sin((t * 2 * pi)))"
+rotation = "(3 * sin((t * 2 * pi) * 0.5 + 1))"

@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-out-fly-out"
+name = "Fly Out"
+kind = "animation"
+category = "Text Out"
+order = 57
+description = "The title flies out to the right, shrinking."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 - 0.5 * t)"
+x = "(0.6 * pow(t, 3))"
+opacity = "(1 - pow(t, 2))"

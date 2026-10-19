@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-zoom-in-2"
+name = "Zoom In 2"
+kind = "animation"
+category = "Text Out"
+order = 5
+description = "The title swells and fades."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 + 0.5 * t)"
+opacity = "(1 - t)"

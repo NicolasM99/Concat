@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-enlarge-letters"
+name = "Enlarge Letters"
+kind = "animation"
+category = "Text Loop"
+order = 5
+description = "The title swells and shrinks."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+scale = "(1 + 0.12 * sin((t * 2 * pi)))"

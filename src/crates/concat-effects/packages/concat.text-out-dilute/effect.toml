@@ -1,0 +1,20 @@
+format = 2
+
+[effect]
+id = "concat.text-out-dilute"
+name = "Dilute"
+kind = "animation"
+category = "Text Out"
+order = 22
+description = "The title thins out and fades like ink in water."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+opacity = "(1 - t)"
+sx = "(1 + 0.2 * t)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 20 * t" }

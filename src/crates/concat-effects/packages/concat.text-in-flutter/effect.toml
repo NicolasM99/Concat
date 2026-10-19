@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-in-flutter"
+name = "Flutter"
+kind = "animation"
+category = "Text In"
+order = 29
+description = "The title flutters in like a falling leaf."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(-0.1 * (1 - (1 - pow(1 - t, 3))))"
+rotation = "(15 * sin(t * 20) * (1 - t))"
+opacity = "t"

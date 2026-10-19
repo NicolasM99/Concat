@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wiper"
+name = "Wiper"
+kind = "animation"
+category = "Text Loop"
+order = 48
+description = "The title sweeps back and forth like a wiper."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.05 * sin((t * 2 * pi)))"
+rotation = "(20 * sin((t * 2 * pi)))"

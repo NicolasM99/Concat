@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-slide-up-1"
+name = "Slide Up 1"
+kind = "animation"
+category = "Text In"
+order = 69
+description = "The title glides up from the bottom of the frame."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(0.8 * (1 - (1 - pow(1 - t, 3))))"

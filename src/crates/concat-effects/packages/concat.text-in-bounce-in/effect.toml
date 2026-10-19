@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-bounce-in"
+name = "Bounce In"
+kind = "animation"
+category = "Text In"
+order = 48
+description = "The title drops in and bounces."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(-abs(cos(t * pi * 2.5)) * 0.3 * pow(1 - t, 2))"

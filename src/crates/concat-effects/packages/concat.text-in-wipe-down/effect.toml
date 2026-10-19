@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-wipe-down"
+name = "Wipe Down"
+kind = "animation"
+category = "Text In"
+order = 64
+description = "The title is wiped on downward."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * t", direction = "2", softness = "20" }

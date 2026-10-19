@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-float-up"
+name = "Float Up"
+kind = "animation"
+category = "Text Out"
+order = 58
+description = "The title floats up and away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(-0.15 * (1 - (1 - pow(1 - (1 - t), 3))))"
+opacity = "(1 - t)"

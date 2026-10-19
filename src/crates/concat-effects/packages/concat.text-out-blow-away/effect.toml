@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.text-out-blow-away"
+name = "Blow Away"
+kind = "animation"
+category = "Text Out"
+order = 54
+description = "The title blows away, blurring as it goes."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+x = "(0.4 * pow(t, 2))"
+y = "(-0.2 * pow(t, 2))"
+opacity = "(1 - t)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 20 * t" }

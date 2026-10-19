@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-page-turning-i"
+name = "Page Turning I"
+kind = "animation"
+category = "Text Loop"
+order = 46
+description = "The title turns over like a page."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+sx = "abs(cos(t * pi))"

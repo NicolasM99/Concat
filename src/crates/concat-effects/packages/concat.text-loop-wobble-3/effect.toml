@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wobble-3"
+name = "Wobble 3"
+kind = "animation"
+category = "Text Loop"
+order = 25
+description = "The title wobbles in squashes."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+rotation = "(5 * sin((t * 2 * pi) * 2))"
+sy = "(1 + 0.05 * sin((t * 2 * pi) * 2))"

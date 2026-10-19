@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-showing-left"
+name = "Showing Left"
+kind = "animation"
+category = "Text In"
+order = 55
+description = "The title is uncovered to the left."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * t", direction = "1", softness = "0" }

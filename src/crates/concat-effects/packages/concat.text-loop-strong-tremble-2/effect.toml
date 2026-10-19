@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-strong-tremble-2"
+name = "Strong Tremble 2"
+kind = "animation"
+category = "Text Loop"
+order = 34
+description = "The title trembles and twists hard."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.012 * sin((t * 2 * pi) * 13))"
+rotation = "(3 * sin((t * 2 * pi) * 11))"

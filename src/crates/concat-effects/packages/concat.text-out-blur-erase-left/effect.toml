@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-out-blur-erase-left"
+name = "Blur Erase Left"
+kind = "animation"
+category = "Text Out"
+order = 45
+description = "The title is erased to the left behind a soft edge."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * (1 - t)", direction = "0", softness = "100" }

@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-in-wave-in"
+name = "Wave in"
+kind = "animation"
+category = "Text In"
+order = 9
+description = "The title's words wave up into place one after another."
+
+[animation]
+slot = "in"
+duration = 1
+text = true
+y = "(0.06 * sin(t * 20) * (1 - t))"
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * t", softness = "30" }

@@ -1,0 +1,20 @@
+format = 2
+
+[effect]
+id = "concat.text-out-blur-to-the-left"
+name = "Blur to the Left"
+kind = "animation"
+category = "Text Out"
+order = 11
+description = "The title slides left into a blur."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+x = "(-0.15 * (1 - (1 - pow(1 - (1 - t), 3))))"
+opacity = "(1 - t)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 20 * (1 - (1 - t))" }

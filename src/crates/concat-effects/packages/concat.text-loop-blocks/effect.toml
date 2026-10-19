@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-blocks"
+name = "Blocks"
+kind = "animation"
+category = "Text Loop"
+order = 50
+description = "The title breaks into blocks and back."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.pixelate"
+params = { size = "2 + 10 * (0.5 + 0.5 * sin((t * 2 * pi)))" }

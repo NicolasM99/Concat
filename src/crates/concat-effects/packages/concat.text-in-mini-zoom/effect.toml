@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-mini-zoom"
+name = "Mini Zoom"
+kind = "animation"
+category = "Text In"
+order = 58
+description = "The title settles in with a small zoom."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "(1.15 + (1 - (1.15)) * (1 - pow(1 - t, 3)))"
+opacity = "t"

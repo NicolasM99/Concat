@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-expand"
+name = "Expand"
+kind = "animation"
+category = "Text Out"
+order = 17
+description = "The title stretches wide and fades."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+opacity = "(1 - t)"
+sx = "(1 + 1.5 * t)"

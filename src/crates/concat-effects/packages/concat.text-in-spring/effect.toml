@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-spring"
+name = "Spring"
+kind = "animation"
+category = "Text In"
+order = 72
+description = "The title springs in and wobbles to rest."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "(1 + (0.5 * sin(t * 20) * (1 - t)) - 0.5 * pow(1 - t, 4))"

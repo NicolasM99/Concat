@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-in-sunrise"
+name = "Sunrise"
+kind = "animation"
+category = "Text In"
+order = 63
+description = "The title rises like the sun, glowing up from below."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(0.15 * (1 - (1 - pow(1 - t, 3))))"
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * t", direction = "3", softness = "60" }

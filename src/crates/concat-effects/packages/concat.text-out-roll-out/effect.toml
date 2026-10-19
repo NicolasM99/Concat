@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-roll-out"
+name = "Roll Out"
+kind = "animation"
+category = "Text Out"
+order = 32
+description = "The title rolls away to the left."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+x = "(-0.5 * (1 - (1 - pow(1 - (1 - t), 3))))"
+rotation = "(-360 * (1 - (1 - pow(1 - (1 - t), 3))))"

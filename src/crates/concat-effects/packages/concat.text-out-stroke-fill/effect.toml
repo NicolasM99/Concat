@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-out-stroke-fill"
+name = "Stroke Fill"
+kind = "animation"
+category = "Text Out"
+order = 41
+description = "The title empties out to its outline and fades."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+opacity = "(1 - t)"
+
+[animation.effect]
+id = "concat.gray-mask"
+params = { progress = "100 * t" }

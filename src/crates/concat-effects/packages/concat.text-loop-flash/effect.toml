@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-flash"
+name = "Flash"
+kind = "animation"
+category = "Text Loop"
+order = 8
+description = "The title flashes on and off."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+opacity = "(if(sin((t * 2 * pi)) > 0, 1, 0.25))"

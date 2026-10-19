@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-typewriter"
+name = "Typewriter"
+kind = "animation"
+category = "Text In"
+order = 2
+description = "The title types itself out word by word."
+
+[animation]
+slot = "in"
+duration = 1.2
+text = true
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * t", softness = "0" }

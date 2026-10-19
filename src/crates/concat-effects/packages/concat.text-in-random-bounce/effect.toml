@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-in-random-bounce"
+name = "Random Bounce"
+kind = "animation"
+category = "Text In"
+order = 62
+description = "The title bounces about as it appears."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+x = "(0.04 * sin(t * 33) * (1 - t))"
+y = "(0.06 * sin(t * 27) * (1 - t))"
+opacity = "min(1, t * 3)"

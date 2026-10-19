@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-slide-up"
+name = "Slide Up"
+kind = "animation"
+category = "Text Out"
+order = 9
+description = "The title slides up away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(-0.3 * (1 - (1 - pow(1 - (1 - t), 3))))"
+opacity = "(1 - t)"

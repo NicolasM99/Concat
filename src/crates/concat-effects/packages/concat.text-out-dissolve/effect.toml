@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-out-dissolve"
+name = "Dissolve"
+kind = "animation"
+category = "Text Out"
+order = 8
+description = "The title dissolves away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+opacity = "(1 - t)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 8 * (1 - (1 - t))" }

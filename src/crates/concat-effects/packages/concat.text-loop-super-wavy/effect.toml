@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-super-wavy"
+name = "Super Wavy"
+kind = "animation"
+category = "Text Loop"
+order = 21
+description = "The title rides a big wave."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(0.06 * sin((t * 2 * pi)))"
+sx = "(1 + 0.05 * cos((t * 2 * pi)))"

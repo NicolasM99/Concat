@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-fold"
+name = "Fold"
+kind = "animation"
+category = "Text Out"
+order = 29
+description = "The title folds up into its top."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(-0.05 * (1 - (1 - pow(1 - (1 - t), 3))))"
+sy = "(1 - pow(1 - (1 - t), 3))"

@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-bounce-out"
+name = "Bounce Out"
+kind = "animation"
+category = "Text Out"
+order = 15
+description = "The title bounces once and drops away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(-0.15 * sin(t * pi) + 0.6 * pow(t, 3))"
+opacity = "(1 - pow(t, 4))"

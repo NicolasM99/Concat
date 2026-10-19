@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-out-flip-verbatim"
+name = "Flip Verbatim"
+kind = "animation"
+category = "Text Out"
+order = 62
+description = "The title flips away as its words disappear."
+
+[animation]
+slot = "out"
+duration = 1
+text = true
+sx = "sin((1 - pow(1 - (1 - t), 3)) * pi / 2)"
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * (1 - t)", softness = "20" }

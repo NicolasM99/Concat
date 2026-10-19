@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-clock-wipe"
+name = "Clock wipe"
+kind = "animation"
+category = "Text In"
+order = 42
+description = "The title is swept on by a clock hand."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-clock"
+params = { progress = "100 * t" }

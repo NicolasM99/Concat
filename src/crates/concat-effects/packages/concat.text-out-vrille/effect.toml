@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-out-vrille"
+name = "Vrille"
+kind = "animation"
+category = "Text Out"
+order = 53
+description = "The title spins away in a spiral dive."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 - t)"
+y = "(0.2 * t)"
+rotation = "(720 * pow(t, 2))"

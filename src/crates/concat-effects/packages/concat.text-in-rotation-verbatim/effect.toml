@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-in-rotation-verbatim"
+name = "Rotation Verbatim"
+kind = "animation"
+category = "Text In"
+order = 36
+description = "The title's words turn into place one after another."
+
+[animation]
+slot = "in"
+duration = 1
+text = true
+rotation = "(20 * (1 - (1 - pow(1 - t, 3))))"
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * t", softness = "20" }

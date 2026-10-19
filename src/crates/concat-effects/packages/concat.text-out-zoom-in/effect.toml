@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-zoom-in"
+name = "Zoom In"
+kind = "animation"
+category = "Text Out"
+order = 3
+description = "The title zooms in past the viewer."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 + 2 * pow(t, 3))"
+opacity = "(1 - t)"

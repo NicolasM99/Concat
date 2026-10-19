@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wave"
+name = "Wave"
+kind = "animation"
+category = "Text Loop"
+order = 3
+description = "The title bobs up and down on a wave."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(0.03 * sin((t * 2 * pi)))"

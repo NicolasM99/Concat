@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-rotate"
+name = "Rotate"
+kind = "animation"
+category = "Text Loop"
+order = 27
+description = "The title turns round and round."
+
+[animation]
+slot = "loop"
+duration = 2
+text = true
+rotation = "(360 * t)"

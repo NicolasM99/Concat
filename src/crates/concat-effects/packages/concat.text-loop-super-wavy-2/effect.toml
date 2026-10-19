@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-super-wavy-2"
+name = "Super Wavy 2"
+kind = "animation"
+category = "Text Loop"
+order = 20
+description = "The title waves hard, up and down and round."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(0.05 * sin((t * 2 * pi)))"
+rotation = "(10 * sin((t * 2 * pi) + 1.5))"

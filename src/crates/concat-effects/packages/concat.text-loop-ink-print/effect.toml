@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-ink-print"
+name = "Ink Print"
+kind = "animation"
+category = "Text Loop"
+order = 15
+description = "The title breathes like wet ink spreading."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 3 * (0.5 + 0.5 * sin((t * 2 * pi)))" }

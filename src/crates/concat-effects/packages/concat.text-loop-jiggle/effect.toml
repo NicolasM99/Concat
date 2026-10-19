@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-jiggle"
+name = "Jiggle"
+kind = "animation"
+category = "Text Loop"
+order = 35
+description = "The title jiggles about its centre."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+rotation = "(6 * sin((t * 2 * pi) * 4))"

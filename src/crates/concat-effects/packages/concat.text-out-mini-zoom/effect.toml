@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-mini-zoom"
+name = "Mini Zoom"
+kind = "animation"
+category = "Text Out"
+order = 14
+description = "The title fades with a small zoom."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1.15 + (1 - (1.15)) * (1 - pow(1 - (1 - t), 3)))"
+opacity = "(1 - t)"

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-elastic-telescopic-ii"
+name = "Elastic Telescopic II"
+kind = "animation"
+category = "Text Out"
+order = 66
+description = "The title springs wide and snaps away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+sx = "(1 + 2.70158 * pow((1 - t) - 1, 3) + 1.70158 * pow((1 - t) - 1, 2))"

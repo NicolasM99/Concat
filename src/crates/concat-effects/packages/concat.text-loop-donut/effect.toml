@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-donut"
+name = "Donut"
+kind = "animation"
+category = "Text Loop"
+order = 16
+description = "The title circles round a small loop."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.03 * cos((t * 2 * pi)))"
+y = "(0.03 * sin((t * 2 * pi)))"

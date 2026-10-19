@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-rotate-1"
+name = "Rotate 1"
+kind = "animation"
+category = "Text Loop"
+order = 36
+description = "The title turns round the other way."
+
+[animation]
+slot = "loop"
+duration = 2
+text = true
+rotation = "(-360 * t)"

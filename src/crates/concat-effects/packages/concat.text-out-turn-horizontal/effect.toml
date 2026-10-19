@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-turn-horizontal"
+name = "Turn Horizontal"
+kind = "animation"
+category = "Text Out"
+order = 46
+description = "The title turns away on its vertical axis."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+sx = "sin((1 - pow(1 - (1 - t), 3)) * pi / 2)"

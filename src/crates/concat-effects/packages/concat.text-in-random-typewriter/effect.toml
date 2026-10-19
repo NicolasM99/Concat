@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-random-typewriter"
+name = "Random Typewriter"
+kind = "animation"
+category = "Text In"
+order = 13
+description = "The title appears in scattered pieces."
+
+[animation]
+slot = "in"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.reveal-tiles"
+params = { progress = "100 * t", tiles = "16" }

@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-pressing"
+name = "Pressing"
+kind = "animation"
+category = "Text Loop"
+order = 45
+description = "The title is pressed flat and springs back."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+sx = "(1 + 0.15 * pow(sin(t * pi), 4))"
+sy = "(1 - 0.25 * pow(sin(t * pi), 4))"

@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-out-wave-out"
+name = "Wave out"
+kind = "animation"
+category = "Text Out"
+order = 65
+description = "The title's words wave away one after another."
+
+[animation]
+slot = "out"
+duration = 1
+text = true
+y = "(0.06 * sin((1 - t) * 20) * (1 - (1 - t)))"
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * (1 - t)", softness = "30" }

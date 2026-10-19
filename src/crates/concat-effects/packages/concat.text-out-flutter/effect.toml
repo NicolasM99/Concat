@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-out-flutter"
+name = "Flutter"
+kind = "animation"
+category = "Text Out"
+order = 28
+description = "The title flutters away like a falling leaf."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(-0.1 * (1 - (1 - pow(1 - (1 - t), 3))))"
+rotation = "(15 * sin((1 - t) * 20) * (1 - (1 - t)))"
+opacity = "(1 - t)"

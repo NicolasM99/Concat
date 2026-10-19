@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-spin-out-2"
+name = "Spin Out 2"
+kind = "animation"
+category = "Text Out"
+order = 60
+description = "The title spins away to nothing, the other way."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 - pow(1 - (1 - t), 3))"
+rotation = "(360 * (1 - (1 - pow(1 - (1 - t), 3))))"

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-jump"
+name = "Jump"
+kind = "animation"
+category = "Text Loop"
+order = 29
+description = "The title jumps up and lands, over and over."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(-0.06 * abs(sin((t * 2 * pi) / 2)))"

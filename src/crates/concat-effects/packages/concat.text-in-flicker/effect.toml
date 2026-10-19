@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-flicker"
+name = "Flicker"
+kind = "animation"
+category = "Text In"
+order = 27
+description = "The title flickers on."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+opacity = "(if(sin(t * 40) > 0, 1, 0.2) * t + (1 - t) * 0)"

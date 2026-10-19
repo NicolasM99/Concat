@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-scrolling"
+name = "Scrolling"
+kind = "animation"
+category = "Text Loop"
+order = 32
+description = "The title scrolls across, again and again."
+
+[animation]
+slot = "loop"
+duration = 3
+text = true
+x = "(0.5 - t)"

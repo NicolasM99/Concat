@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-fade-out"
+name = "Fade Out"
+kind = "animation"
+category = "Text Out"
+order = 1
+description = "The title fades away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+opacity = "(1 - t)"

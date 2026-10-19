@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-zoom-out-2"
+name = "Zoom Out 2"
+kind = "animation"
+category = "Text In"
+order = 8
+description = "The title zooms down into place from huge."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "(4 + (1 - (4)) * (1 - pow(1 - t, 3)))"
+opacity = "min(1, t * 2)"

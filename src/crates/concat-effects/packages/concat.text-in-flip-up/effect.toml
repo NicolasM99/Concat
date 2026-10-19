@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-flip-up"
+name = "Flip up"
+kind = "animation"
+category = "Text In"
+order = 76
+description = "The title flips up into place."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(0.1 * (1 - (1 - pow(1 - t, 3))))"
+sy = "sin((1 - pow(1 - t, 3)) * pi / 2)"

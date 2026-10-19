@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-showing-right"
+name = "Showing Right"
+kind = "animation"
+category = "Text In"
+order = 54
+description = "The title is uncovered to the right."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * t", direction = "0", softness = "0" }

@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-out-disband-to-the-left"
+name = "Disband to the Left"
+kind = "animation"
+category = "Text Out"
+order = 26
+description = "The title breaks up and blows away to the left."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+x = "(-0.3 * pow(t, 2))"
+
+[animation.effect]
+id = "concat.reveal-tiles"
+params = { progress = "100 * (1 - t)", tiles = "20" }

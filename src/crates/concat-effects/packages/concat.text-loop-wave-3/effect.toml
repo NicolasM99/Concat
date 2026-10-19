@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wave-3"
+name = "Wave 3"
+kind = "animation"
+category = "Text Loop"
+order = 14
+description = "The title rocks on a swell."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(0.03 * sin((t * 2 * pi)))"
+rotation = "(4 * cos((t * 2 * pi)))"

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-bullet-screen"
+name = "Bullet Screen"
+kind = "animation"
+category = "Text Loop"
+order = 47
+description = "The title streams across the screen right to left, like bullet comments."
+
+[animation]
+slot = "loop"
+duration = 4
+text = true
+x = "(0.8 - 1.6 * t)"

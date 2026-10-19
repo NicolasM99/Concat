@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-jump-pieces"
+name = "Jump Pieces"
+kind = "animation"
+category = "Text Loop"
+order = 53
+description = "The title hops in short jumps."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(-0.03 * abs(sin((t * 2 * pi) * 2)))"
+rotation = "(3 * sin((t * 2 * pi) * 2))"

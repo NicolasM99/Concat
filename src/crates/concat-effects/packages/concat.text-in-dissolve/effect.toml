@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-in-dissolve"
+name = "Dissolve"
+kind = "animation"
+category = "Text In"
+order = 11
+description = "The title dissolves into view."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+opacity = "t"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 8 * (1 - t)" }

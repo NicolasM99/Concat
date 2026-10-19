@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-faulty-text"
+name = "Faulty text"
+kind = "animation"
+category = "Text Out"
+order = 35
+description = "The title stutters off like a faulty sign."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+opacity = "(if((1 - t) < 0.2, 0.3, if((1 - t) < 0.35, 1, if((1 - t) < 0.5, 0.2, if((1 - t) < 0.65, 1, if((1 - t) < 0.75, 0.4, 1))))))"

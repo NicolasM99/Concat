@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-out-trail"
+name = "Trail"
+kind = "animation"
+category = "Text Out"
+order = 30
+description = "The title slides away leaving a trail."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+x = "(-0.3 * (1 - (1 - pow(1 - (1 - t), 3))))"
+
+[animation.effect]
+id = "concat.motion-blur"
+params = { length = "2 + 50 * (1 - (1 - t))" }

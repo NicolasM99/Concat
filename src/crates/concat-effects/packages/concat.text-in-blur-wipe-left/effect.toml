@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-blur-wipe-left"
+name = "Blur Wipe Left"
+kind = "animation"
+category = "Text In"
+order = 33
+description = "The title is wiped on to the left behind a soft edge."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * t", direction = "1", softness = "100" }

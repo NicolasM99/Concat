@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-out-random-typewriter"
+name = "Random Typewriter"
+kind = "animation"
+category = "Text Out"
+order = 27
+description = "The title disappears in scattered pieces."
+
+[animation]
+slot = "out"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.reveal-tiles"
+params = { progress = "100 * (1 - t)", tiles = "16" }

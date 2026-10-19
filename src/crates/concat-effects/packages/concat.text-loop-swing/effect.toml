@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-swing"
+name = "Swing"
+kind = "animation"
+category = "Text Loop"
+order = 42
+description = "The title swings like a hanging sign."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+rotation = "(10 * sin((t * 2 * pi)))"

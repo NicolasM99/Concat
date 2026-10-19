@@ -1,0 +1,20 @@
+format = 2
+
+[effect]
+id = "concat.text-in-dissolve-down"
+name = "Dissolve Down"
+kind = "animation"
+category = "Text In"
+order = 30
+description = "The title drifts down into place as it dissolves in."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(-0.08 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "t"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 10 * (1 - t)" }

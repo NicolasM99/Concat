@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-fold"
+name = "Fold"
+kind = "animation"
+category = "Text In"
+order = 45
+description = "The title unfolds down from its top."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(-0.05 * (1 - (1 - pow(1 - t, 3))))"
+sy = "(1 - pow(1 - t, 3))"

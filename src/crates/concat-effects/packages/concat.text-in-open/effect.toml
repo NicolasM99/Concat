@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-open"
+name = "Open"
+kind = "animation"
+category = "Text In"
+order = 23
+description = "The title opens out from its middle."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-split"
+params = { progress = "100 * t", direction = "1" }

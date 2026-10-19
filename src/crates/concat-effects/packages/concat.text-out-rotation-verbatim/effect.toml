@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-out-rotation-verbatim"
+name = "Rotation Verbatim"
+kind = "animation"
+category = "Text Out"
+order = 56
+description = "The title's words turn away one after another."
+
+[animation]
+slot = "out"
+duration = 1
+text = true
+rotation = "(20 * (1 - (1 - pow(1 - (1 - t), 3))))"
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * (1 - t)", softness = "20" }

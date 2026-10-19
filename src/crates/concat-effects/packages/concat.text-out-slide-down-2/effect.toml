@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-slide-down-2"
+name = "Slide Down 2"
+kind = "animation"
+category = "Text Out"
+order = 61
+description = "The title drops away out of the frame."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(0.8 * pow(t, 3))"

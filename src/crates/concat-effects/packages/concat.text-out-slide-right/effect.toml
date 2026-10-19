@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-slide-right"
+name = "Slide Right"
+kind = "animation"
+category = "Text Out"
+order = 25
+description = "The title slides off to the right."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+x = "(0.4 * (1 - (1 - pow(1 - (1 - t), 3))))"
+opacity = "(1 - t)"

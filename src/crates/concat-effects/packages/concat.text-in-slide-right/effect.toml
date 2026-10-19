@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-slide-right"
+name = "Slide Right"
+kind = "animation"
+category = "Text In"
+order = 41
+description = "The title slides in from the left."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+x = "(-0.4 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "t"

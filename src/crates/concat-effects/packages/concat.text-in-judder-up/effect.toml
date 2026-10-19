@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-judder-up"
+name = "Judder Up"
+kind = "animation"
+category = "Text In"
+order = 47
+description = "The title judders up into place in steps."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(0.2 * (1 - floor(t * 5) / 5))"
+opacity = "min(1, t * 3)"

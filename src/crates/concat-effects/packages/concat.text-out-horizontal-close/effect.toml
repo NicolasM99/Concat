@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-out-horizontal-close"
+name = "Horizontal Close"
+kind = "animation"
+category = "Text Out"
+order = 24
+description = "The title closes in to a line at its middle."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-split"
+params = { progress = "100 * (1 - t)", direction = "1" }

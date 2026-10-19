@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-showing-up"
+name = "Showing Up"
+kind = "animation"
+category = "Text In"
+order = 57
+description = "The title is uncovered upward."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * t", direction = "3", softness = "0" }

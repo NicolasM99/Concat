@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-flare"
+name = "Flare"
+kind = "animation"
+category = "Text Loop"
+order = 1
+description = "The title flares brighter and larger on a pulse."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+scale = "(1 + 0.06 * sin((t * 2 * pi)))"
+opacity = "(0.85 + 0.15 * sin((t * 2 * pi)))"

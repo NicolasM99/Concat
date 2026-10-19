@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-scroll-up"
+name = "Scroll Up"
+kind = "animation"
+category = "Text Loop"
+order = 7
+description = "The title scrolls up through its line, over and over."
+
+[animation]
+slot = "loop"
+duration = 2
+text = true
+y = "(0.1 - 0.2 * t)"

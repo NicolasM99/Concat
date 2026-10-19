@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wobbly-projector-3"
+name = "Wobbly Projector 3"
+kind = "animation"
+category = "Text Loop"
+order = 13
+description = "The title drifts and tilts like a loose projector."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.015 * sin((t * 2 * pi)))"
+rotation = "(2 * sin((t * 2 * pi)))"

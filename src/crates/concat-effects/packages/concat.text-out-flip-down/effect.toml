@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-flip-down"
+name = "Flip Down"
+kind = "animation"
+category = "Text Out"
+order = 43
+description = "The title flips down and away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(0.1 * t)"
+sy = "cos(t * pi / 2)"

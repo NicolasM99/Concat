@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-out-type-1"
+name = "Type 1"
+kind = "animation"
+category = "Text Out"
+order = 21
+description = "The title is typed away."
+
+[animation]
+slot = "out"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * (1 - t)", softness = "0" }

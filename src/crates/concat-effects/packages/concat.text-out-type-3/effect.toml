@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-out-type-3"
+name = "Type 3"
+kind = "animation"
+category = "Text Out"
+order = 55
+description = "The title is unwritten from right to left."
+
+[animation]
+slot = "out"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * (1 - t)", direction = "0", softness = "5" }

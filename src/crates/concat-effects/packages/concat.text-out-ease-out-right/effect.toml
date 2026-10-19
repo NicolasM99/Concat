@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-ease-out-right"
+name = "Ease Out Right"
+kind = "animation"
+category = "Text Out"
+order = 49
+description = "The title eases out to the right."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+x = "(0.25 * pow(t, 3))"
+opacity = "(1 - t)"

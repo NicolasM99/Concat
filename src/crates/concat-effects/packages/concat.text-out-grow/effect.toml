@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-grow"
+name = "Grow"
+kind = "animation"
+category = "Text Out"
+order = 48
+description = "The title shrinks steadily away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 - t)"

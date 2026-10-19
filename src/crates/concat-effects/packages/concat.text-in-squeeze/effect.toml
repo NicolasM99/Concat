@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-squeeze"
+name = "Squeeze"
+kind = "animation"
+category = "Text In"
+order = 44
+description = "The title is squeezed out to its width."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+opacity = "min(1, t * 3)"
+sx = "(1 - pow(1 - t, 3))"

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-flip"
+name = "Flip"
+kind = "animation"
+category = "Text Loop"
+order = 52
+description = "The title flips round on its vertical axis."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+sx = "abs(cos((t * 2 * pi)))"

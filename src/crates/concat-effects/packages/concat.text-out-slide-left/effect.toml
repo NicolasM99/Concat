@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-slide-left"
+name = "Slide Left"
+kind = "animation"
+category = "Text Out"
+order = 19
+description = "The title slides off to the left."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+x = "(-0.4 * (1 - (1 - pow(1 - (1 - t), 3))))"
+opacity = "(1 - t)"

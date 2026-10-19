@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-karaoke"
+name = "Karaoke"
+kind = "animation"
+category = "Text In"
+order = 26
+description = "The title lights up left to right like karaoke lyrics."
+
+[animation]
+slot = "in"
+duration = 1.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * t", direction = "0", softness = "40" }

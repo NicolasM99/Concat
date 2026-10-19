@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-wobble"
+name = "Wobble"
+kind = "animation"
+category = "Text In"
+order = 51
+description = "The title wobbles into place."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "(0.8 + (1 - (0.8)) * (1 - pow(1 - t, 3)))"
+rotation = "(20 * sin(t * 25) * (1 - t))"

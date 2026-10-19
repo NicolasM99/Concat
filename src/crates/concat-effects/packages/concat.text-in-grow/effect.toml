@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-grow"
+name = "Grow"
+kind = "animation"
+category = "Text In"
+order = 75
+description = "The title grows steadily into place."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "t"

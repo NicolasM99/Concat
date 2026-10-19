@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-in-throw-out"
+name = "Throw Out"
+kind = "animation"
+category = "Text In"
+order = 1
+description = "The title is thrown up into place, spinning."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(0.4 * (1 - (1 - pow(1 - t, 3))))"
+rotation = "(-90 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "min(1, t * 3)"

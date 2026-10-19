@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-out-blur"
+name = "Blur"
+kind = "animation"
+category = "Text Out"
+order = 2
+description = "The title blurs away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+opacity = "min(1, (1 - t) * 2)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 30 * (1 - (1 - t))" }

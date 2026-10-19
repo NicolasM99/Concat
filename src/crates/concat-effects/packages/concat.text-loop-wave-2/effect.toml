@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-wave-2"
+name = "Wave 2"
+kind = "animation"
+category = "Text Loop"
+order = 31
+description = "The title sways gently as if on water."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.01 * cos((t * 2 * pi)))"
+y = "(0.02 * sin((t * 2 * pi)))"

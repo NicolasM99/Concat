@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-pop-down"
+name = "Pop Down"
+kind = "animation"
+category = "Text Out"
+order = 33
+description = "The title pops down and away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 + 2.70158 * pow((1 - t) - 1, 3) + 1.70158 * pow((1 - t) - 1, 2))"

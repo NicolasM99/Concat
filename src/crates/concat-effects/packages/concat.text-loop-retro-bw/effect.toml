@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-retro-bw"
+name = "Retro BW"
+kind = "animation"
+category = "Text Loop"
+order = 39
+description = "The title in old black and white."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.alt-bw"
+params = { strength = "100" }

@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-out-typewriter"
+name = "Typewriter"
+kind = "animation"
+category = "Text Out"
+order = 4
+description = "The title is typed away word by word."
+
+[animation]
+slot = "out"
+duration = 1.2
+text = true
+
+[animation.effect]
+id = "concat.reveal-words"
+params = { progress = "100 * (1 - t)", softness = "0" }

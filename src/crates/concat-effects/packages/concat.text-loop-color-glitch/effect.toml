@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-color-glitch"
+name = "Color Glitch"
+kind = "animation"
+category = "Text Loop"
+order = 4
+description = "The title glitches in colour now and then."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+
+[animation.effect]
+id = "concat.color-glitch-fx"
+params = { speed = "60" }

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-flipping"
+name = "Flipping"
+kind = "animation"
+category = "Text In"
+order = 43
+description = "The title flips over into view."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+sy = "abs(cos((1 - (1 - pow(1 - t, 3))) * pi))"

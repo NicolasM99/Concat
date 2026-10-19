@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-dance"
+name = "Dance"
+kind = "animation"
+category = "Text Loop"
+order = 37
+description = "The title dances from side to side."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.03 * sin((t * 2 * pi)))"
+y = "(-0.02 * abs(sin((t * 2 * pi))))"
+rotation = "(-8 * sin((t * 2 * pi)))"

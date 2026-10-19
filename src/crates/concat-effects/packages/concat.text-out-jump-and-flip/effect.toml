@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-out-jump-and-flip"
+name = "Jump and flip"
+kind = "animation"
+category = "Text Out"
+order = 68
+description = "The title jumps and flips away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+y = "(-0.1 * sin((1 - t) * pi))"
+sy = "sin((1 - pow(1 - (1 - t), 3)) * pi / 2)"

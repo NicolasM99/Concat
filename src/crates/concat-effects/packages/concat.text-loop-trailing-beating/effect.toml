@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-trailing-beating"
+name = "Trailing Beating"
+kind = "animation"
+category = "Text Loop"
+order = 44
+description = "The title beats like a heart, leaving a trace."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+scale = "(1 + 0.15 * exp(-t * 6) + 0.1 * exp(-max(t - 0.25, 0) * 6) * if(t > 0.25, 1, 0))"

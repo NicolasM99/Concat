@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-zoom-out"
+name = "Zoom Out"
+kind = "animation"
+category = "Text Out"
+order = 12
+description = "The title shrinks away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 - pow(t, 2))"

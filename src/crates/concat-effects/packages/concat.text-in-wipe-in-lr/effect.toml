@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-wipe-in-lr"
+name = "Wipe In LR"
+kind = "animation"
+category = "Text In"
+order = 65
+description = "The title is wiped open from the middle to both sides."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-split"
+params = { progress = "100 * t", direction = "0" }

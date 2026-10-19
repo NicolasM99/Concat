@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-zoom-in"
+name = "Zoom In"
+kind = "animation"
+category = "Text In"
+order = 22
+description = "The title zooms in from nothing."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "(1 - pow(1 - t, 3))"

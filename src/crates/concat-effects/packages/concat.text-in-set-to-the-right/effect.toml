@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-set-to-the-right"
+name = "Set to the Right"
+kind = "animation"
+category = "Text In"
+order = 59
+description = "The title sets itself into place from just left of it."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+x = "(-0.05 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "t"

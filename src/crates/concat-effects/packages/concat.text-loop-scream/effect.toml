@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-scream"
+name = "Scream"
+kind = "animation"
+category = "Text Loop"
+order = 51
+description = "The title screams: it swells and shakes."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+scale = "(1.05 + 0.05 * sin((t * 2 * pi)))"
+x = "(0.01 * sin((t * 2 * pi) * 15))"

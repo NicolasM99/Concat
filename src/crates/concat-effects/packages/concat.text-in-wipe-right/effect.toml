@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-wipe-right"
+name = "Wipe Right"
+kind = "animation"
+category = "Text In"
+order = 31
+description = "The title is wiped on to the right."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * t", direction = "0", softness = "20" }

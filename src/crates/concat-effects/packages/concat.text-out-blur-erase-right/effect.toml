@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-out-blur-erase-right"
+name = "Blur Erase Right"
+kind = "animation"
+category = "Text Out"
+order = 44
+description = "The title is erased to the right behind a soft edge."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * (1 - t)", direction = "1", softness = "100" }

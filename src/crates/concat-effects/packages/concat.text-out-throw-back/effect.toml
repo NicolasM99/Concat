@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-out-throw-back"
+name = "Throw Back"
+kind = "animation"
+category = "Text Out"
+order = 18
+description = "The title is thrown back into the distance."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 - pow(t, 2))"
+y = "(-0.2 * t)"
+rotation = "(180 * pow(t, 2))"

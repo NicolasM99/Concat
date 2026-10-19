@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-in-trail"
+name = "Trail"
+kind = "animation"
+category = "Text In"
+order = 40
+description = "The title slides in leaving a trail."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+x = "(-0.3 * (1 - (1 - pow(1 - t, 3))))"
+
+[animation.effect]
+id = "concat.motion-blur"
+params = { length = "2 + 50 * (1 - t)" }

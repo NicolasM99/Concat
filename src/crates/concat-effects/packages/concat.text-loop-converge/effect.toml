@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-converge"
+name = "Converge"
+kind = "animation"
+category = "Text Loop"
+order = 6
+description = "The title draws in narrow and back."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+sx = "(1 - 0.15 * (0.5 + 0.5 * sin((t * 2 * pi))))"

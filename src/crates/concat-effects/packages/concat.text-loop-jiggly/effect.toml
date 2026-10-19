@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-jiggly"
+name = "Jiggly"
+kind = "animation"
+category = "Text Loop"
+order = 9
+description = "The title jiggles like jelly."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+sx = "(1 + 0.06 * sin((t * 2 * pi) * 2))"
+sy = "(1 - 0.06 * sin((t * 2 * pi) * 2))"

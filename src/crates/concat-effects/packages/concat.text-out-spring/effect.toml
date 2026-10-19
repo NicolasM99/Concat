@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-out-spring"
+name = "Spring"
+kind = "animation"
+category = "Text Out"
+order = 50
+description = "The title springs away."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+scale = "(1 + (0.5 * sin((1 - t) * 20) * (1 - (1 - t))) - 0.5 * pow(1 - (1 - t), 4))"

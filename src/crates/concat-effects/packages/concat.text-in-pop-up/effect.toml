@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-in-pop-up"
+name = "Pop Up"
+kind = "animation"
+category = "Text In"
+order = 12
+description = "The title pops up with a bounce."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "(1 + 2.70158 * pow(t - 1, 3) + 1.70158 * pow(t - 1, 2))"

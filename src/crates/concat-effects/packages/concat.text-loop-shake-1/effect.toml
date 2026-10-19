@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-shake-1"
+name = "Shake 1"
+kind = "animation"
+category = "Text Loop"
+order = 49
+description = "The title shakes up and down."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+y = "(0.012 * sin((t * 2 * pi) * 6))"

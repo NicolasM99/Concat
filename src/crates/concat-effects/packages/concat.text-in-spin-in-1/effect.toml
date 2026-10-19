@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-spin-in-1"
+name = "Spin In 1"
+kind = "animation"
+category = "Text In"
+order = 7
+description = "The title spins in from small."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "(1 - pow(1 - t, 3))"
+rotation = "(-360 * (1 - (1 - pow(1 - t, 3))))"

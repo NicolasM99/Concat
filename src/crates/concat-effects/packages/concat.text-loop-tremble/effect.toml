@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-loop-tremble"
+name = "Tremble"
+kind = "animation"
+category = "Text Loop"
+order = 19
+description = "The title trembles."
+
+[animation]
+slot = "loop"
+duration = 1
+text = true
+x = "(0.006 * sin((t * 2 * pi) * 9))"
+y = "(0.006 * cos((t * 2 * pi) * 11))"

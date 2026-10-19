@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-in-fly-in"
+name = "Fly In"
+kind = "animation"
+category = "Text In"
+order = 14
+description = "The title flies in from the right, growing."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+scale = "(0.5 + (1 - (0.5)) * (1 - pow(1 - t, 3)))"
+x = "(0.6 * (1 - (1 - pow(1 - t, 3))))"
+opacity = "min(1, t * 2)"

@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.text-in-flip-and-jump"
+name = "Flip and jump"
+kind = "animation"
+category = "Text In"
+order = 28
+description = "The title flips up and jumps into place."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+y = "(-0.1 * sin(t * pi))"
+sy = "sin((1 - pow(1 - t, 3)) * pi / 2)"

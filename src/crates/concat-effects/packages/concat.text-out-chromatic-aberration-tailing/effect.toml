@@ -1,0 +1,20 @@
+format = 2
+
+[effect]
+id = "concat.text-out-chromatic-aberration-tailing"
+name = "Chromatic Aberration Tailing"
+kind = "animation"
+category = "Text Out"
+order = 31
+description = "The title streaks away in split colour."
+
+[animation]
+slot = "out"
+duration = 0.5
+text = true
+x = "(0.3 * pow(t, 2))"
+opacity = "(1 - t)"
+
+[animation.effect]
+id = "concat.rgb-scanlines"
+params = { progress = "100 * t" }
