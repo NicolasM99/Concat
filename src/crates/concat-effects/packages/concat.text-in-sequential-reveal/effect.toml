@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-in-sequential-reveal"
+name = "Sequential Reveal"
+kind = "animation"
+category = "Text In"
+order = 38
+description = "The letters fade on one after another, left to right."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.glyphs]
+opacity = "window(t, 0.06 + 0.62 * i / max(n - 1, 1), 0.06 + 0.62 * i / max(n - 1, 1) + 0.12)"

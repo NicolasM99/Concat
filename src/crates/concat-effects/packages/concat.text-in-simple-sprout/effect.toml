@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.text-in-simple-sprout"
+name = "Simple Sprout"
+kind = "animation"
+category = "Text In"
+order = 39
+description = "Every letter sprouts from a speck where it stands."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.glyphs]
+sx = "(1 - pow(1 - window(t, 0.04, 0.27), 3))"
+sy = "(1 - pow(1 - window(t, 0.04, 0.27), 3))"
+opacity = "window(t, 0.02, 0.12)"

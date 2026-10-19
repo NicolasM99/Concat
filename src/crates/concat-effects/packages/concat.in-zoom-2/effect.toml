@@ -6,10 +6,12 @@ name = "Zoom 2"
 kind = "animation"
 category = "In"
 order = 3
-description = "The clip shrinks into place from larger than the frame."
+description = "The clip grows back from small, mirrored round itself, out of a zoom blur."
 
 [animation]
 slot = "in"
 duration = 0.5
-scale = "(1.6 + (1 - (1.6)) * (1 - pow(1 - t, 3)))"
-opacity = "min(1, t * 2)"
+
+[animation.effect]
+id = "concat.zoom-2-blur"
+params = { progress = "100 * t" }

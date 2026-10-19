@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.flash-cut"
+name = "Flash Cut"
+kind = "transition"
+category = "Light"
+order = 63
+description = "A hard cut at the middle of the transition, for a flash laid over it."
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"
+
+[card]
+progress = 0.75

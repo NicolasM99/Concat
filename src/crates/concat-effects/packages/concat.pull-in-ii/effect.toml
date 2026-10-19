@@ -1,0 +1,13 @@
+format = 2
+
+[effect]
+id = "concat.pull-in-ii"
+name = "Pull In II"
+kind = "transition"
+category = "Zoom"
+order = 61
+description = "The outgoing shot zooms in through a lens warp and a spin blur, the incoming one bulges into place under a shaking flash."
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

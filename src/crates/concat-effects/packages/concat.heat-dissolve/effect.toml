@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.heat-dissolve"
+name = "Heat Dissolve"
+kind = "transition"
+category = "Light"
+order = 64
+description = "The shots dissolve through a dim dip, for a heat-wave flash laid over it."
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"
+
+[card]
+progress = 0.5

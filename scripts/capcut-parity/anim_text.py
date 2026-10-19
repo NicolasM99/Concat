@@ -237,6 +237,16 @@ TEXT_LOOPS = [
 
 PACKAGES = TEXT_INS + TEXT_OUTS + TEXT_LOOPS
 
+# CapCut's own, where its package has been read: see anim_text_exact.py.
+from anim_text_exact import EXACT, MEASURED
+for at, spec in enumerate(PACKAGES):
+    if spec["slug"] in EXACT:
+        exact = dict(EXACT[spec["slug"]])
+        exact["order"] = spec["order"]
+        exact["name"] = spec["name"]
+        PACKAGES[at] = exact
+PACKAGES += MEASURED
+
 # Cards shown where the title is part way uncovered, not hidden or whole.
 for spec in PACKAGES:
     if spec["slug"] in ("text-in-wipe-down", "text-in-showing-down", "text-out-wipe-up", "text-in-wipe-up", "text-in-showing-up", "text-out-wipe-down"):

@@ -261,7 +261,7 @@ impl Titles {
                     continue;
                 }
             };
-            out.push(TitleClip {
+            let title = TitleClip {
                 clip_id: clip.id.clone(),
                 clip: ExportClip {
                     path: path.to_string_lossy().into_owned(),
@@ -313,7 +313,27 @@ impl Titles {
                 block: art.block,
                 offset: art.offset,
                 frame,
-            });
+            };
+            // A title whose In or Out moves its letters apart is painted a
+            // frame at a time over those windows; see `glyph_titles`. The
+            // monitor shows the still for now.
+            let pieces = match painting {
+                Painting::Title(text) if !live => {
+                    self.glyph_pieces(project, clip, text, &title.clip, width, height)
+                }
+                _ => Vec::new(),
+            };
+            if pieces.is_empty() {
+                out.push(title);
+            } else {
+                for piece in pieces {
+                    out.push(TitleClip {
+                        clip: piece,
+                        frame: None,
+                        ..title.clone()
+                    });
+                }
+            }
         }
         out
     }
@@ -430,6 +450,36 @@ impl Titles {
         );
         self.remember(key, art.clone());
         Ok((png, art))
+    }
+
+    /// The pieces a title whose letters move stands in as, or none for one
+    /// whose still does alone. A title that fails to paint keeps its still.
+    fn glyph_pieces(
+        &self,
+        project: &Project,
+        clip: &concat_project::model::Clip,
+        text: &TextStyle,
+        still: &ExportClip,
+        width: u32,
+        height: u32,
+    ) -> Vec<ExportClip> {
+        let title = title_style(text);
+        let mut fonts = self.fonts.lock().unwrap_or_else(|e| e.into_inner());
+        let fonts = self.fonts_for(project, &mut fonts);
+        let stage = crate::glyph_titles::Stage {
+            fonts,
+            dir: &self.dir,
+            key: key_of(project, Painting::Title(text), width, height),
+            width,
+            height,
+            rate: project.active().video.rate(),
+        };
+        crate::glyph_titles::pieces(&stage, clip, &title, &text.word_times, still).unwrap_or_else(
+            |error| {
+                log::warn!("title {}: its letters' animation: {error}", clip.id);
+                Vec::new()
+            },
+        )
     }
 
     /// The faces, loaded once, with the project's own files added - each
@@ -583,6 +633,9 @@ fn title_style(style: &TextStyle) -> TitleStyle {
         line_height: style.line_height,
         max_width: style.max_width,
         max_height: style.max_height,
+        wrap_width: style.wrap_width,
+        background_lines: style.background_lines,
+        snug_lines: style.snug_lines,
         tracking: style.tracking,
     }
 }

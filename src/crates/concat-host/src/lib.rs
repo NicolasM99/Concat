@@ -28,6 +28,7 @@ pub mod cutout;
 pub mod dirs;
 pub mod enhance;
 pub mod export;
+mod glyph_titles;
 pub mod jobs;
 pub mod lock;
 pub mod logs;

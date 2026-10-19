@@ -78,6 +78,8 @@ def manifest(p):
             out += ["", "[animation.effect]", f"id = {toml_value(lid)}"]
             if knobs:
                 out.append("params = { " + ", ".join(f"{k} = {toml_value(v)}" for k, v in knobs.items()) + " }")
+        if a.get("glyphs"):
+            out += ["", "[animation.glyphs]"] + [f"{k} = {toml_value(v)}" for k, v in a["glyphs"].items()]
         if p.get("card"):
             out += ["", "[card]"] + [f"{k} = {toml_value(v)}" for k, v in p["card"].items()]
         return HEADER + "\n".join(out) + "\n"

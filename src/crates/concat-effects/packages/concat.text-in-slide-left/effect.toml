@@ -6,11 +6,13 @@ name = "Slide Left"
 kind = "animation"
 category = "Text In"
 order = 60
-description = "The title slides in from the right."
+description = "The title slides in from the right, a third further than its width, fading up."
 
 [animation]
 slot = "in"
 duration = 0.5
 text = true
-x = "(0.4 * (1 - (1 - pow(1 - t, 3))))"
-opacity = "t"
+
+[animation.glyphs]
+block_dx = "1.33 * w * (1 - (1 - pow(1 - t, 2)))"
+block_opacity = "(1 - pow(1 - t, 2))"

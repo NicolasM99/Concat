@@ -1,0 +1,13 @@
+format = 2
+
+[effect]
+id = "concat.blurry-bubbles"
+name = "Blurry Bubbles"
+kind = "transition"
+category = "Blur"
+order = 62
+description = "Both shots melt into a bokeh of soft bubbles, crossing over in the middle."
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

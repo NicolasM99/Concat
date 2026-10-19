@@ -6,16 +6,16 @@ name = "Showing Down"
 kind = "animation"
 category = "Text In"
 order = 56
-description = "The title is uncovered downward."
+description = "The title slides down out of its own top edge into place."
 
 [animation]
 slot = "in"
 duration = 0.5
 text = true
 
-[animation.effect]
-id = "concat.reveal-wipe"
-params = { progress = "100 * t", direction = "2", softness = "0" }
+[animation.glyphs]
+block_dy = "-(1 - bezier(t, 0, 0, 0.5, 1)) * h"
+clip_top = true
 
 [card]
 progress = 0.5

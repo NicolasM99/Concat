@@ -1603,6 +1603,23 @@ pub struct TextStyle {
     /// can be a band of a fixed size whatever is written on it.
     /// https://github.com/jub0t/Concat/issues/119
     pub max_height: f64,
+    /// Where lines wrap, as a fraction of frame width, with the box still
+    /// hugging the lines; zero - the default - for no limit. A CapCut
+    /// caption wraps so and is as wide as its longest line, where
+    /// `max_width` makes the box that wide.
+    pub wrap_width: f64,
+    /// The background behind each line on its own, as wide as that line,
+    /// rather than one box behind them all: a caption's highlight.
+    pub background_lines: bool,
+    /// Lines set as CapCut sets them: in the face's typographic box, grown
+    /// to hold an accent that rises past it, stacked edge to edge with the
+    /// background's air round each line. Off is Concat's own fixed pitch.
+    pub snug_lines: bool,
+    /// When each word of the content is spoken, as `[start, end]` seconds
+    /// from the clip's start, in the content's order: a caption's word
+    /// timings, which its word-by-word animations follow. Empty for none.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub word_times: Vec<[f64; 2]>,
 }
 
 impl TextStyle {
@@ -1622,6 +1639,7 @@ impl TextStyle {
         self.tracking = finite(self.tracking, base.tracking);
         self.max_width = finite(self.max_width, base.max_width).max(0.0);
         self.max_height = finite(self.max_height, base.max_height).max(0.0);
+        self.wrap_width = finite(self.wrap_width, base.wrap_width).max(0.0);
         self.background_radius = finite(self.background_radius, base.background_radius).max(0.0);
         self.background_padding_x =
             finite(self.background_padding_x, base.background_padding_x).max(0.0);
@@ -1653,6 +1671,10 @@ impl Default for TextStyle {
             tracking: 0.0,
             max_width: 0.0,
             max_height: 0.0,
+            wrap_width: 0.0,
+            background_lines: false,
+            snug_lines: false,
+            word_times: Vec::new(),
         }
     }
 }

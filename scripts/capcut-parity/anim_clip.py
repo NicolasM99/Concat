@@ -10,9 +10,11 @@ def swing_in(slug, name, order, px, py, deg):
 INS = [
     A("in-fade-in", "Fade In", "in", 1, "The clip fades up from nothing.", opacity="t"),
     A("in-zoom-1", "Zoom 1", "in", 2, "The clip grows into place from half its size.", scale=lin(0.5, 1), opacity="min(1, t * 2)"),
-    A("in-zoom-2", "Zoom 2", "in", 3, "The clip shrinks into place from larger than the frame.", scale=lin(1.6, 1), opacity="min(1, t * 2)"),
+    # CapCut's own, from its package: see fx_reveal.py's zoom-2-blur.
+    A("in-zoom-2", "Zoom 2", "in", 3, "The clip grows back from small, mirrored round itself, out of a zoom blur.", look=("concat.zoom-2-blur", {"progress": "100 * t"})),
     A("in-zoom-in", "Zoom In", "in", 4, "The clip zooms in from a speck.", scale=lin(0.05, 1)),
-    A("in-zoom-out", "Zoom Out", "in", 5, "The clip zooms out to its place from very close.", scale=lin(3, 1), opacity="min(1, t * 3)"),
+    # CapCut's own, from its package: linear 150 % to 100 %, opaque by 20 %.
+    A("in-zoom-out", "Zoom Out", "in", 5, "The clip zooms out to its place from closer, fading up.", scale="(1.5 - 0.5 * t)", opacity="min(1, t / 0.2)"),
     A("in-mini-zoom", "Mini Zoom", "in", 6, "The clip settles in with a small zoom and a fade.", scale=lin(1.1, 1), opacity="t"),
     A("in-rock-vertically", "Rock Vertically", "in", 7, "The clip rocks up and down as it arrives.", y=decay(0.08, 25), opacity="min(1, t * 3)"),
     A("in-rock-horizontally", "Rock Horizontally", "in", 8, "The clip rocks side to side as it arrives.", x=decay(0.08, 25), opacity="min(1, t * 3)"),

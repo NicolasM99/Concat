@@ -104,6 +104,23 @@ pub struct TitleStyle {
     /// own. With a height the block is a box that tall, at least, and the
     /// words sit centred in it.
     pub max_height: f64,
+    /// Where lines wrap, as a fraction of frame width, with the block
+    /// still hugging the lines it wraps to; zero for no limit. Unlike
+    /// `max_width` it sizes nothing: a caption that wraps at four fifths
+    /// of the frame is as wide as its longest line. Ignored under a
+    /// `max_width`, which wraps at its own.
+    pub wrap_width: f64,
+    /// The plate behind each line on its own - as wide as that line and
+    /// its air, as tall as the line's box and its air - rather than one box
+    /// behind the block. How a caption's highlight sits.
+    pub background_lines: bool,
+    /// Lines set the way CapCut sets them: each in the face's typographic
+    /// box (its `OS/2` ascender and descender), grown to hold any ink that
+    /// rises or falls past it - an accent on a capital - and stacked edge
+    /// to edge with `line_height - 1` ems between, the plate's air above
+    /// and below each line rather than the block. Off, lines sit at a
+    /// fixed pitch from the font's own ascender.
+    pub snug_lines: bool,
 }
 
 /// One word's box in canvas pixels, top-left origin, in reading order
@@ -435,6 +452,17 @@ impl Fonts {
     pub fn families(&self) -> Vec<String> {
         family_names(&self.db)
     }
+}
+
+/// The height of a face's line box - its ascender to its descender - in
+/// ems, from the font file at `path`: what a line of it is set in, and
+/// what a caption's per-line plate is as tall as. `None` for a file that
+/// is not a font.
+pub fn line_box_of(path: &std::path::Path) -> Option<f64> {
+    let data = std::fs::read(path).ok()?;
+    let face = ttf_parser::Face::parse(&data, 0).ok()?;
+    let upem = f64::from(face.units_per_em());
+    Some((f64::from(face.ascender()) - f64::from(face.descender())) / upem)
 }
 
 /// The families a font file carries - one for a face, several for a
@@ -817,6 +845,20 @@ struct Line {
     marks: Vec<Mark>,
     width: f32,
     words: Vec<(f32, f32)>,
+    /// Each outlined glyph on its own, for a title whose letters move
+    /// apart; see [`render_frame_posed`].
+    glyphs: Vec<GlyphOutline>,
+    /// Where the line's paragraph starts in the content, in bytes.
+    para_offset: usize,
+}
+
+/// One glyph's outline in its line's pen space, the byte of its cluster
+/// in the paragraph, and the span it advances over.
+struct GlyphOutline {
+    cluster: usize,
+    path: Path,
+    left: f32,
+    right: f32,
 }
 
 /// A glyph that colours itself, in pen space at its line's origin: an
@@ -978,11 +1020,14 @@ impl Setter<'_> {
                 marks: Vec::new(),
                 width: 0.0,
                 words: Vec::new(),
+                glyphs: Vec::new(),
+                para_offset: 0,
             };
         }
         let (levels, runs) = para.bidi.visual_runs(range.clone());
         let mut builder = PathBuilder::new();
         let mut marks: Vec<Mark> = Vec::new();
+        let mut glyphs: Vec<GlyphOutline> = Vec::new();
         let mut pen = 0.0_f32;
         // Each glyph's cluster, as a byte into the paragraph, and the span
         // it advances over.
@@ -1018,6 +1063,7 @@ impl Setter<'_> {
                     .iter()
                     .zip(shaped.glyph_positions().iter())
                 {
+                    let advance = position.x_advance as f32 * scale;
                     if outline {
                         let glyph = ttf_parser::GlyphId(info.glyph_id as u16);
                         let x = pen + position.x_offset as f32 * scale;
@@ -1037,9 +1083,26 @@ impl Setter<'_> {
                                 y,
                             };
                             face.outline_glyph(glyph, &mut outliner);
+                            let mut own = PathBuilder::new();
+                            face.outline_glyph(
+                                glyph,
+                                &mut Outliner {
+                                    builder: &mut own,
+                                    scale,
+                                    x,
+                                    y,
+                                },
+                            );
+                            if let Some(path) = own.finish() {
+                                glyphs.push(GlyphOutline {
+                                    cluster: piece.start + info.cluster as usize,
+                                    path,
+                                    left: pen,
+                                    right: pen + advance,
+                                });
+                            }
                         }
                     }
-                    let advance = position.x_advance as f32 * scale;
                     spans.push((piece.start + info.cluster as usize, pen, pen + advance));
                     pen += advance + self.tracking;
                 }
@@ -1071,6 +1134,8 @@ impl Setter<'_> {
             marks,
             width,
             words,
+            glyphs,
+            para_offset: 0,
         }
     }
 
@@ -1239,7 +1304,7 @@ pub fn render(
     width: u32,
     height: u32,
 ) -> Result<Rendered, Error> {
-    let (canvas, block, words) = paint(fonts, style, width, height)?;
+    let (canvas, block, words) = paint(fonts, style, width, height, None)?;
     let png = canvas
         .encode_png()
         .map_err(|error| Error::Encode(error.to_string()))?;
@@ -1265,7 +1330,7 @@ pub fn render_frame(
     width: u32,
     height: u32,
 ) -> Result<RenderedFrame, Error> {
-    let (canvas, block, words) = paint(fonts, style, width, height)?;
+    let (canvas, block, words) = paint(fonts, style, width, height, None)?;
     Ok(RenderedFrame {
         rgba: straight_rgba(&canvas),
         width,
@@ -1278,6 +1343,298 @@ pub fn render_frame(
     })
 }
 
+/// Where one glyph is drawn on one frame of a title's animation, relative to
+/// where the layout put it. Lengths are in ems of the title's size, so a
+/// pose means the same at any resolution.
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub struct GlyphPose {
+    /// Ems to the right.
+    pub dx: f32,
+    /// Ems down.
+    pub dy: f32,
+    /// A factor on the glyph's width, about its centre.
+    pub sx: f32,
+    /// A factor on its height, about its centre.
+    pub sy: f32,
+    /// Degrees clockwise about its centre.
+    pub rotation: f32,
+    /// A factor on its opacity, outline and fill alike.
+    pub opacity: f32,
+    /// A blur over the glyph, its radius in ems.
+    pub blur: f32,
+}
+
+impl GlyphPose {
+    /// Where the layout put it.
+    pub const REST: GlyphPose = GlyphPose {
+        dx: 0.0,
+        dy: 0.0,
+        sx: 1.0,
+        sy: 1.0,
+        rotation: 0.0,
+        opacity: 1.0,
+        blur: 0.0,
+    };
+}
+
+/// What happens to the whole block - words and plate - on one frame of a
+/// title's animation.
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub struct BlockPose {
+    /// Ems to the right.
+    pub dx: f32,
+    /// Ems down.
+    pub dy: f32,
+    /// A factor on its size, about its centre.
+    pub scale: f32,
+    /// A factor on its opacity.
+    pub opacity: f32,
+    /// A blur over all of it, its radius in ems.
+    pub blur: f32,
+    /// Whether nothing shows above the top edge of the block where the
+    /// layout put it: words sliding down into place appear out of that
+    /// edge rather than above it.
+    pub clip_top: bool,
+}
+
+impl BlockPose {
+    /// Where the layout put it.
+    pub const REST: BlockPose = BlockPose {
+        dx: 0.0,
+        dy: 0.0,
+        scale: 1.0,
+        opacity: 1.0,
+        blur: 0.0,
+        clip_top: false,
+    };
+}
+
+/// Which glyph a pose is asked for: its character's place among the
+/// title's characters - spaces and line breaks counted, as CapCut counts
+/// them - and the line and word it is in.
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub struct GlyphSlot {
+    /// The character's index in the content, from 0.
+    pub index: usize,
+    /// How many characters the content has.
+    pub count: usize,
+    /// The laid-out line it is on, from 0.
+    pub line: usize,
+    /// How many lines the title is laid out on.
+    pub lines: usize,
+    /// The word it is in, from 0.
+    pub word: usize,
+    /// How many words the content has.
+    pub words: usize,
+    /// Its place on its line, from 0, and how many characters the line
+    /// holds: CapCut staggers some animations line by line.
+    pub in_line: usize,
+    /// How many glyphs its line holds.
+    pub line_glyphs: usize,
+    /// How far across the block its centre is, 0 at the left edge and 1 at
+    /// the right.
+    pub across: f32,
+    /// Its centre from the block's centre, in ems, right and down: what an
+    /// animation that grows the words about the block's middle moves.
+    pub from_centre: (f32, f32),
+}
+
+/// One frame of a title's animation: the block's pose and each glyph's.
+pub trait Choreography {
+    /// The whole block's, given its size in ems - words and plate - for a
+    /// slide that travels a block's width.
+    fn block(&self, width: f32, height: f32) -> BlockPose;
+    /// One glyph's.
+    fn glyph(&self, slot: &GlyphSlot) -> GlyphPose;
+}
+
+/// [`render_frame`] for one frame of an animation that moves a title's
+/// letters apart: each glyph drawn where `choreography` says, the block and
+/// its plate under the block's pose. The layout - lines, wraps, the plate -
+/// is the still title's, so the letters settle exactly onto it.
+pub fn render_frame_posed(
+    fonts: &Fonts,
+    style: &TitleStyle,
+    width: u32,
+    height: u32,
+    choreography: &dyn Choreography,
+) -> Result<RenderedFrame, Error> {
+    let (canvas, block, words) = paint(fonts, style, width, height, Some(choreography))?;
+    Ok(RenderedFrame {
+        rgba: straight_rgba(&canvas),
+        width,
+        height,
+        block_width: block.0,
+        block_height: block.1,
+        block_dx: block.2,
+        block_dy: block.3,
+        words,
+    })
+}
+
+/// What drawing a posed frame needs of the still title's layout.
+struct Posed<'a> {
+    style: &'a TitleStyle,
+    em: f32,
+    frame_h: f32,
+    ascent: f32,
+    descent: f32,
+    fill: Color,
+    left: f32,
+    top: f32,
+    box_w: f32,
+    drops: &'a [f32],
+    block: BlockPose,
+    block_moved: Transform,
+    block_top: f32,
+}
+
+impl Posed<'_> {
+    fn paint(&self, canvas: &mut Pixmap, lines: &[Line], choreography: &dyn Choreography) {
+        let content = &self.style.content;
+        // Each byte's character index, and each character's word.
+        let mut char_of = vec![0usize; content.len() + 1];
+        let mut word_of = Vec::new();
+        let (mut words, mut in_word) = (0usize, false);
+        for (index, (at, ch)) in content.char_indices().enumerate() {
+            char_of[at..at + ch.len_utf8()].fill(index);
+            let space = ch.is_whitespace();
+            if !space && !in_word {
+                words += 1;
+            }
+            in_word = !space;
+            word_of.push(words.saturating_sub(1));
+        }
+        let count = content.chars().count();
+        let stroke_w = self.style.stroke_width.max(0.0) as f32 * self.frame_h;
+        let edge = colour(&self.style.stroke_color).filter(|_| stroke_w > 0.0);
+        let mid = (self.ascent - self.descent) / 2.0;
+        for (row, line) in lines.iter().enumerate() {
+            let indent = match self.style.align {
+                Align::Left => 0.0,
+                Align::Center => (self.box_w - line.width) / 2.0,
+                Align::Right => self.box_w - line.width,
+            };
+            let origin_x = self.left + indent;
+            let baseline = self.top + self.drops[row];
+            for (in_line, glyph) in line.glyphs.iter().enumerate() {
+                let byte = (line.para_offset + glyph.cluster).min(content.len());
+                let index = char_of[byte];
+                let slot = GlyphSlot {
+                    index,
+                    count,
+                    line: row,
+                    lines: lines.len(),
+                    word: word_of.get(index).copied().unwrap_or(0),
+                    words: words.max(1),
+                    in_line,
+                    line_glyphs: line.glyphs.len(),
+                    across: ((origin_x + (glyph.left + glyph.right) / 2.0 - self.left)
+                        / self.box_w.max(1.0))
+                    .clamp(0.0, 1.0),
+                    from_centre: (
+                        (origin_x + (glyph.left + glyph.right) / 2.0
+                            - (self.left + self.box_w / 2.0))
+                            / self.em,
+                        (baseline - mid - self.frame_h / 2.0) / self.em,
+                    ),
+                };
+                let pose = choreography.glyph(&slot);
+                let opacity = (pose.opacity * self.block.opacity).clamp(0.0, 1.0);
+                if opacity <= 0.0 || pose.sx == 0.0 || pose.sy == 0.0 {
+                    continue;
+                }
+                let pivot = (origin_x + (glyph.left + glyph.right) / 2.0, baseline - mid);
+                let placed = Transform::from_translate(origin_x, baseline)
+                    .post_translate(-pivot.0, -pivot.1)
+                    .post_scale(pose.sx, pose.sy)
+                    .post_rotate(pose.rotation)
+                    .post_translate(pivot.0 + pose.dx * self.em, pivot.1 + pose.dy * self.em)
+                    .post_concat(self.block_moved);
+                let look = GlyphLook {
+                    edge,
+                    stroke_w,
+                    opacity,
+                    blur_em: pose.blur,
+                };
+                self.glyph(canvas, &glyph.path, placed, look);
+            }
+        }
+        if self.block.blur > 0.0 {
+            blur(
+                canvas,
+                (self.block.blur * self.em).round().max(0.0) as usize,
+            );
+        }
+        if self.block.clip_top {
+            let rows = (self.block_top.floor().max(0.0) as usize).min(canvas.height() as usize);
+            let stride = canvas.width() as usize * 4;
+            canvas.data_mut()[..rows * stride].fill(0);
+        }
+    }
+
+    /// One glyph, outline under fill, on a layer its own size so a fade or
+    /// a blur takes the two together.
+    fn glyph(&self, canvas: &mut Pixmap, path: &Path, placed: Transform, look: GlyphLook) {
+        let Some(moved) = path.clone().transform(placed) else {
+            return;
+        };
+        let bounds = moved.bounds();
+        let scale = (placed.sx * placed.sx + placed.ky * placed.ky)
+            .sqrt()
+            .max(1e-3);
+        let blur_px = (look.blur_em * self.em).max(0.0);
+        let margin = (look.stroke_w * 2.0 * scale + blur_px * 3.0 + 2.0).ceil();
+        let x0 = (bounds.left() - margin).floor();
+        let y0 = (bounds.top() - margin).floor();
+        let w = (bounds.width() + 2.0 * margin).ceil().max(1.0) as u32;
+        let h = (bounds.height() + 2.0 * margin).ceil().max(1.0) as u32;
+        let Some(mut layer) = Pixmap::new(w, h) else {
+            return;
+        };
+        let local = placed.post_translate(-x0, -y0);
+        let mut paint = Paint {
+            anti_alias: true,
+            ..Paint::default()
+        };
+        if let Some(edge) = look.edge {
+            paint.set_color(edge);
+            let stroke = Stroke {
+                width: look.stroke_w * 2.0,
+                line_join: LineJoin::Round,
+                line_cap: LineCap::Round,
+                ..Stroke::default()
+            };
+            layer.stroke_path(path, &paint, &stroke, local, None);
+        }
+        paint.set_color(self.fill);
+        layer.fill_path(path, &paint, FillRule::Winding, local, None);
+        if blur_px >= 0.5 {
+            blur(&mut layer, blur_px.round() as usize);
+        }
+        canvas.draw_pixmap(
+            x0 as i32,
+            y0 as i32,
+            layer.as_ref(),
+            &PixmapPaint {
+                opacity: look.opacity,
+                ..PixmapPaint::default()
+            },
+            Transform::identity(),
+            None,
+        );
+    }
+}
+
+/// How one posed glyph is painted: its outline, its fade and its blur.
+#[derive(Clone, Copy)]
+struct GlyphLook {
+    edge: Option<Color>,
+    stroke_w: f32,
+    opacity: f32,
+    blur_em: f32,
+}
+
 /// A painted block: (width, height, dx, dy), on [`Rendered`]'s terms.
 type Block = (u32, u32, i32, i32);
 
@@ -1288,6 +1645,7 @@ fn paint(
     style: &TitleStyle,
     width: u32,
     height: u32,
+    pose: Option<&dyn Choreography>,
 ) -> Result<(Pixmap, Block, Vec<WordRect>), Error> {
     let mut canvas = Pixmap::new(width, height).ok_or(Error::Canvas(width, height))?;
     let frame_h = height as f32;
@@ -1313,8 +1671,16 @@ fn paint(
     // pitch and the block should not jump because one character came from
     // elsewhere.
     let upem = own.units_per_em() as f32;
-    let ascent = own.ascender() as f32 / upem * em;
-    let descent = -(own.descender() as f32) / upem * em;
+    let (rise, fall) = if style.snug_lines {
+        (
+            own.typographic_ascender().unwrap_or(own.ascender()),
+            own.typographic_descender().unwrap_or(own.descender()),
+        )
+    } else {
+        (own.ascender(), own.descender())
+    };
+    let ascent = rise as f32 / upem * em;
+    let descent = -(fall as f32) / upem * em;
 
     // The box's limits, where the style sets them; zero is a box the words
     // size.
@@ -1335,6 +1701,10 @@ fn paint(
     } else {
         0.0
     };
+    // Snug lines carry the plate's air above and below each of them, so the
+    // block takes none of its own.
+    let line_air = if style.snug_lines { pad_y } else { 0.0 };
+    let pad_y = if style.snug_lines { 0.0 } else { pad_y };
     // Where a line may run to. A sized box wraps at its own width. Without
     // one the words would be set on one line however long, and the canvas
     // is the frame: whatever ran past its edge was never drawn, so a long
@@ -1343,6 +1713,8 @@ fn paint(
     // centre and growing one way - less the plate's air on either side.
     let wrap_w = if max_w > 0.0 {
         max_w
+    } else if style.wrap_width > 0.0 {
+        ((style.wrap_width as f32) * width as f32 - 2.0 * pad_x).max(em)
     } else {
         let room = match style.align {
             Align::Center => width as f32,
@@ -1371,12 +1743,51 @@ fn paint(
                 bidi: ParagraphBidiInfo::new(text, None),
                 face_of,
             };
-            setter.wrap(&para, wrap_w)
+            let offset = text.as_ptr() as usize - style.content.as_ptr() as usize;
+            let mut lines = setter.wrap(&para, wrap_w);
+            for line in &mut lines {
+                line.para_offset = offset;
+            }
+            lines
         })
         .collect();
     let rows = lines.len().max(1);
     let words_w = lines.iter().map(|line| line.width).fold(0.0, f32::max);
-    let words_h = (rows as f32 - 1.0) * pitch + ascent + descent;
+    // How far each line's box rises above its baseline and falls below
+    // it, and where each baseline sits under the block's top edge.
+    let extents: Vec<(f32, f32)> = lines
+        .iter()
+        .map(|line| {
+            if !style.snug_lines {
+                return (ascent, descent);
+            }
+            let (ink_up, ink_down) = line
+                .path
+                .as_ref()
+                .map(|path| (-path.bounds().top(), path.bounds().bottom()))
+                .unwrap_or((0.0, 0.0));
+            (
+                ascent.max(ink_up) + line_air,
+                descent.max(ink_down) + line_air,
+            )
+        })
+        .collect();
+    let gap = (style.line_height as f32 - 1.0) * em;
+    let mut drops = Vec::with_capacity(lines.len());
+    let mut edge = 0.0_f32;
+    for (row, &(up, down)) in extents.iter().enumerate() {
+        if style.snug_lines {
+            drops.push(edge + up);
+            edge += up + down + gap;
+        } else {
+            drops.push(ascent + row as f32 * pitch);
+        }
+    }
+    let words_h = if style.snug_lines {
+        (edge - gap).max(0.0)
+    } else {
+        (rows as f32 - 1.0) * pitch + ascent + descent
+    };
     if words_w <= 0.0 || lines.is_empty() {
         // Nothing to paint: an empty, valid canvas.
         return Ok((canvas, (0, 0, 0, 0), Vec::new()));
@@ -1429,7 +1840,7 @@ fn paint(
             Align::Center => (box_w - line.width) / 2.0,
             Align::Right => box_w - line.width,
         };
-        let baseline = top + ascent + row as f32 * pitch;
+        let baseline = top + drops[row];
         if let Some(path) = &line.path {
             let placed = path
                 .clone()
@@ -1454,23 +1865,85 @@ fn paint(
         ..Paint::default()
     };
 
-    // The plate, first and under everything: the whole box.
-    if let Some(fill) = plate
-        && let Some(rect) = Rect::from_xywh(outer_left, (frame_h - outer_h) / 2.0, outer_w, outer_h)
-    {
-        paint.set_color(fill);
-        let radius = (style.background_radius.max(0.0) as f32) * frame_h;
-        let mut plate_path = PathBuilder::new();
-        push_rounded_rect(&mut plate_path, rect, radius);
-        if let Some(plate_path) = plate_path.finish() {
-            canvas.fill_path(
-                &plate_path,
-                &paint,
-                FillRule::Winding,
-                Transform::identity(),
-                None,
-            );
+    // The plate, first and under everything: the whole box, or a box per
+    // line round that line's words and the face's line box.
+    let mut plate_path = PathBuilder::new();
+    let radius = (style.background_radius.max(0.0) as f32) * frame_h;
+    if style.background_lines {
+        for (row, line) in lines.iter().enumerate() {
+            if line.width <= 0.0 {
+                continue;
+            }
+            let indent = match style.align {
+                Align::Left => 0.0,
+                Align::Center => (box_w - line.width) / 2.0,
+                Align::Right => box_w - line.width,
+            };
+            let baseline = top + drops[row];
+            let (up, down) = extents[row];
+            let (up, down) = if style.snug_lines {
+                (up, down)
+            } else {
+                (up + pad_y, down + pad_y)
+            };
+            if let Some(rect) = Rect::from_xywh(
+                left + indent - pad_x,
+                baseline - up,
+                line.width + 2.0 * pad_x,
+                up + down,
+            ) {
+                push_rounded_rect(&mut plate_path, rect, radius);
+            }
         }
+    } else if let Some(rect) =
+        Rect::from_xywh(outer_left, (frame_h - outer_h) / 2.0, outer_w, outer_h)
+    {
+        push_rounded_rect(&mut plate_path, rect, radius);
+    }
+    // A block moved, grown or faded for a frame of an animation carries
+    // its plate along; see `render_frame_posed`.
+    let block_pose = pose
+        .map(|pose| pose.block(outer_w / em, outer_h / em))
+        .unwrap_or(BlockPose::REST);
+    let block_centre = (outer_left + outer_w / 2.0, frame_h / 2.0);
+    let block_moved = Transform::from_translate(-block_centre.0, -block_centre.1)
+        .post_scale(block_pose.scale, block_pose.scale)
+        .post_translate(
+            block_centre.0 + block_pose.dx * em,
+            block_centre.1 + block_pose.dy * em,
+        );
+    if let Some(fill) = plate {
+        let faded = fill.alpha() * block_pose.opacity.clamp(0.0, 1.0);
+        let mut fill = fill;
+        fill.set_alpha(faded);
+        paint.set_color(fill);
+        if let Some(plate_path) = plate_path.finish() {
+            canvas.fill_path(&plate_path, &paint, FillRule::Winding, block_moved, None);
+        }
+    }
+
+    if let Some(choreography) = pose {
+        let posed = Posed {
+            style,
+            em,
+            frame_h,
+            ascent,
+            descent,
+            fill,
+            left,
+            top,
+            box_w,
+            drops: &drops,
+            block: block_pose,
+            block_moved,
+            block_top: (frame_h - outer_h) / 2.0,
+        };
+        posed.paint(&mut canvas, &lines, choreography);
+        return Ok((
+            canvas,
+            (outer_w.round() as u32, outer_h.round() as u32, block_dx, 0),
+            word_rects,
+        ));
     }
 
     // The shadow: the words again, offset down and right, black, blurred on
@@ -1540,7 +2013,7 @@ fn paint(
             Align::Center => (box_w - line.width) / 2.0,
             Align::Right => box_w - line.width,
         };
-        let baseline = top + ascent + row as f32 * pitch;
+        let baseline = top + drops[row];
         let placed = Transform::from_translate(left + indent, baseline);
         for mark in &line.marks {
             match mark {
@@ -1926,6 +2399,9 @@ mod tests {
             tracking: 0.0,
             max_width: 0.0,
             max_height: 0.0,
+            wrap_width: 0.0,
+            background_lines: false,
+            snug_lines: false,
         }
     }
 

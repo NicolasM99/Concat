@@ -21,6 +21,37 @@ opened. `concat <folder>` does the same from a terminal, and the API's `project.
   adjustments and voice cleanup as the packages above, by CapCut's ids, then by the words
   of the item's name in English, Spanish, Portuguese, French, German or Italian.
 
+Titles are set as CapCut sets them, measured against CapCut's own export: an em of 6.285 px
+a unit of CapCut's size on a canvas whose shorter side is 1080, the outline that far past the
+glyph as its width says in ems, lines in the face's typographic box grown to hold an accent,
+and the background behind each line with CapCut's width and height dials as air in ems. A
+caption's size is its style's whatever scale its segment carries, as in CapCut.
+
+### Ported from CapCut's own packages
+
+CapCut downloads each item it uses into `Cache/effect/<resource id>/`: Lua, keyframe tables and
+GLSL. These were read and rewritten as Concat packages (`scripts/capcut-parity/tr_exact*.py`,
+`anim_text_exact.py`, `fx_reveal.py`'s `zoom-2-blur`), and checked frame by frame against
+CapCut's export of the same projects:
+
+| CapCut (Spanish UI) | Concat | Fidelity |
+|---|---|---|
+| Abajo, Arriba, Derecha, Izquierda | `slide-mirror-down`/`up`/`right`/`left` | the package's passes in one |
+| Acercar II | `pull-in-ii` | the package's four passes in one, every AE curve |
+| Burbujas desenfocadas | `blurry-bubbles` | the bokeh exact; its pre-blur a five-tap cross |
+| Destello II | `flash-cut` + the package's 70 frames over the cut in Screen | exact |
+| Flash de ola de calor | `heat-dissolve` + the package's `light3.mp4` over the cut in Screen | exact, ±1 frame |
+| Zoom 2, Alejamiento, Desaparición progresiva | `in-zoom-2`, `in-zoom-out`, `out-fade-out` | exact |
+| Volteo, Concentración, Rebote hacia dentro, Deslizar hacia la izquierda / arriba, Aparición hacia abajo | `text-in-flipping`, `-concentrate`, `-bounce-in`, `-slide-left`, `-slide-up`, `-showing-down` | exact, letter by letter where CapCut's is |
+| Ondulación | `text-in-flutter` | exact but for its noise ripple |
+| Alejamiento central (caption) | `text-caption-zoom-out` | exact, on the caption's word timings |
+| Viaje escolar, Revelación secuencial, Germinación sencilla, Despliegue rápido, Entrada básica | `text-in-school-trip`, `-sequential-reveal`, `-simple-sprout`, `-quick-unfold`, `-basic-in` | measured off CapCut's render: their packages are encrypted |
+
+A title animation that moves letters apart (`[animation.glyphs]`) is painted a frame at a time
+over its window when the edit is exported; the editor's monitor shows the still title for now.
+The flash footage is copied from CapCut's cache into the project's `capcut/` folder, since CapCut
+clears its cache; open the project in CapCut once if the import says the flash is missing.
+
 Whatever had to be approximated or left out is listed in `capcut-import.txt` in the new
 project's folder. Recent CapCut releases may write the draft encrypted; such a draft is
 refused with a reason. The id table is `src/crates/concat-host/src/capcut/ids.rs`, written

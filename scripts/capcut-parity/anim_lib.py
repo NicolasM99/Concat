@@ -29,7 +29,7 @@ def mirror(expr):
 
 KEYS = ("scale", "x", "y", "rotation", "opacity", "sx", "sy")
 
-def A(slug, name, slot, order, description, duration=0.5, text=False, look=None, category=None, card=None, **motion):
+def A(slug, name, slot, order, description, duration=0.5, text=False, look=None, category=None, card=None, glyphs=None, **motion):
     cat = category or {"in": "In", "out": "Out", "combo": "Combo", "loop": "Loop"}[slot]
     if text:
         cat = "Text " + cat
@@ -41,6 +41,8 @@ def A(slug, name, slot, order, description, duration=0.5, text=False, look=None,
             a[k] = motion[k]
     if look:
         a["look"] = look
+    if glyphs:
+        a["glyphs"] = glyphs
     spec = {"slug": slug, "name": name, "kind": "animation", "category": cat, "order": order,
             "description": description, "animation": a, "params": []}
     if card:

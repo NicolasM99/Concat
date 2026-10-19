@@ -6,11 +6,13 @@ name = "Slide Up"
 kind = "animation"
 category = "Text In"
 order = 49
-description = "The title slides up into place."
+description = "The title slides up into place from a third further than its height, fading up."
 
 [animation]
 slot = "in"
 duration = 0.5
 text = true
-y = "(0.3 * (1 - (1 - pow(1 - t, 3))))"
-opacity = "t"
+
+[animation.glyphs]
+block_dy = "1.33 * h * (1 - (1 - pow(1 - t, 2)))"
+block_opacity = "(1 - pow(1 - t, 2))"

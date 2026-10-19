@@ -1,0 +1,13 @@
+format = 2
+
+[effect]
+id = "concat.slide-mirror-down"
+name = "Slide Mirror Down"
+kind = "transition"
+category = "Slide"
+order = 60
+description = "The shots slide down with mirror images filling the gap, blurred along the motion, cutting at the middle."
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

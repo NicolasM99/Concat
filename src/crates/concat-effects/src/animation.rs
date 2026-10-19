@@ -36,6 +36,38 @@
 //! The motion rides on top of the clip's placement and its keys - a scale
 //! is a factor, an offset an addition - so the same animation means the same
 //! thing on any clip. The document stores only `{ id, duration }` per slot.
+//!
+//! A title's animation may move its letters apart instead, with a
+//! `[animation.glyphs]` table: each glyph's pose as expressions of `t` and of
+//! which glyph it is, and the whole block's - words and plate together:
+//!
+//! ```toml
+//! [animation.glyphs]
+//! # per glyph: i (0..n-1, spaces and line breaks counted), n, line, lines,
+//! # word, words, li and ln (its place on its line, and the line's length),
+//! # u (how far across the block it is, 0..1), gx and gy (its centre from
+//! # the block's, ems right and down), ws and we (when its word is spoken,
+//! # seconds into the animation), d (the animation's seconds), and w and h,
+//! # the block's size in ems
+//! dx = "0"               # ems right
+//! dy = "0"               # ems down
+//! sx = "window(t, i / n, i / n + 0.5)"
+//! sy = "1"
+//! rotation = "0"         # degrees clockwise, about the glyph's centre
+//! opacity = "1"
+//! blur = "0"             # ems
+//! # the block: n, lines, words, w and h as above
+//! block_dx = "0"
+//! block_dy = "0"
+//! block_scale = "1"
+//! block_opacity = "1"
+//! block_blur = "0"
+//! clip_top = 0           # 1: nothing shows above the block's resting top
+//! ```
+//!
+//! `bezier(x, x1, y1, x2, y2)` eases as After Effects does and
+//! `window(t, a, b)` is how far `t` is through `a..b`: the two CapCut's own
+//! keyframe tables are written in.
 
 use std::collections::BTreeMap;
 
@@ -114,7 +146,157 @@ pub struct AnimationSpec {
     /// A look ridden over the same window.
     #[serde(default)]
     pub effect: Option<LookSpec>,
+    /// A title's letters moved apart: see the module docs.
+    #[serde(default)]
+    pub glyphs: Option<GlyphsSpec>,
 }
+
+/// The `[animation.glyphs]` table: each glyph's pose and the block's, as
+/// expressions.
+#[derive(Deserialize, Clone, PartialEq, Debug, Default)]
+#[serde(deny_unknown_fields)]
+pub struct GlyphsSpec {
+    /// Ems the glyph moves right.
+    #[serde(default)]
+    pub dx: Option<String>,
+    /// Ems it moves down.
+    #[serde(default)]
+    pub dy: Option<String>,
+    /// A factor on its width.
+    #[serde(default)]
+    pub sx: Option<String>,
+    /// A factor on its height.
+    #[serde(default)]
+    pub sy: Option<String>,
+    /// Degrees it turns clockwise.
+    #[serde(default)]
+    pub rotation: Option<String>,
+    /// A factor on its opacity.
+    #[serde(default)]
+    pub opacity: Option<String>,
+    /// Its blur's radius in ems.
+    #[serde(default)]
+    pub blur: Option<String>,
+    /// Ems the block moves right.
+    #[serde(default)]
+    pub block_dx: Option<String>,
+    /// Ems the block moves down.
+    #[serde(default)]
+    pub block_dy: Option<String>,
+    /// A factor on the block's size, about its centre.
+    #[serde(default)]
+    pub block_scale: Option<String>,
+    /// A factor on the block's opacity.
+    #[serde(default)]
+    pub block_opacity: Option<String>,
+    /// The block's blur's radius in ems.
+    #[serde(default)]
+    pub block_blur: Option<String>,
+    /// Whether nothing shows above the block's resting top edge.
+    #[serde(default)]
+    pub clip_top: bool,
+}
+
+/// One glyph's pose on one frame; see [`GlyphsSpec`].
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub struct GlyphMotion {
+    /// Ems right.
+    pub dx: f64,
+    /// Ems down.
+    pub dy: f64,
+    /// A factor on its width.
+    pub sx: f64,
+    /// A factor on its height.
+    pub sy: f64,
+    /// Degrees clockwise.
+    pub rotation: f64,
+    /// A factor on its opacity.
+    pub opacity: f64,
+    /// Its blur's radius in ems.
+    pub blur: f64,
+}
+
+impl GlyphMotion {
+    /// Where the layout put it.
+    pub const REST: GlyphMotion = GlyphMotion {
+        dx: 0.0,
+        dy: 0.0,
+        sx: 1.0,
+        sy: 1.0,
+        rotation: 0.0,
+        opacity: 1.0,
+        blur: 0.0,
+    };
+}
+
+/// The block's pose on one frame; see [`GlyphsSpec`].
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub struct BlockMotion {
+    /// Ems right.
+    pub dx: f64,
+    /// Ems down.
+    pub dy: f64,
+    /// A factor on its size, about its centre.
+    pub scale: f64,
+    /// A factor on its opacity.
+    pub opacity: f64,
+    /// Its blur's radius in ems.
+    pub blur: f64,
+    /// Whether nothing shows above its resting top edge.
+    pub clip_top: bool,
+}
+
+impl BlockMotion {
+    /// Where the layout put it.
+    pub const REST: BlockMotion = BlockMotion {
+        dx: 0.0,
+        dy: 0.0,
+        scale: 1.0,
+        opacity: 1.0,
+        blur: 0.0,
+        clip_top: false,
+    };
+}
+
+/// Which glyph a pose is asked for, and the block it is in.
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub struct GlyphPlace {
+    /// Its character's index, spaces and line breaks counted.
+    pub index: usize,
+    /// How many characters there are.
+    pub count: usize,
+    /// The laid-out line it is on.
+    pub line: usize,
+    /// How many lines there are.
+    pub lines: usize,
+    /// The word it is in.
+    pub word: usize,
+    /// How many words there are.
+    pub words: usize,
+    /// The block's width in ems.
+    pub width: f64,
+    /// The block's height in ems.
+    pub height: f64,
+    /// Its place on its line, from 0.
+    pub in_line: usize,
+    /// How many glyphs its line holds.
+    pub line_glyphs: usize,
+    /// How far across the block its centre is, 0..1.
+    pub across: f64,
+    /// Its centre from the block's centre in ems, right and down.
+    pub from_centre: (f64, f64),
+    /// When its word is spoken, seconds into the animation: start and end.
+    pub word_time: (f64, f64),
+    /// How long the animation runs, in seconds.
+    pub duration: f64,
+}
+
+/// The names a glyph's expressions read, and the block's.
+const GLYPH_NAMES: [&str; 18] = [
+    "t", "pi", "i", "n", "line", "lines", "word", "words", "w", "h", "li", "ln", "u", "gx", "gy",
+    "ws", "we", "d",
+];
+const BLOCK_NAMES: [&str; 7] = ["t", "pi", "n", "lines", "words", "w", "h"];
 
 /// The `[animation.effect]` table: an effect package and its knobs as
 /// expressions of `t`.
@@ -201,18 +383,28 @@ pub struct Animation {
     spec: AnimationSpec,
     motion: [Option<Expr>; 7],
     look: Option<(String, Vec<(String, Expr)>)>,
+    /// The glyphs' seven expressions and the block's five, parsed.
+    glyphs: Option<Choreography>,
 }
+
+/// A glyphs table parsed: each glyph's seven expressions, the block's five.
+type Choreography = ([Option<Expr>; 7], [Option<Expr>; 5]);
 
 /// The names an animation's expressions may read.
 const NAMES: [&str; 2] = ["t", "pi"];
 
 fn parse(what: &str, source: &str) -> Result<Expr, String> {
+    parse_reading(what, source, &NAMES)
+}
+
+fn parse_reading(what: &str, source: &str, known: &[&str]) -> Result<Expr, String> {
     let expr = Expr::parse(source).map_err(|error| format!("{what} = {source:?}: {}", error.0))?;
     let mut names = Vec::new();
     expr.names(&mut names);
-    if let Some(name) = names.iter().find(|name| !NAMES.contains(&name.as_str())) {
+    if let Some(name) = names.iter().find(|name| !known.contains(&name.as_str())) {
         return Err(format!(
-            "{what} = {source:?}: `{name}` is not known; an animation reads `t` and `pi`"
+            "{what} = {source:?}: `{name}` is not known; it reads {}",
+            known.join(", ")
         ));
     }
     Ok(expr)
@@ -253,12 +445,71 @@ impl Animation {
             }
             None => None,
         };
-        let animation = Animation { spec, motion, look };
+        let glyphs = match &spec.glyphs {
+            Some(table) => {
+                let mut glyph: [Option<Expr>; 7] = Default::default();
+                let fields = [
+                    ("dx", &table.dx),
+                    ("dy", &table.dy),
+                    ("sx", &table.sx),
+                    ("sy", &table.sy),
+                    ("rotation", &table.rotation),
+                    ("opacity", &table.opacity),
+                    ("blur", &table.blur),
+                ];
+                for (slot, (what, source)) in glyph.iter_mut().zip(fields) {
+                    if let Some(source) = source {
+                        *slot = Some(parse_reading(what, source, &GLYPH_NAMES)?);
+                    }
+                }
+                let mut block: [Option<Expr>; 5] = Default::default();
+                let fields = [
+                    ("block_dx", &table.block_dx),
+                    ("block_dy", &table.block_dy),
+                    ("block_scale", &table.block_scale),
+                    ("block_opacity", &table.block_opacity),
+                    ("block_blur", &table.block_blur),
+                ];
+                for (slot, (what, source)) in block.iter_mut().zip(fields) {
+                    if let Some(source) = source {
+                        *slot = Some(parse_reading(what, source, &BLOCK_NAMES)?);
+                    }
+                }
+                Some((glyph, block))
+            }
+            None => None,
+        };
+        let animation = Animation {
+            spec,
+            motion,
+            look,
+            glyphs,
+        };
         // An expression that cannot be evaluated - text where a number is
         // wanted - is a fault of the package, found here rather than on a
         // frame.
         for t in [0.0, 0.5, 1.0] {
             animation.try_motion_at(t)?;
+            if animation.glyphs.is_some() {
+                let place = GlyphPlace {
+                    index: 1,
+                    count: 4,
+                    line: 0,
+                    lines: 1,
+                    word: 0,
+                    words: 2,
+                    width: 6.0,
+                    height: 1.3,
+                    in_line: 1,
+                    line_glyphs: 4,
+                    across: 0.4,
+                    from_centre: (-0.5, 0.0),
+                    word_time: (0.1, 0.3),
+                    duration: 0.5,
+                };
+                animation.try_glyph_at(t, &place)?;
+                animation.try_block_at(t, &place)?;
+            }
         }
         Ok(animation)
     }
@@ -342,6 +593,121 @@ impl Animation {
         }
     }
 
+    /// Whether it moves a title's letters apart rather than the clip.
+    pub fn moves_glyphs(&self) -> bool {
+        self.glyphs.is_some()
+    }
+
+    fn glyph_env(t: f64, place: &GlyphPlace) -> BTreeMap<String, Value> {
+        let mut env = Self::env(t);
+        for (name, value) in [
+            ("i", place.index),
+            ("n", place.count),
+            ("line", place.line),
+            ("lines", place.lines),
+            ("word", place.word),
+            ("words", place.words),
+            ("li", place.in_line),
+            ("ln", place.line_glyphs),
+        ] {
+            env.insert(name.to_owned(), Value::Int(value as i64));
+        }
+        env.insert("w".to_owned(), Value::Float(place.width));
+        env.insert("h".to_owned(), Value::Float(place.height));
+        env.insert("u".to_owned(), Value::Float(place.across));
+        env.insert("gx".to_owned(), Value::Float(place.from_centre.0));
+        env.insert("gy".to_owned(), Value::Float(place.from_centre.1));
+        env.insert("ws".to_owned(), Value::Float(place.word_time.0));
+        env.insert("we".to_owned(), Value::Float(place.word_time.1));
+        env.insert("d".to_owned(), Value::Float(place.duration));
+        env
+    }
+
+    fn read_into(
+        expr: &Option<Expr>,
+        env: &BTreeMap<String, Value>,
+        or: f64,
+    ) -> Result<f64, String> {
+        match expr {
+            Some(expr) => match expr.eval(env).map_err(|error| error.0)? {
+                Value::Int(n) => Ok(n as f64),
+                Value::Float(x) => Ok(x),
+                Value::Text(_) => Err("an animation's expression must be a number".to_owned()),
+            },
+            None => Ok(or),
+        }
+    }
+
+    fn try_glyph_at(&self, t: f64, place: &GlyphPlace) -> Result<GlyphMotion, String> {
+        let Some((glyph, _)) = &self.glyphs else {
+            return Ok(GlyphMotion::REST);
+        };
+        let env = Self::glyph_env(t, place);
+        let [dx, dy, sx, sy, rotation, opacity, blur] = glyph;
+        Ok(GlyphMotion {
+            dx: Self::read_into(dx, &env, 0.0)?,
+            dy: Self::read_into(dy, &env, 0.0)?,
+            sx: Self::read_into(sx, &env, 1.0)?,
+            sy: Self::read_into(sy, &env, 1.0)?,
+            rotation: Self::read_into(rotation, &env, 0.0)?,
+            opacity: Self::read_into(opacity, &env, 1.0)?.clamp(0.0, 1.0),
+            blur: Self::read_into(blur, &env, 0.0)?.max(0.0),
+        })
+    }
+
+    fn try_block_at(&self, t: f64, place: &GlyphPlace) -> Result<BlockMotion, String> {
+        let Some((_, block)) = &self.glyphs else {
+            return Ok(BlockMotion::REST);
+        };
+        let env = Self::glyph_env(t, place);
+        let [dx, dy, scale, opacity, blur] = block;
+        Ok(BlockMotion {
+            dx: Self::read_into(dx, &env, 0.0)?,
+            dy: Self::read_into(dy, &env, 0.0)?,
+            scale: Self::read_into(scale, &env, 1.0)?.max(0.0),
+            opacity: Self::read_into(opacity, &env, 1.0)?.clamp(0.0, 1.0),
+            blur: Self::read_into(blur, &env, 0.0)?.max(0.0),
+            clip_top: self.spec.glyphs.as_ref().is_some_and(|g| g.clip_top),
+        })
+    }
+
+    /// One glyph's pose `t` of the way through; one whose expressions fail
+    /// or come out other than finite is left where the layout put it.
+    pub fn glyph_at(&self, t: f64, place: &GlyphPlace) -> GlyphMotion {
+        match self.try_glyph_at(t.clamp(0.0, 1.0), place) {
+            Ok(pose)
+                if [
+                    pose.dx,
+                    pose.dy,
+                    pose.sx,
+                    pose.sy,
+                    pose.rotation,
+                    pose.opacity,
+                    pose.blur,
+                ]
+                .iter()
+                .all(|v| v.is_finite()) =>
+            {
+                pose
+            }
+            _ => GlyphMotion::REST,
+        }
+    }
+
+    /// The block's pose `t` of the way through, on the same terms.
+    pub fn block_at(&self, t: f64, place: &GlyphPlace) -> BlockMotion {
+        match self.try_block_at(t.clamp(0.0, 1.0), place) {
+            Ok(pose)
+                if [pose.dx, pose.dy, pose.scale, pose.opacity, pose.blur]
+                    .iter()
+                    .all(|v| v.is_finite()) =>
+            {
+                pose
+            }
+            _ => BlockMotion::REST,
+        }
+    }
+
     /// The look's knobs `t` of the way through, by key; a knob whose
     /// expression fails is left at its default.
     pub fn look_at(&self, t: f64) -> Option<(&str, BTreeMap<String, f64>)> {
@@ -410,6 +776,7 @@ mod tests {
             sx: None,
             sy: None,
             effect: None,
+            glyphs: None,
         }
     }
 

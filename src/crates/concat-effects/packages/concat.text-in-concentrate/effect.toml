@@ -6,15 +6,15 @@ name = "Concentrate"
 kind = "animation"
 category = "Text In"
 order = 3
-description = "The title comes into focus as it shrinks into place."
+description = "The letters fall in from large, one after another, as the title fades up out of a blur."
 
 [animation]
 slot = "in"
 duration = 0.5
 text = true
-scale = "(1.8 + (1 - (1.8)) * (1 - pow(1 - t, 3)))"
-opacity = "t"
 
-[animation.effect]
-id = "concat.gaussian-blur"
-params = { radius = "1 + 20 * (1 - t)" }
+[animation.glyphs]
+sx = "if(t >= 0.999999, 1, if(t <= (((i + 1) - 1.7) / n), 0, 1 + (0.2 + pow((i + 1) / n, 0.25)) * bezier((1 - clamp((t - (((i + 1) - 1.7) / n)) / (1 - (((i + 1) - 1.7) / n)), 0, 1)), (0.5 - 0.15 * (i / (n - 1 + 0.0001))), (0.35 + 0.15 * (i / (n - 1 + 0.0001))), (0.41 + 0.57 * (i / (n - 1 + 0.0001))), (0.98 - 0.57 * (i / (n - 1 + 0.0001))))))"
+sy = "if(t >= 0.999999, 1, if(t <= (((i + 1) - 1.7) / n), 0, 1 + (0.2 + pow((i + 1) / n, 0.25)) * bezier((1 - clamp((t - (((i + 1) - 1.7) / n)) / (1 - (((i + 1) - 1.7) / n)), 0, 1)), (0.5 - 0.15 * (i / (n - 1 + 0.0001))), (0.35 + 0.15 * (i / (n - 1 + 0.0001))), (0.41 + 0.57 * (i / (n - 1 + 0.0001))), (0.98 - 0.57 * (i / (n - 1 + 0.0001))))))"
+block_opacity = "clamp(t / 0.7, 0, 1)"
+block_blur = "0.11 * bezier((1 - t), 0.24, 0.53, 0.42, 0.97)"

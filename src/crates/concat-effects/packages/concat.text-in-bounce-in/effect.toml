@@ -6,10 +6,12 @@ name = "Bounce In"
 kind = "animation"
 category = "Text In"
 order = 48
-description = "The title drops in and bounces."
+description = "The title springs up from nothing past its size and settles."
 
 [animation]
 slot = "in"
 duration = 0.5
 text = true
-y = "(-abs(cos(t * pi * 2.5)) * 0.3 * pow(1 - t, 2))"
+
+[animation.glyphs]
+block_scale = "if(t <= 0.57, 1.1 * bezier((t / 0.57), 0, 0, 0.51, 1), 1.1 + (1 - 1.1) * bezier(((t - 0.57) / 0.43), 0.2, 0, 0.13, 1))"

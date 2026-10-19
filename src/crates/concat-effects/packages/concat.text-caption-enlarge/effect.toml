@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.text-caption-enlarge"
+name = "Caption Enlarge"
+kind = "animation"
+category = "Text In"
+order = 43
+description = "The caption as it is, word for word."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.glyphs]
+opacity = "1"

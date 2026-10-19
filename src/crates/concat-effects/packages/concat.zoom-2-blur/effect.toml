@@ -1,0 +1,28 @@
+format = 2
+
+[effect]
+id = "concat.zoom-2-blur"
+name = "Zoom 2 Blur"
+kind = "effect"
+category = "Reveal"
+order = 40
+intensity = "progress"
+description = "Shrinks the clip toward its centre, mirrored copies round it, under a zoom blur; the progress grows it back and clears the blur."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

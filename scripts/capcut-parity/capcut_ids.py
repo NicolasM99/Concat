@@ -28,8 +28,9 @@ for folder in os.listdir(root):
 SAME = {"mix": "concat.dissolve", "black fade": "concat.fade-black", "white flash": "concat.fade-white",
         "dissolve": "concat.dissolve", "burn": "concat.film-burn", "pull in": "concat.zoom-transition",
         "pull out": ("concat.zoom-transition", "direction=1"), "cw swirl": "concat.swirl",
-        "right": ("concat.push", "direction=1"), "left": ("concat.push", "direction=0"),
-        "up": ("concat.push", "direction=2"), "radial blur": "concat.zoom-blur-transition",
+        "right": "concat.slide-mirror-right",
+        "left": "concat.slide-mirror-left",
+        "up": "concat.slide-mirror-up", "down": "concat.slide-mirror-down", "radial blur": "concat.zoom-blur-transition",
         "blur": "concat.blur-dissolve", "woosh": "concat.whip-pan", "wipe right": ("concat.linear-wipe", "direction=0"),
         "wipe left": ("concat.linear-wipe", "direction=1"), "wipe up": ("concat.linear-wipe", "direction=2"),
         "stretch ll": "concat.stretch-ii", "slide": "concat.slide", "cube": "concat.cube",
@@ -44,26 +45,27 @@ ANIM = {"CapCut_Intro_type": "In", "CapCut_Outro_type": "Out", "CapCut_Group_ani
 # Ids from real drafts the metadata does not list, by what the item does.
 MANUAL = [
     # transitions
-    ("6724227330190873100", "concat.push", "direction=3"),          # Down
-    ("6724227090872275463", "concat.push", "direction=2"),          # Up
-    ("6724227717195108867", "concat.push", "direction=0"),          # Left
-    ("7291211157254181377", "concat.zoom-transition", ""),          # Zoom In II
+    ("6724227330190873100", "concat.slide-mirror-down", ""),  # Down
+    ("6724227090872275463", "concat.slide-mirror-up", ""),  # Up
+    ("6724227599616184836", "concat.slide-mirror-right", ""),  # Right
+    ("6724227717195108867", "concat.slide-mirror-left", ""),  # Left
+    ("7291211157254181377", "concat.pull-in-ii", ""),              # Zoom In II
     ("7488094700159782145", "concat.zoom-blur-transition", ""),     # Speed zoom out
-    ("7159450506648097281", "concat.blurred-highlight", ""),        # Blurry bubbles
+    ("7159450506648097281", "concat.blurry-bubbles", ""),           # Blurry bubbles
     ("7618907808662113554", "concat.slide", "direction=3"),         # Bounce fall
     ("7317281163750412801", "concat.slide", "direction=0"),         # Slide left
-    ("6952697917563998722", "concat.flash-transition", ""),         # Flash II
-    ("7564617241841437953", "concat.camera-glow", ""),              # Heat wave flash
+    ("6952697917563998722", "concat.flash-cut", ""),         # Flash II
+    ("7564617241841437953", "concat.heat-dissolve", ""),              # Heat wave flash
     # clip and text animations
     ("7241878375516606978", "concat.in-slide-left", ""),            # Side slide
-    ("7565842231504997633", "concat.in-flip", ""),                  # Quick unfold
-    ("7642665703748766983", "concat.in-fade-in", ""),               # Basic in
+    ("7565842231504997633", "concat.text-in-quick-unfold", ""),                  # Quick unfold
+    ("7642665703748766983", "concat.text-in-basic-in", ""),               # Basic in
     ("7591705801023048976", "concat.text-in-pop-up", ""),           # Bold in
-    ("7591715953348496657", "concat.text-in-grow", ""),             # Simple sprout
-    ("7594796714926542096", "concat.text-in-typewriter", ""),       # Sequential reveal
-    ("7597009340931034375", "concat.text-in-bounce-in", ""),        # School trip
-    ("7330184537214816769", "concat.text-in-zoom-out", ""),         # caption: centre zoom out
-    ("7252982471115936258", "concat.text-in-zoom-in", ""),          # caption: enlarge
+    ("7591715953348496657", "concat.text-in-simple-sprout", ""),             # Simple sprout
+    ("7594796714926542096", "concat.text-in-sequential-reveal", ""),       # Sequential reveal
+    ("7597009340931034375", "concat.text-in-school-trip", ""),        # School trip
+    ("7330184537214816769", "concat.text-caption-zoom-out", ""),         # caption: centre zoom out
+    ("7252982471115936258", "concat.text-caption-enlarge", ""),          # caption: enlarge
     ("7324601184377901569", "concat.text-in-pop-up", ""),           # caption: short phrase scale
     ("7135040682032370178", "concat.text-in-bounce-in", ""),        # caption: bounce out
     # video effects

@@ -6,10 +6,10 @@ name = "Zoom Out"
 kind = "animation"
 category = "In"
 order = 5
-description = "The clip zooms out to its place from very close."
+description = "The clip zooms out to its place from closer, fading up."
 
 [animation]
 slot = "in"
 duration = 0.5
-scale = "(3 + (1 - (3)) * (1 - pow(1 - t, 3)))"
-opacity = "min(1, t * 3)"
+scale = "(1.5 - 0.5 * t)"
+opacity = "min(1, t / 0.2)"

@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.text-in-basic-in"
+name = "Basic In"
+kind = "animation"
+category = "Text In"
+order = 41
+description = "The title grows up from small as it fades in."
+
+[animation]
+slot = "in"
+duration = 0.5
+text = true
+
+[animation.glyphs]
+block_scale = "(0.15 + 0.85 * (1 - pow(1 - min(t / 0.7, 1), 2)))"
+block_opacity = "min(1, t / 0.45)"

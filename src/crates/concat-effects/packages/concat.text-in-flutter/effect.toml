@@ -6,12 +6,15 @@ name = "Flutter"
 kind = "animation"
 category = "Text In"
 order = 29
-description = "The title flutters in like a falling leaf."
+description = "The letters ripple in along each line, fading up and settling, behind a sweeping blur."
 
 [animation]
 slot = "in"
 duration = 0.5
 text = true
-y = "(-0.1 * (1 - (1 - pow(1 - t, 3))))"
-rotation = "(15 * sin(t * 20) * (1 - t))"
-opacity = "t"
+
+[animation.glyphs]
+sx = "(0.95 + 0.05 * bezier(clamp((t - (li / (ln - 1 + 0.001) * 0.25)) / (1 - (li / (ln - 1 + 0.001) * 0.25)), 0, 1), 0.22, 0.6, 0.52, 0.93))"
+sy = "(0.95 + 0.05 * bezier(clamp((t - (li / (ln - 1 + 0.001) * 0.25)) / (1 - (li / (ln - 1 + 0.001) * 0.25)), 0, 1), 0.22, 0.6, 0.52, 0.93))"
+opacity = "bezier(clamp((t - (li / (ln - 1 + 0.001) * 0.25)) / (1 - (li / (ln - 1 + 0.001) * 0.25)), 0, 1), 0.22, 0.6, 0.52, 0.93)"
+blur = "0.33 * clamp((u - (2 * clamp(t / 0.781, 0, 1) - 1)) / (clamp(t / 0.781, 0, 1) + 0.2 - (2 * clamp(t / 0.781, 0, 1) - 1)), 0, 1)"

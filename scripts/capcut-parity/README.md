@@ -11,6 +11,10 @@ covers what.
   `fx_reveal.py` - the reveal effects animations ride; `anim_clip.py`,
   `anim_text.py` - the clips' and titles' animations; `audio.py` - voice effects.
 - `lib_wgsl.py`, `anim_lib.py` - the shared WGSL snippets and expression helpers.
+- `tr_exact*.py`, `anim_text_exact.py` - CapCut's own transitions and title animations,
+  ported from the packages CapCut keeps in `Cache/effect/<resource id>/` (or, for the five
+  it ships encrypted, measured off its render); `anim_text.py` swaps them in for its
+  stand-ins of the same name. See docs/CAPCUT_PARITY.md.
 - `generated.txt` - the slugs these scripts own; `gen.py` refuses to overwrite a
   package folder not on it.
 
@@ -20,7 +24,7 @@ Regenerate every package, from the repository root:
 cd scripts/capcut-parity
 python gen.py ../../src/crates/concat-effects/packages tr_light.py tr_motion.py tr_shape.py \
   fx_particles.py fx_camera.py fx_lens.py fx_glitch.py fx_light.py fx_color.py fx_frame.py \
-  fx_texture.py fx_body.py fx_body2.py fx_reveal.py anim_clip.py anim_text.py
+  fx_texture.py fx_body.py fx_body2.py fx_reveal.py anim_clip.py anim_text.py   tr_exact.py tr_exact_zoom.py tr_exact_bokeh.py tr_exact_flash.py
 python audio.py ../../src/crates/concat-effects/packages
 ```
 

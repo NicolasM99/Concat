@@ -1,0 +1,13 @@
+format = 2
+
+[effect]
+id = "concat.slide-mirror-left"
+name = "Slide Mirror Left"
+kind = "transition"
+category = "Slide"
+order = 63
+description = "The shots slide to the left with mirror images filling the gap, blurred along the motion, cutting at the middle."
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

@@ -116,6 +116,8 @@ const FUNCTIONS: &[(&str, usize)] = &[
     ("cos", 1),
     ("exp", 1),
     ("fixed", 2),
+    ("bezier", 5),
+    ("window", 3),
 ];
 
 // ─── parsing ────────────────────────────────────────────────────────────────
@@ -472,6 +474,21 @@ fn call(name: &str, args: &[Value]) -> Result<Value, EvalError> {
         "sin" => Value::Float(num(0)?.sin()),
         "cos" => Value::Float(num(0)?.cos()),
         "exp" => Value::Float(num(0)?.exp()),
+        // An easing curve as After Effects and CSS draw it: the cubic from
+        // (0, 0) to (1, 1) through (x1, y1) and (x2, y2), read at x - what
+        // CapCut's animations ease every keyframe span with.
+        "bezier" => Value::Float(bezier(num(0)?, num(1)?, num(2)?, num(3)?, num(4)?)),
+        // How far t is through a to b, 0 before it and 1 after.
+        "window" => {
+            let (t, a, b) = (num(0)?, num(1)?, num(2)?);
+            Value::Float(if b > a {
+                ((t - a) / (b - a)).clamp(0.0, 1.0)
+            } else if t >= a {
+                1.0
+            } else {
+                0.0
+            })
+        }
         "fixed" => {
             let digits = num(1)?;
             if digits < 0.0 || digits.fract() != 0.0 || digits > 20.0 {
@@ -481,6 +498,27 @@ fn call(name: &str, args: &[Value]) -> Result<Value, EvalError> {
         }
         _ => return Err(EvalError(format!("unknown function `{name}`"))),
     })
+}
+
+/// The easing cubic through (x1, y1) and (x2, y2) at `x`: the curve's
+/// parameter found by bisection to a ten-thousandth, as CapCut's own
+/// keyframe player finds it, then its height there.
+fn bezier(x: f64, x1: f64, y1: f64, x2: f64, y2: f64) -> f64 {
+    let x = x.clamp(0.0, 1.0);
+    let at = |p0: f64, p1: f64, s: f64| {
+        let r = 1.0 - s;
+        3.0 * p0 * r * r * s + 3.0 * p1 * r * s * s + s * s * s
+    };
+    let (mut low, mut high) = (0.0_f64, 1.0_f64);
+    while high - low >= 1e-4 {
+        let mid = (low + high) * 0.5;
+        if at(x1, x2, mid) > x {
+            high = mid;
+        } else {
+            low = mid;
+        }
+    }
+    at(y1, y2, (low + high) * 0.5)
 }
 
 /// `value` with exactly `digits` decimals. Negative zero prints unsigned, so

@@ -72,6 +72,38 @@ pub struct Converted {
     pub notes: Vec<String>,
 }
 
+/// Footage the import took from CapCut's cache - a flash transition's -
+/// copied into the project's own folder and the bin pointed there: CapCut
+/// clears its cache, and the project should not lose its flashes when it
+/// does. A file that will not copy stays where it is.
+fn keep_cached_footage(project: &mut Project, folder: &Path) {
+    let into = folder.join("capcut");
+    for media in &mut project.media {
+        let path = Path::new(&media.path);
+        let cached = media.path.replace('\\', "/").contains("/Cache/effect/");
+        if !cached || !path.is_file() {
+            continue;
+        }
+        let Some(name) = path.file_name() else {
+            continue;
+        };
+        // The package's id names the folder, so two packages' frames of
+        // the same name do not meet.
+        let package = path
+            .ancestors()
+            .find(|dir| dir.parent().and_then(Path::file_name) == Some("effect".as_ref()))
+            .and_then(Path::file_name)
+            .map(|id| id.to_string_lossy().into_owned())
+            .unwrap_or_default();
+        let target = into.join(package).join(name);
+        if std::fs::create_dir_all(target.parent().unwrap_or(&into)).is_ok()
+            && (target.is_file() || std::fs::copy(path, &target).is_ok())
+        {
+            media.path = target.to_string_lossy().into_owned();
+        }
+    }
+}
+
 /// The draft file in `path`: the folder's `draft_content.json` or
 /// `draft_info.json`, or `path` itself when it names one.
 pub fn draft_file(path: &Path) -> Option<PathBuf> {
@@ -136,6 +168,7 @@ pub fn import(draft: &Path, location: &str) -> Result<Imported, String> {
         video.rate_num,
         video.rate_den,
     )?;
+    keep_cached_footage(&mut converted.project, Path::new(&info.path));
     let settings = concat_project::doc::DocumentSettings {
         name: converted.name.clone(),
         width: video.width,
@@ -430,6 +463,53 @@ struct Builder<'a> {
     /// material, for the note that says where its clips were.
     drop_missing: bool,
     gone: HashMap<String, String>,
+    /// CapCut's flash transitions' footage, to lay over their cuts: where
+    /// the cut is, how long the transition, which flash, and its package.
+    flashes: Vec<(f64, f64, Flash, PathBuf)>,
+}
+
+/// The two CapCut transitions whose flash is footage in their package.
+#[derive(Clone, Copy, PartialEq, Debug)]
+enum Flash {
+    /// Destello II: 70 frames, `clipname_000.png` on.
+    Frames,
+    /// Flash de ola de calor: `light3.mp4`, 45 frames at 30.
+    Video,
+}
+
+impl Flash {
+    fn of(resource_id: &str) -> Option<Flash> {
+        match resource_id {
+            "6952697917563998722" => Some(Flash::Frames),
+            "7564617241841437953" => Some(Flash::Video),
+            _ => None,
+        }
+    }
+}
+
+/// Every file under `dir` whose name `wanted` takes, sorted by name.
+fn files_under(dir: &Path, wanted: &dyn Fn(&str) -> bool) -> Vec<PathBuf> {
+    let mut found = Vec::new();
+    let mut stack = vec![dir.to_owned()];
+    while let Some(at) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&at) else {
+            continue;
+        };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+            } else if path
+                .file_name()
+                .and_then(|n| n.to_str())
+                .is_some_and(wanted)
+            {
+                found.push(path);
+            }
+        }
+    }
+    found.sort();
+    found
 }
 
 /// The draft as a Concat project. `probe` describes a file on disk, or
@@ -494,6 +574,7 @@ fn convert_with(
         skipped: BTreeMap::new(),
         drop_missing,
         gone: HashMap::new(),
+        flashes: Vec::new(),
     };
     builder.draft(document, Place::ROOT, None);
     builder.finish(name, video)
@@ -512,6 +593,7 @@ impl Builder<'_> {
                 clip.transition_in = Some(transition);
             }
         }
+        self.lay_flashes(video);
         for (what, count) in std::mem::take(&mut self.skipped) {
             self.notes.push(format!(
                 "{count} {what} item(s) left out: Concat has no counterpart yet"
@@ -541,6 +623,132 @@ impl Builder<'_> {
             project: self.project,
             notes: self.notes,
         }
+    }
+
+    /// Each flash transition's footage over its cut, on a lane of its own
+    /// at the top, in Screen - as CapCut draws it over the picture - and
+    /// filling the frame.
+    fn lay_flashes(&mut self, video: VideoSettings) {
+        let flashes = std::mem::take(&mut self.flashes);
+        if flashes.is_empty() {
+            return;
+        }
+        let lane = format!("T{}", self.lanes.len() + 1);
+        self.lanes.push(Track {
+            id: lane.clone(),
+            ..Track::default()
+        });
+        let rate = video.rate().max(1.0);
+        let (canvas_w, canvas_h) = (f64::from(video.width), f64::from(video.height));
+        // Concat fits a picture inside the frame; CapCut's flash covers it.
+        let cover = |w: f64, h: f64| {
+            let (fit, fill) = (
+                (canvas_w / w).min(canvas_h / h),
+                (canvas_w / w).max(canvas_h / h),
+            );
+            fill / fit
+        };
+        for (cut, length, flash, dir) in flashes {
+            let from = (cut - length / 2.0).max(0.0);
+            match flash {
+                Flash::Frames => {
+                    let frames = files_under(&dir, &|name| {
+                        name.starts_with("clipname_") && name.ends_with(".png")
+                    });
+                    if frames.len() < 70 {
+                        self.notes.push(format!(
+                            "the Flash II frames in {} are incomplete",
+                            dir.display()
+                        ));
+                        continue;
+                    }
+                    let shown = (length * rate).ceil() as usize;
+                    for k in 0..shown {
+                        let p = k as f64 / (length * rate);
+                        let index = ((p * 70.0).floor() as usize + 1).min(69);
+                        let start = from + k as f64 / rate;
+                        let span = (from + length - start).min(1.0 / rate);
+                        let media_id = self.still(&frames[index], "Flash II");
+                        let id = self.mint.next("c");
+                        let mut clip = Clip::blank(
+                            &id,
+                            &lane,
+                            ClipKind::Image,
+                            "Flash II".to_owned(),
+                            start,
+                            span,
+                        );
+                        clip.media_id = media_id;
+                        clip.blend = "screen".to_owned();
+                        clip.scale = cover(720.0, 405.0);
+                        self.clips.push(clip);
+                    }
+                }
+                Flash::Video => {
+                    let Some(file) = files_under(&dir, &|name| name == "light3.mp4")
+                        .into_iter()
+                        .next()
+                    else {
+                        self.notes.push(format!(
+                            "the Heat Wave Flash video is not in {}",
+                            dir.display()
+                        ));
+                        continue;
+                    };
+                    let media_id = self.footage(&file, "Heat Wave Flash");
+                    let id = self.mint.next("c");
+                    let mut clip = Clip::blank(
+                        &id,
+                        &lane,
+                        ClipKind::Video,
+                        "Heat Wave Flash".to_owned(),
+                        from,
+                        length,
+                    );
+                    clip.media_id = media_id;
+                    clip.blend = "screen".to_owned();
+                    clip.scale = cover(2160.0, 2160.0);
+                    // Its 44 frames span the transition, each held from
+                    // half a frame early, as CapCut rounds to them.
+                    clip.speed = ((44.0 / 30.0) / length).clamp(0.0625, 16.0);
+                    clip.source_start = 0.5 / 30.0;
+                    clip.volume = 0.0;
+                    self.clips.push(clip);
+                }
+            }
+        }
+    }
+
+    /// A video file in the bin, once, as probed.
+    fn footage(&mut self, path: &Path, name: &str) -> String {
+        let path_text = path.to_string_lossy().into_owned();
+        if let Some(id) = self.by_path.get(&path_text) {
+            return id.clone();
+        }
+        let media_id = self.mint.next("m");
+        let found = (self.probe)(&path_text);
+        self.project.media.push(MediaItem {
+            id: media_id.clone(),
+            path: path_text.clone(),
+            name: name.to_owned(),
+            duration: found.as_ref().and_then(|f| f.duration),
+            kind: MediaKind::Video,
+            width: found.as_ref().and_then(|f| f.width),
+            height: found.as_ref().and_then(|f| f.height),
+            frame_rate: found.as_ref().and_then(|f| f.frame_rate),
+            frame_rate_fraction: found.as_ref().and_then(|f| f.frame_rate_fraction.clone()),
+            video_codec: found.as_ref().and_then(|f| f.video_codec.clone()),
+            audio_codec: None,
+            has_audio: false,
+            audio_tracks: Vec::new(),
+            placeholder: false,
+            color_range: None,
+            color_space: found.as_ref().map(|f| f.color_space).unwrap_or_default(),
+            origin: None,
+            extra: Default::default(),
+        });
+        self.by_path.insert(path_text, media_id.clone());
+        media_id
     }
 
     /// The bin entries for a draft's files, once each.
@@ -809,7 +1017,9 @@ impl Builder<'_> {
                 clip
             }
             (Lane::Text, "texts") => {
-                let style = text_style(material, &mut self.fonts, &mut self.notes);
+                let video = self.project.active().video;
+                let canvas = (f64::from(video.width), f64::from(video.height));
+                let style = text_style(material, canvas, &mut self.fonts, &mut self.notes);
                 let name = style.content.lines().next().unwrap_or("").to_owned();
                 let mut clip = Clip::blank(&id, track_id, ClipKind::Text, name, start, duration);
                 clip.text = Some(style);
@@ -868,6 +1078,14 @@ impl Builder<'_> {
             clip.opacity = 0.0;
         }
         placement(&mut clip, segment);
+        // A caption's size is its style's alone: CapCut sets a subtitle at
+        // its font size whatever scale the segment carries (measured
+        // against CapCut's own export, a 0.97 scale draws the words and
+        // their plate at full size).
+        if list == "texts" && text(material, "type") == "subtitle" {
+            clip.scale = 1.0;
+            clip.stretch_y = 1.0;
+        }
         // A compound's placement rides over its contents'.
         if place.depth > 0 {
             clip.offset_x = place.offset.0 + clip.offset_x * place.scale;
@@ -942,6 +1160,16 @@ impl Builder<'_> {
             "transitions" => {
                 if let Some((package, _)) = stand_in(Want::Transition, item, &mut self.notes) {
                     let length = seconds(&item["duration"]).max(0.1);
+                    if let Some(flash) = Flash::of(text(item, "resource_id")) {
+                        match resolve(text(item, "path"), self.folder).filter(|dir| dir.is_dir()) {
+                            Some(dir) => self.flashes.push((end, length, flash, dir)),
+                            None => self.notes.push(format!(
+                                "the flash of the {} transition at {end:.2}s is not on this \
+                                 machine; open the project in CapCut once to fetch it",
+                                text(item, "name")
+                            )),
+                        }
+                    }
                     self.pending.push((
                         track_id.to_owned(),
                         end,
@@ -1270,6 +1498,29 @@ fn placement(clip: &mut Clip, segment: &Value) {
 /// CapCut's keyframes on the segment as Concat's keys.
 fn keys(segment: &Value, duration: f64) -> Vec<ClipKey> {
     let mut out = Vec::new();
+    // A key's time is in the source's time in current drafts - the first
+    // sits at the segment's source start, the last at most its source end -
+    // and from the segment's own start in older ones. Read either way, onto
+    // the segment's timeline time.
+    let source_start = seconds(&segment["source_timerange"]["start"]);
+    let source_length = seconds(&segment["source_timerange"]["duration"]).max(1e-6);
+    let rate = source_length / duration.max(1e-6);
+    let offsets: Vec<f64> = segment["common_keyframes"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .flat_map(|track| track["keyframe_list"].as_array().into_iter().flatten())
+        .map(|key| seconds(&key["time_offset"]))
+        .collect();
+    let in_source = source_start > 1e-3
+        && offsets
+            .iter()
+            .all(|&at| at >= source_start - 1e-3 && at <= source_start + source_length + 1e-3);
+    let (origin, rate) = if in_source {
+        (source_start, rate)
+    } else {
+        (0.0, 1.0)
+    };
     for track in segment["common_keyframes"].as_array().into_iter().flatten() {
         let (property, scale, shift): (KeyProperty, f64, f64) = match text(track, "property_type") {
             "KFTypePositionX" => (KeyProperty::OffsetX, 0.5, 0.0),
@@ -1281,7 +1532,8 @@ fn keys(segment: &Value, duration: f64) -> Vec<ClipKey> {
             _ => continue,
         };
         for key in track["keyframe_list"].as_array().into_iter().flatten() {
-            let at = (seconds(&key["time_offset"]) / duration.max(1e-6)).clamp(0.0, 1.0);
+            let at = ((seconds(&key["time_offset"]) - origin) / rate / duration.max(1e-6))
+                .clamp(0.0, 1.0);
             let value = key["values"].get(0).and_then(Value::as_f64).unwrap_or(0.0) * scale + shift;
             let ease = match text(key, "curveType") {
                 "" | "Line" => KeyEase::LINEAR,
@@ -1371,6 +1623,62 @@ fn animations(clip: &mut Clip, item: &Value, notes: &mut Vec<String>) {
     clip.animations = (!set.is_empty()).then_some(set);
 }
 
+/// When each of `content`'s words is spoken: the caption's recognised
+/// words, in milliseconds from the caption's start, matched in order onto
+/// the content's. They come with the spaces between them, and often with
+/// more words than this caption shows, since CapCut splits a sentence over
+/// several. Empty when they do not line up.
+fn word_times(content: &str, item: &Value) -> Vec<[f64; 2]> {
+    let words = &item["words"];
+    let (Some(said), Some(starts), Some(ends)) = (
+        words["text"].as_array(),
+        words["start_time"].as_array(),
+        words["end_time"].as_array(),
+    ) else {
+        return Vec::new();
+    };
+    let plain = |word: &str| -> String {
+        word.chars()
+            .filter(|c| c.is_alphanumeric())
+            .flat_map(char::to_lowercase)
+            .collect()
+    };
+    let spoken: Vec<(String, f64, f64)> = said
+        .iter()
+        .zip(starts.iter().zip(ends))
+        .filter_map(|(word, (start, end))| {
+            let word = plain(word.as_str()?);
+            (!word.is_empty()).then(|| {
+                (
+                    word,
+                    start.as_f64().unwrap_or(0.0) / 1000.0,
+                    end.as_f64().unwrap_or(0.0) / 1000.0,
+                )
+            })
+        })
+        .collect();
+    let shown: Vec<String> = content.split_whitespace().map(plain).collect();
+    if shown.is_empty() {
+        return Vec::new();
+    }
+    for at in 0..spoken.len() {
+        if spoken.len() - at < shown.len() {
+            break;
+        }
+        if shown
+            .iter()
+            .zip(&spoken[at..])
+            .all(|(word, (heard, _, _))| word == heard)
+        {
+            return spoken[at..at + shown.len()]
+                .iter()
+                .map(|(_, start, end)| [*start, *end])
+                .collect();
+        }
+    }
+    Vec::new()
+}
+
 /// A CapCut mask as the clip's.
 fn mask(item: &Value) -> Option<ClipMask> {
     let config = &item["config"];
@@ -1419,7 +1727,17 @@ fn weight_in(path: &str) -> Option<f64> {
 }
 
 /// A text material as a title's style.
-fn text_style(item: &Value, fonts: &mut Vec<CustomFont>, notes: &mut Vec<String>) -> TextStyle {
+/// CapCut's text size unit, in pixels of em on a canvas whose shorter side
+/// is 1080: measured by fitting Concat's painting of the same words over
+/// CapCut's export (size 8 is a 50.25 px em, size 10 a 62.9 px one).
+const EM_PER_SIZE: f64 = 6.285;
+
+fn text_style(
+    item: &Value,
+    (canvas_w, canvas_h): (f64, f64),
+    fonts: &mut Vec<CustomFont>,
+    notes: &mut Vec<String>,
+) -> TextStyle {
     let mut style = TextStyle::default();
     let content: Value = serde_json::from_str(text(item, "content")).unwrap_or(Value::Null);
     let words = content
@@ -1429,13 +1747,13 @@ fn text_style(item: &Value, fonts: &mut Vec<CustomFont>, notes: &mut Vec<String>
         .unwrap_or_else(|| text(item, "recognize_text").to_owned());
     style.content = words;
     let first = content["styles"].get(0).cloned().unwrap_or(Value::Null);
-    // CapCut's size is in its own units: about 0.21 % of the frame's
-    // height a unit for the cap height Concat measures.
     let size = first["size"]
         .as_f64()
         .or_else(|| item["font_size"].as_f64())
         .unwrap_or(15.0);
-    style.font_size = (size * 0.0021).clamp(0.003, 0.5);
+    // The em in pixels, then as Concat's fraction of the frame's height.
+    let em = size * EM_PER_SIZE * canvas_w.min(canvas_h) / 1080.0;
+    style.font_size = (em / canvas_h).clamp(0.003, 0.5);
     if let Some(colour) = first["fill"]["content"]["solid"]["color"]
         .as_array()
         .and_then(|c| hex_of(c))
@@ -1458,33 +1776,47 @@ fn text_style(item: &Value, fonts: &mut Vec<CustomFont>, notes: &mut Vec<String>
         Some(2) => TextAlign::Right,
         _ => TextAlign::Center,
     };
-    style.line_height = 1.0 + number(&item["line_spacing"], 0.02) * 4.0;
-    style.tracking = number(&item["letter_spacing"], 0.0) * 0.01;
-    // The stroke: the style's own, or the material's border.
+    // CapCut sets lines in the face's typographic box, a plate behind each
+    // line; see `concat_text::TitleStyle::snug_lines`.
+    style.snug_lines = true;
+    style.line_height = 1.0 + number(&item["line_spacing"], 0.02);
+    style.tracking = number(&item["letter_spacing"], 0.0) * 0.05 * style.font_size;
+    // The stroke is the style's own: the material's border colour is only
+    // what the panel would offer next. Its width is a fraction of the em,
+    // the outline reaching that far past the glyph's edge.
     let stroke = first["strokes"].get(0).cloned().unwrap_or(Value::Null);
     if let Some(colour) = stroke["content"]["solid"]["color"]
         .as_array()
         .and_then(|c| hex_of(c))
     {
         style.stroke_color = colour;
-        style.stroke_width = number(&stroke["width"], 0.08) * style.font_size * 0.6;
-    } else if let Some(colour) = hex(text(item, "border_color")) {
-        style.stroke_color = colour;
-        style.stroke_width = number(&item["border_width"], 0.08) * style.font_size * 0.6;
+        style.stroke_width = number(&stroke["width"], 0.08) * em / canvas_h;
     }
     style.shadow = item["has_shadow"].as_bool().unwrap_or(false)
         || first["shadows"].as_array().is_some_and(|s| !s.is_empty());
+    // The plate: CapCut's width and height dials are air in ems either
+    // side of each line, its roundness a fraction of half an em.
     if let Some(colour) = hex(text(item, "background_color"))
         && number(&item["background_alpha"], 1.0) > 0.0
         && item["background_style"].as_i64().unwrap_or(0) != 0
     {
-        style.background = colour;
+        let alpha = number(&item["background_alpha"], 1.0).clamp(0.0, 1.0);
+        style.background = if alpha < 1.0 {
+            format!("{colour}{:02x}", (alpha * 255.0).round() as u8)
+        } else {
+            colour
+        };
+        style.background_lines = true;
+        style.background_padding_x = number(&item["background_width"], 0.14) * em / canvas_h;
+        style.background_padding_y = number(&item["background_height"], 0.14) * em / canvas_h;
         style.background_radius =
-            number(&item["background_round_radius"], 0.0) * style.font_size * 0.5;
+            number(&item["background_round_radius"], 0.0) * em * 0.5 / canvas_h;
     }
+    style.word_times = word_times(&style.content, item);
+    // CapCut's line width wraps the words; the plate still hugs them.
     let width = number(&item["line_max_width"], 0.0);
     if width > 0.0 && width < 1.0 {
-        style.max_width = width;
+        style.wrap_width = width;
     }
     // The face: a file CapCut points at, registered on the project once.
     let path = first["font"]["path"]
@@ -1620,7 +1952,7 @@ mod tests {
             .expect("the still");
         assert_eq!(
             still.transition_in.as_ref().map(|t| t.id.as_str()),
-            Some("concat.flash-transition"),
+            Some("concat.flash-cut"),
             "the transition rides into the next clip"
         );
 
