@@ -604,9 +604,13 @@ pub(crate) fn transitions_at(shapes: &[TransitionShape], frame: i64) -> Vec<Tran
 /// for the compositor to combine over; every other kind needs nothing more
 /// than what it already baked into the clips themselves.
 ///
-/// Track indices are doubled first, so an incoming clip gets an odd lane of
-/// its own directly above the pair it crosses over - stacking against every
-/// other track is preserved, and nothing else occupies odd lanes. Cuts are
+/// Track indices are spread [`LANES`] apart first, so an incoming clip gets
+/// a lane of its own directly above the clip it crosses over - stacking
+/// against every other track is preserved. A run of transitions on one
+/// track climbs a lane each, its incoming clip over the one before; the
+/// spread keeps the climb inside the track's own band, where doubling the
+/// indices once let the fourth transition in a row land on the next
+/// track's lane and the seventh draw a video over the titles above it. Cuts are
 /// collected before anything mutates, so resolving one transition cannot
 /// unhook the adjacency test of the next.
 ///
@@ -628,6 +632,10 @@ pub(crate) fn transitions_at(shapes: &[TransitionShape], frame: i64) -> Vec<Tran
 /// `combine_transition`. Legacy ids are matched first and never reach this
 /// path, so a project saved before packaged transitions existed renders
 /// exactly as it always did.
+/// How many lanes each track gets once transitions are resolved: its own,
+/// and one for each transition in a row a run of its clips may climb.
+const LANES: usize = 4096;
+
 fn resolve_transitions(clips: &mut Vec<ExportClip>, rate: FrameRate) -> Vec<TransitionSpan> {
     resolve_transitions_at(clips, rate, 0.0)
 }
@@ -638,7 +646,7 @@ fn resolve_transitions_at(
     origin: f64,
 ) -> Vec<TransitionSpan> {
     for clip in clips.iter_mut() {
-        clip.track *= 2;
+        clip.track *= LANES;
     }
     let mut spans: Vec<TransitionSpan> = Vec::new();
 
@@ -3389,7 +3397,7 @@ mod tests {
             "runs on half the transition past the cut"
         );
         assert_eq!(a.fade_out, 1.0, "and its sound fades out across it");
-        assert_eq!(a.track, 0, "outgoing stays on its doubled lane");
+        assert_eq!(a.track, 0, "outgoing stays on its track's lane");
         assert_eq!(clips.len(), 2, "no hold: both sides have footage");
     }
 
@@ -3804,14 +3812,39 @@ mod tests {
     }
 
     #[test]
-    fn track_indices_are_doubled_for_everyone() {
+    fn track_indices_are_spread_for_everyone() {
         let mut clips = vec![
             clip("video", 0, 0.0, 2.0, 0.0),
             clip("audio", 3, 0.0, 2.0, 0.0),
         ];
         resolve_transitions(&mut clips, FrameRate::THIRTY);
         assert_eq!(clips[0].track, 0);
-        assert_eq!(clips[1].track, 6);
+        assert_eq!(clips[1].track, 3 * LANES);
+    }
+
+    /// Transitions in a row on one track climb a lane each, and never past
+    /// the track above: a title there stays over the video.
+    #[test]
+    fn a_run_of_transitions_stays_under_the_track_above() {
+        let mut clips: Vec<ExportClip> = (0..10)
+            .map(|n| clip("video", 0, f64::from(n) * 2.0, 2.0, 1.0))
+            .collect();
+        for incoming in clips.iter_mut().skip(1) {
+            incoming.transition = spec("cross-fade", 0.5);
+        }
+        clips.push(clip("title", 1, 0.0, 20.0, 0.0));
+        resolve_transitions(&mut clips, FrameRate::THIRTY);
+        let title = clips
+            .iter()
+            .find(|c| c.path == "title.mp4")
+            .expect("the title")
+            .track;
+        assert!(
+            clips
+                .iter()
+                .filter(|c| c.path == "video.mp4")
+                .all(|c| c.track < title)
+        );
     }
 
     #[test]
