@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Voice added to the timeline",
   "speech.voiceFrom": "Voice from",
   "speech.voiceName": "Name this voice",
+  "start.capcutImported": "Opened the CapCut project as a Concat project",
+  "start.capcutImportedNotes": "Opened the CapCut project as a Concat project. {0} things were approximated or left out: see {1} in the project folder",
   "start.choose": "Choose…",
   "start.chooseAFolder": "Choose a folder",
   "start.chooseWhereProjectFolder": "Choose where the project folder should go",

@@ -439,6 +439,11 @@ impl Api {
                 video,
             } => view(self.create(&location, &name, video.unwrap_or_default())?),
             Request::ProjectOpen { path } => view(self.open(&path)?),
+            Request::ProjectImportCapCut { draft, location } => {
+                let imported = concat_host::capcut::import(std::path::Path::new(&draft), &location)
+                    .map_err(ApiError::failed)?;
+                view(self.adopt(imported.info)?)
+            }
             Request::ProjectClose { path, save } => {
                 self.close(&path, save)?;
                 Ok(Reply::Done(Done {}))

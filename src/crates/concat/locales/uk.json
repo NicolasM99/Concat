@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Голос додано на часову шкалу",
   "speech.voiceFrom": "Джерело голосу",
   "speech.voiceName": "Назва голосу",
+  "start.capcutImported": "Проєкт CapCut відкрито як проєкт Concat",
+  "start.capcutImportedNotes": "Проєкт CapCut відкрито як проєкт Concat. {0} елементів наближено або пропущено: див. {1} у теці проєкту",
   "start.choose": "Вибрати…",
   "start.chooseAFolder": "Виберіть папку",
   "start.chooseWhereProjectFolder": "Виберіть, де розмістити папку проєкту",

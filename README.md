@@ -58,6 +58,7 @@ Everything runs locally on a native Rust engine with a GPU compositor. Install i
 - 🧍 **Background removal.** People, objects, or paint the mask yourself.
 - 🎞️ **Keyframes.** Position, scale, rotation, opacity, volume, effect parameters. Curve editor built in.
 - ✨ **900+ effects, filters, transitions and animations**, CapCut's catalogue among them ([what covers what](docs/CAPCUT_PARITY.md)). GPU-rendered, live in the preview.
+- 📥 **Opens CapCut projects.** Point Open project at a CapCut project folder: clips, titles, keyframes, compound clips, transitions, animations and effects come over ([details](docs/CAPCUT_PARITY.md#opening-capcut-projects)).
 - ✂️ **Cut fast.** Split, trim, ripple, merge, freeze frame, speed. Magnetic timeline if you want it.
 - 🎚️ **Multi-track, multi-timeline.** Several cuts in one project. Blend modes, crop, flips.
 - 📝 **Titles.** Fonts, stroke, shadow, background plate. Presets to start from.

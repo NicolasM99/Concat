@@ -69,6 +69,17 @@ pub enum Request {
         #[serde(default)]
         video: Option<VideoSettings>,
     },
+    /// Reads a CapCut project - its folder, or its `draft_content.json` -
+    /// into a new Concat project under `location`, and opens it. What was
+    /// approximated or left out is written beside it, in
+    /// `capcut-import.txt`.
+    #[serde(rename = "project.importCapCut")]
+    ProjectImportCapCut {
+        /// The CapCut project folder, or its draft file.
+        draft: String,
+        /// The directory the new project folder is made in.
+        location: String,
+    },
     /// Opens a project folder. Opening one already open returns its state
     /// as it stands, edits and all.
     #[serde(rename = "project.open")]

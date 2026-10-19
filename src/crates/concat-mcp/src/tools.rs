@@ -175,6 +175,13 @@ pub fn catalogue() -> Vec<Tool> {
             Summary,
         ),
         method(
+            "project_import_capcut",
+            "Open a CapCut project",
+            "Reads a CapCut project - its folder, or its draft_content.json - into a new Concat project inside `location` and opens it: media, clips with their timing, speed, volume, fades, placement and keys, titles, transitions, animations, effects, filters and adjustments, each CapCut item as the Concat package that stands in for it. What was approximated or left out is listed in capcut-import.txt in the new project's folder. Returns the project summary.",
+            "project.importCapCut",
+            Summary,
+        ),
+        method(
             "project_open",
             "Open a project",
             "Opens a project folder so it can be read and edited. Opening one already open returns it as it stands, unsaved edits included. Refused when the Concat window has that project open. Returns the project summary.",
@@ -937,6 +944,10 @@ mod tests {
                 json!({ "location": "/tmp", "name": "Cut", "video": { "width": 1080, "height": 1920, "rateNum": 30, "rateDen": 1 } }),
             ),
             ("project_open", json!({ "path": "/tmp/Cut" })),
+            (
+                "project_import_capcut",
+                json!({ "draft": "/tmp/CapCut/Projects/My video", "location": "/tmp" }),
+            ),
             ("project_save", json!({ "path": "/tmp/Cut" })),
             ("project_close", json!({ "path": "/tmp/Cut", "save": true })),
             ("timeline_read", json!({ "path": "/tmp/Cut" })),

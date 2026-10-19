@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Đã thêm giọng nói vào dòng thời gian",
   "speech.voiceFrom": "Giọng từ",
   "speech.voiceName": "Đặt tên cho giọng này",
+  "start.capcutImported": "Đã mở dự án CapCut thành dự án Concat",
+  "start.capcutImportedNotes": "Đã mở dự án CapCut thành dự án Concat. {0} mục được ước lượng hoặc bỏ qua: xem {1} trong thư mục dự án",
   "start.choose": "Chọn…",
   "start.chooseAFolder": "Chọn thư mục",
   "start.chooseWhereProjectFolder": "Chọn nơi lưu thư mục dự án",

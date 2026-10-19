@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "आवाज़ टाइमलाइन में जोड़ी गई",
   "speech.voiceFrom": "आवाज़ का स्रोत",
   "speech.voiceName": "इस आवाज़ का नाम",
+  "start.capcutImported": "CapCut प्रोजेक्ट को Concat प्रोजेक्ट के रूप में खोला गया",
+  "start.capcutImportedNotes": "CapCut प्रोजेक्ट को Concat प्रोजेक्ट के रूप में खोला गया। {0} चीज़ें अनुमानित या छोड़ी गईं: प्रोजेक्ट फ़ोल्डर में {1} देखें",
   "start.choose": "चुनें…",
   "start.chooseAFolder": "फ़ोल्डर चुनें",
   "start.chooseWhereProjectFolder": "चुनें कि प्रोजेक्ट फ़ोल्डर कहां रखा जाए",

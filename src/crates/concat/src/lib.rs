@@ -2353,6 +2353,15 @@ fn start(project: Option<std::path::PathBuf>, smoke: bool) -> Result<(), slint::
                 let path = path
                     .to_str()
                     .ok_or_else(|| "project directory is not valid Unicode".to_string())?;
+                // A CapCut project on the command line is read into a new
+                // project, as Open does with one.
+                if !concat_host::projects::is_project(std::path::Path::new(path))
+                    && concat_host::capcut::is_capcut(std::path::Path::new(path))
+                {
+                    let location = panes::start::default_location();
+                    return concat_host::capcut::import(std::path::Path::new(path), &location)
+                        .map(|imported| imported.info);
+                }
                 concat_host::projects::open(path)
             })
             .and_then(|info| shell.studio.borrow_mut().open_project(info));

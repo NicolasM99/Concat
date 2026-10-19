@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Ses zaman çizelgesine eklendi",
   "speech.voiceFrom": "Ses kaynağı",
   "speech.voiceName": "Bu sesin adı",
+  "start.capcutImported": "CapCut projesi Concat projesi olarak açıldı",
+  "start.capcutImportedNotes": "CapCut projesi Concat projesi olarak açıldı. {0} öğe yaklaşık olarak aktarıldı veya atlandı: proje klasöründeki {1} dosyasına bakın",
   "start.choose": "Seç…",
   "start.chooseAFolder": "Bir klasör seçin",
   "start.chooseWhereProjectFolder": "Proje klasörünün nereye gideceğini seçin",

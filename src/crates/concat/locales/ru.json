@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Голос добавлен на таймлайн",
   "speech.voiceFrom": "Голос из",
   "speech.voiceName": "Имя голоса",
+  "start.capcutImported": "Проект CapCut открыт как проект Concat",
+  "start.capcutImportedNotes": "Проект CapCut открыт как проект Concat. {0} элементов приближено или пропущено: см. {1} в папке проекта",
   "start.choose": "Выбрать…",
   "start.chooseAFolder": "Выберите папку",
   "start.chooseWhereProjectFolder": "Выберите, где будет папка проекта",

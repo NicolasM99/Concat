@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "صدا به تایم‌لاین اضافه شد",
   "speech.voiceFrom": "صدا از",
   "speech.voiceName": "نامی برای این صدا",
+  "start.capcutImported": "پروژهٔ CapCut به‌صورت پروژهٔ Concat باز شد",
+  "start.capcutImportedNotes": "پروژهٔ CapCut به‌صورت پروژهٔ Concat باز شد. {0} مورد تقریبی یا حذف شد: {1} را در پوشهٔ پروژه ببینید",
   "start.choose": "انتخاب…",
   "start.chooseAFolder": "انتخاب پوشه",
   "start.chooseWhereProjectFolder": "محل ذخیره پوشه پروژه را انتخاب کنید",

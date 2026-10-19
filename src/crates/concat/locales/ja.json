@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "音声をタイムラインに追加しました",
   "speech.voiceFrom": "声の元",
   "speech.voiceName": "ボイスの名前",
+  "start.capcutImported": "CapCut プロジェクトを Concat プロジェクトとして開きました",
+  "start.capcutImportedNotes": "CapCut プロジェクトを Concat プロジェクトとして開きました。{0} 件を近似または省略しました: プロジェクトフォルダーの {1} をご覧ください",
   "start.choose": "選択…",
   "start.chooseAFolder": "フォルダーを選択",
   "start.chooseWhereProjectFolder": "プロジェクトフォルダーの保存先を選んでください",

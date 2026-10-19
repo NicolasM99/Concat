@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Glas dodan na vremensku liniju",
   "speech.voiceFrom": "Glas iz",
   "speech.voiceName": "Ime glasa",
+  "start.capcutImported": "CapCut projekt otvoren je kao Concat projekt",
+  "start.capcutImportedNotes": "CapCut projekt otvoren je kao Concat projekt. {0} stavki je približeno ili izostavljeno: pogledajte {1} u mapi projekta",
   "start.choose": "Odaberi…",
   "start.chooseAFolder": "Odaberite mapu",
   "start.chooseWhereProjectFolder": "Odaberite kamo će mapa projekta",

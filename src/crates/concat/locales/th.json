@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "เพิ่มเสียงพูดลงไทม์ไลน์แล้ว",
   "speech.voiceFrom": "เสียงจาก",
   "speech.voiceName": "ตั้งชื่อเสียงพูดนี้",
+  "start.capcutImported": "เปิดโปรเจกต์ CapCut เป็นโปรเจกต์ Concat แล้ว",
+  "start.capcutImportedNotes": "เปิดโปรเจกต์ CapCut เป็นโปรเจกต์ Concat แล้ว {0} รายการถูกประมาณหรือละไว้: ดู {1} ในโฟลเดอร์โปรเจกต์",
   "start.choose": "เลือก…",
   "start.chooseAFolder": "เลือกโฟลเดอร์",
   "start.chooseWhereProjectFolder": "เลือกตำแหน่งของโฟลเดอร์โปรเจกต์",

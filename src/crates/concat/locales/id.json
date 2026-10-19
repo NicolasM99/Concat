@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Suara ditambahkan ke linimasa",
   "speech.voiceFrom": "Suara dari",
   "speech.voiceName": "Nama suara ini",
+  "start.capcutImported": "Proyek CapCut dibuka sebagai proyek Concat",
+  "start.capcutImportedNotes": "Proyek CapCut dibuka sebagai proyek Concat. {0} hal diperkirakan atau dihilangkan: lihat {1} di folder proyek",
   "start.choose": "Pilih…",
   "start.chooseAFolder": "Pilih folder",
   "start.chooseWhereProjectFolder": "Pilih lokasi folder proyek",

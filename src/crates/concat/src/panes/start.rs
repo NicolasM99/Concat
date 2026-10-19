@@ -171,7 +171,7 @@ impl Default for StartPane {
 /// Where a new project goes unless told otherwise; see [`location_on`].
 /// On an iPhone the folder is made here, so that the Files app shows it
 /// from the first launch and not only from the first project.
-fn default_location() -> String {
+pub(crate) fn default_location() -> String {
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     let desktop = dirs::desktop_dir();
     #[cfg(any(target_os = "android", target_os = "ios"))]
@@ -447,15 +447,48 @@ impl StartPane {
         );
     }
 
-    /// The folder Open was answered with: checked, then opened.
+    /// The folder Open was answered with: checked, then opened. A CapCut
+    /// project is read into a new Concat project where new projects go,
+    /// and that is opened.
     fn open_chosen(folder: &Path, studio: &mut Studio) {
         let path = folder.to_string_lossy().into_owned();
+        if !projects::is_project(folder) && concat_host::capcut::is_capcut(folder) {
+            Self::open_capcut(folder, studio);
+            return;
+        }
         if !projects::is_project(folder) {
             studio.notify(&tf("start.notConcatProjectFolder", &[&path]), true);
             return;
         }
         if let Err(error) = projects::open(&path).and_then(|info| studio.open_project(info)) {
             studio.notify(&error, true);
+        }
+    }
+
+    /// Reads the CapCut project in `folder` into a new project and opens
+    /// it, saying how much of it had to be approximated.
+    pub(crate) fn open_capcut(folder: &Path, studio: &mut Studio) {
+        let location = default_location();
+        match concat_host::capcut::import(folder, &location) {
+            Ok(imported) => {
+                let notes = imported.notes.len();
+                if let Err(error) = studio.open_project(imported.info) {
+                    studio.notify(&error, true);
+                    return;
+                }
+                if notes == 0 {
+                    studio.notify(&t("start.capcutImported"), false);
+                } else {
+                    studio.notify(
+                        &tf(
+                            "start.capcutImportedNotes",
+                            &[&notes.to_string(), &concat_host::capcut::REPORT],
+                        ),
+                        false,
+                    );
+                }
+            }
+            Err(error) => studio.notify(&error, true),
         }
     }
 

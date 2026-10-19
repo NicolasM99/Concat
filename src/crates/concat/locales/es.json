@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Voz añadida a la línea de tiempo",
   "speech.voiceFrom": "Voz de",
   "speech.voiceName": "Nombre de la voz",
+  "start.capcutImported": "Proyecto de CapCut abierto como proyecto de Concat",
+  "start.capcutImportedNotes": "Proyecto de CapCut abierto como proyecto de Concat. {0} elementos se aproximaron o se omitieron: consulta {1} en la carpeta del proyecto",
   "start.choose": "Elegir…",
   "start.chooseAFolder": "Elige una carpeta",
   "start.chooseWhereProjectFolder": "Elige dónde irá la carpeta del proyecto",

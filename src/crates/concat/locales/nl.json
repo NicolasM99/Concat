@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Stem toegevoegd aan de tijdlijn",
   "speech.voiceFrom": "Stem uit",
   "speech.voiceName": "Naam van de stem",
+  "start.capcutImported": "CapCut-project geopend als Concat-project",
+  "start.capcutImportedNotes": "CapCut-project geopend als Concat-project. {0} onderdelen zijn benaderd of weggelaten: zie {1} in de projectmap",
   "start.choose": "Kiezen…",
   "start.chooseAFolder": "Kies een map",
   "start.chooseWhereProjectFolder": "Kies waar de projectmap moet komen",

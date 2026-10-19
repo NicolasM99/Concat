@@ -4,6 +4,28 @@ What of CapCut's catalogue this build of Concat carries, and the package that ca
 The list is CapCut's own, as VectCutAPI's `pyJianYingDraft` metadata records it (`capcut_*_meta.py`).
 Everything here is drawn by Concat's own GPU shaders and FFmpeg chains: no CapCut asset is copied.
 
+## Opening CapCut projects
+
+**Open project** (on the launch screen or under File) takes a CapCut project folder as it
+takes a Concat one: the draft is read into a new Concat project where new projects go, and
+opened. `concat <folder>` does the same from a terminal, and the API's `project.importCapCut`
+(MCP `project_import_capcut`) for agents. What comes over:
+
+- the media, from the draft's own folder or wherever CapCut found it; a file that is gone
+  comes in to be relinked;
+- every segment as a clip: its span, in-point, speed and speed curve, volume, fades, position,
+  scale, rotation, flips, opacity, keyframes, mask and background, and hidden clips stay hidden;
+- titles: words, font file, weight, size, colour, stroke, shadow, box, alignment and width;
+- compound clips, opened in place: their own tracks cut to the compound's span and moved with it;
+- transitions, In/Out/Combo/Loop and caption animations, effects, filters, colour
+  adjustments and voice cleanup as the packages above, by CapCut's ids, then by the words
+  of the item's name in English, Spanish, Portuguese, French, German or Italian.
+
+Whatever had to be approximated or left out is listed in `capcut-import.txt` in the new
+project's folder. Recent CapCut releases may write the draft encrypted; such a draft is
+refused with a reason. The id table is `src/crates/concat-host/src/capcut/ids.rs`, written
+by `scripts/capcut-parity/capcut_ids.py`.
+
 ## Summary
 
 | Catalogue | Covered | CapCut |

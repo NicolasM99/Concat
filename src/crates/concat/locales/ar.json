@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "تمت إضافة الصوت إلى المخطط الزمني",
   "speech.voiceFrom": "الصوت من",
   "speech.voiceName": "سمِّ هذا الصوت",
+  "start.capcutImported": "تم فتح مشروع CapCut كمشروع Concat",
+  "start.capcutImportedNotes": "تم فتح مشروع CapCut كمشروع Concat. تمت مقاربة {0} عنصرًا أو حذفها: راجع {1} في مجلد المشروع",
   "start.choose": "اختيار…",
   "start.chooseAFolder": "اختيار مجلد",
   "start.chooseWhereProjectFolder": "اختر مكان مجلد المشروع",

@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "語音已加入時間軸",
   "speech.voiceFrom": "語音來源",
   "speech.voiceName": "為這個嗓音命名",
+  "start.capcutImported": "已將 CapCut 專案作為 Concat 專案開啟",
+  "start.capcutImportedNotes": "已將 CapCut 專案作為 Concat 專案開啟。有 {0} 項以近似方式處理或略去：請查看專案資料夾中的 {1}",
   "start.choose": "選擇…",
   "start.chooseAFolder": "選擇資料夾",
   "start.chooseWhereProjectFolder": "選擇專案資料夾的存放位置",

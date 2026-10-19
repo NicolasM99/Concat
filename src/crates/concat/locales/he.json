@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "הקול נוסף לציר הזמן",
   "speech.voiceFrom": "קול מתוך",
   "speech.voiceName": "שם לקול",
+  "start.capcutImported": "פרויקט CapCut נפתח כפרויקט Concat",
+  "start.capcutImportedNotes": "פרויקט CapCut נפתח כפרויקט Concat. {0} פריטים קורבו או הושמטו: ראו את {1} בתיקיית הפרויקט",
   "start.choose": "בחירה…",
   "start.chooseAFolder": "בחירת תיקייה",
   "start.chooseWhereProjectFolder": "בחירת המיקום של תיקיית הפרויקט",

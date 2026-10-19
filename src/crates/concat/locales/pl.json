@@ -617,6 +617,8 @@
   "speech.voiceAddedTimeline": "Głos dodany do osi czasu",
   "speech.voiceFrom": "Głos z",
   "speech.voiceName": "Nazwa głosu",
+  "start.capcutImported": "Projekt CapCut otwarto jako projekt Concat",
+  "start.capcutImportedNotes": "Projekt CapCut otwarto jako projekt Concat. {0} elementów przybliżono lub pominięto: zobacz {1} w folderze projektu",
   "start.choose": "Wybierz…",
   "start.chooseAFolder": "Wybierz folder",
   "start.chooseWhereProjectFolder": "Wybierz, gdzie ma się znaleźć folder projektu",
