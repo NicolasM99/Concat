@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-shake-1"
+name = "Shake 1"
+kind = "animation"
+category = "In"
+order = 28
+description = "The clip shakes side to side as it appears."
+
+[animation]
+slot = "in"
+duration = 0.5
+x = "(0.05 * sin(t * 45) * (1 - t))"
+opacity = "min(1, t * 3)"

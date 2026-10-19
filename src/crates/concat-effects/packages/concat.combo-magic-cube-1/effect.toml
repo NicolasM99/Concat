@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-magic-cube-1"
+name = "Magic Cube 1"
+kind = "animation"
+category = "Combo"
+order = 59
+description = "The clip twists like a face of a magic cube."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(90 * pow(sin(t * pi), 2))"
+sx = "(1 - 0.3 * sin(t * pi * 2))"

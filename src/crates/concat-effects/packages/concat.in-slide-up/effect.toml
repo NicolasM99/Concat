@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.in-slide-up"
+name = "Slide Up"
+kind = "animation"
+category = "In"
+order = 10
+description = "The clip slides up into place from below."
+
+[animation]
+slot = "in"
+duration = 0.5
+y = "(1 - (1 - pow(1 - t, 3)))"

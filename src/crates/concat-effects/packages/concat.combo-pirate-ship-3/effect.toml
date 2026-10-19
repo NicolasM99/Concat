@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-pirate-ship-3"
+name = "Pirate ship 3"
+kind = "animation"
+category = "Combo"
+order = 53
+description = "The clip swings like a fairground ship."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.15 * sin(t * pi * 2))"
+rotation = "(40 * sin(t * pi * 2))"

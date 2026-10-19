@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.in-crt-bands"
+name = "CRT Bands"
+kind = "animation"
+category = "In"
+order = 38
+description = "The clip flickers on through jittering CRT bands."
+
+[animation]
+slot = "in"
+duration = 0.5
+opacity = "min(1, t * 2)"
+
+[animation.effect]
+id = "concat.crt-bands"
+params = { progress = "100 * (1 - t)" }

@@ -1,0 +1,28 @@
+format = 2
+
+[effect]
+id = "concat.anime-frame"
+name = "Anime Frame"
+kind = "effect"
+category = "Reveal"
+order = 21
+intensity = "progress"
+description = "Speed lines and a bright flash over the clip, like a frame from an anime; the amount is how strongly."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.in-screen-wipe"
+name = "Screen Wipe"
+kind = "animation"
+category = "In"
+order = 36
+description = "The clip is wiped on from the left."
+
+[animation]
+slot = "in"
+duration = 0.5
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * t" }

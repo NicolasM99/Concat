@@ -1,0 +1,48 @@
+format = 2
+
+[effect]
+id = "concat.reveal-wipe"
+name = "Reveal Wipe"
+kind = "effect"
+category = "Reveal"
+order = 10
+intensity = "progress"
+description = "Wipes the clip on from one side; the progress is how much of it shows."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[[param]]
+key = "direction"
+label = "Direction"
+type = "enum"
+min = 0
+max = 3
+default = 0
+step = 1
+values = [0, 1, 2, 3]
+labels = ["Left to right", "Right to left", "Top to bottom", "Bottom to top"]
+
+[[param]]
+key = "softness"
+label = "Softness"
+min = 0
+max = 100
+default = 20
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

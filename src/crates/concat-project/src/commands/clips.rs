@@ -385,11 +385,13 @@ pub(super) fn apply(
                 // an entrance or an exit the whole did not have at the cut.
                 tail.transition_in = None;
                 tail.fade_in = 0.0;
+                tail.animations = split_animations(&tail.animations, false);
                 tail.rewindow_keys(whole, offset, whole);
                 created = Some(tail.id.clone());
                 let head = timeline.clip_at_mut(index);
                 head.duration = offset;
                 head.source_start = head_source;
+                head.animations = split_animations(&head.animations, true);
                 head.fade_out = 0.0;
                 head.rewindow_keys(whole, 0.0, offset);
                 timeline.clips.insert(index + 1, Arc::new(tail));
@@ -584,10 +586,12 @@ pub(super) fn apply(
             tail.source_start = tail_source;
             tail.transition_in = None;
             tail.fade_in = 0.0;
+            tail.animations = split_animations(&tail.animations, false);
             tail.rewindow_keys(clip_duration, offset, clip_duration);
             let head = timeline.clip_at_mut(index);
             head.duration = offset;
             head.source_start = head_source;
+            head.animations = split_animations(&head.animations, true);
             head.fade_out = 0.0;
             head.rewindow_keys(clip_duration, 0.0, offset);
             timeline.clips.insert(index + 1, Arc::new(tail));
@@ -621,6 +625,7 @@ pub(super) fn apply(
             frozen.muted = None;
             frozen.detached_from = None;
             frozen.transition_in = None;
+            frozen.animations = None;
             frozen.text = None;
             timeline.clips.push(Arc::new(frozen));
 
@@ -1116,4 +1121,17 @@ pub fn consolidation_clips(
         return Err(refuse("Include both sides of a transition in the merge."));
     }
     Ok(clips)
+}
+
+/// A piece of a split clip's animations: the way in stays on the head and
+/// the way out goes to the tail, so neither piece plays an entrance or an
+/// exit the whole did not have at its cut; a Combo and a Loop run on both.
+fn split_animations(whole: &Option<Animations>, head: bool) -> Option<Animations> {
+    let mut set = whole.clone()?;
+    if head {
+        set.exit = None;
+    } else {
+        set.enter = None;
+    }
+    (!set.is_empty()).then_some(set)
 }

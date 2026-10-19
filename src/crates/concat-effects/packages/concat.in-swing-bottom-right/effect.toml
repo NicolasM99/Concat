@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.in-swing-bottom-right"
+name = "Swing Bottom Right"
+kind = "animation"
+category = "In"
+order = 26
+description = "The clip swings into place about its bottom right corner."
+
+[animation]
+slot = "in"
+duration = 0.5
+x = "(0.5 + -0.5 * cos(((60 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) - -0.5 * sin(((60 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) - (0.5 + -0.5))"
+y = "(0.5 + -0.5 * sin(((60 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) + -0.5 * cos(((60 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) - (0.5 + -0.5))"
+rotation = "60 * (1 - (1 - pow(1 - t, 3)))"
+opacity = "min(1, t * 3)"

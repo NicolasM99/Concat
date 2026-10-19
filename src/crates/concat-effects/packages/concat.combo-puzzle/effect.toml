@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-puzzle"
+name = "Puzzle"
+kind = "animation"
+category = "Combo"
+order = 92
+description = "The clip jumps into place piece by piece and out again."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.05 * (floor(t * 6) - floor(t * 6 / 2) * 2 - 0.5))"
+rotation = "(5 * (floor(t * 6) - floor(t * 6 / 2) * 2 - 0.5))"

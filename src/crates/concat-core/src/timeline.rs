@@ -11,8 +11,9 @@
 //! first and everything after it draws on top.
 
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
-use crate::animate::Animation;
+use crate::animate::{Animation, ClipMotion};
 use crate::arena::{Arena, Id};
 use crate::mask::ShapeMask;
 use crate::retime::SpeedCurve;
@@ -104,6 +105,9 @@ pub struct Clip {
     /// The shape that keeps part of the picture, when one does; its
     /// numbers ride the animation's mask tracks.
     pub mask: Option<ShapeMask>,
+    /// The clip's In, Out, Combo and Loop, when it has any: a motion on
+    /// top of `transform` and `animation`. See [`ClipMotion`].
+    pub motion: Option<Arc<dyn ClipMotion>>,
 }
 
 /// How a layer's colour meets what is beneath it.
@@ -227,6 +231,7 @@ impl Clip {
             blend: Blend::Normal,
             hold: false,
             mask: None,
+            motion: None,
         }
     }
 
@@ -240,11 +245,18 @@ impl Clip {
             .clamp(0.0, 1.0)
     }
 
-    /// The placement at `time`: the clip's own, moved by its animation.
+    /// The placement at `time`: the clip's own, moved by its keys and then
+    /// by its animations.
     pub fn transform_at(&self, time: Rational) -> Transform {
-        match &self.animation {
+        let keyed = match &self.animation {
             Some(animation) => animation.transform_at(self.transform, self.fraction_at(time)),
             None => self.transform,
+        };
+        match &self.motion {
+            Some(motion) => motion
+                .motion_at((time - self.start).as_f64())
+                .transform(keyed),
+            None => keyed,
         }
     }
 
@@ -261,9 +273,16 @@ impl Clip {
     /// The opacity at `time`, before the fade ramps: the clip's own, scaled
     /// by its animation.
     pub fn opacity_at(&self, time: Rational) -> f32 {
-        match &self.animation {
+        let keyed = match &self.animation {
             Some(animation) => animation.opacity_at(self.opacity, self.fraction_at(time)),
             None => self.opacity,
+        };
+        match &self.motion {
+            Some(motion) => {
+                let factor = motion.motion_at((time - self.start).as_f64()).opacity;
+                (f64::from(keyed) * factor).clamp(0.0, 1.0) as f32
+            }
+            None => keyed,
         }
     }
 

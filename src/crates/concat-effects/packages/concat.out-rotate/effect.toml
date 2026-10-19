@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.out-rotate"
+name = "Rotate"
+kind = "animation"
+category = "Out"
+order = 15
+description = "The clip spins away, shrinking."
+
+[animation]
+slot = "out"
+duration = 0.5
+scale = "(0.2 + (1 - (0.2)) * (1 - pow(1 - (1 - t), 3)))"
+rotation = "-360 * (1 - (1 - pow(1 - (1 - t), 3)))"

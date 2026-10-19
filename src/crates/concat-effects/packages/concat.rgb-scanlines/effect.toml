@@ -1,0 +1,28 @@
+format = 2
+
+[effect]
+id = "concat.rgb-scanlines"
+name = "RGB Scanlines"
+kind = "effect"
+category = "Reveal"
+order = 18
+intensity = "progress"
+description = "Splits the clip into red, green and blue with heavy scan lines; the amount is how strongly."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

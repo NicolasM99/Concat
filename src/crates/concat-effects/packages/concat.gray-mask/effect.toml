@@ -1,0 +1,28 @@
+format = 2
+
+[effect]
+id = "concat.gray-mask"
+name = "Gray Mask"
+kind = "effect"
+category = "Reveal"
+order = 20
+intensity = "progress"
+description = "Drains the clip to grey and darkens it; the amount is how far."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

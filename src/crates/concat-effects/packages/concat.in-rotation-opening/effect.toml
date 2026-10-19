@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.in-rotation-opening"
+name = "Rotation Opening"
+kind = "animation"
+category = "In"
+order = 14
+description = "The clip turns open into place."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(0.6 + (1 - (0.6)) * (1 - pow(1 - t, 3)))"
+rotation = "90 * (1 - (1 - pow(1 - t, 3)))"
+opacity = "t"

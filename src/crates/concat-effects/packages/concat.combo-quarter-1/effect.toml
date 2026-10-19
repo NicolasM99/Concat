@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-quarter-1"
+name = "Quarter 1"
+kind = "animation"
+category = "Combo"
+order = 89
+description = "The clip visits each quarter of the frame in turn."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "0.5"
+x = "(if(floor(t * 4) == 1, 0.25, if(floor(t * 4) == 2, 0.25, -0.25)))"
+y = "(if(floor(t * 4) >= 2, 0.25, -0.25))"

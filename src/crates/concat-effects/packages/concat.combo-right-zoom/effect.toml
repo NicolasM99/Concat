@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-right-zoom"
+name = "Right Zoom"
+kind = "animation"
+category = "Combo"
+order = 42
+description = "The clip zooms in toward its right side."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 + 0.4 * t)"
+x = "(-0.15 * t)"

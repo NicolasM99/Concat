@@ -1,0 +1,28 @@
+format = 2
+
+[effect]
+id = "concat.reveal-flame"
+name = "Reveal Flame"
+kind = "effect"
+category = "Reveal"
+order = 17
+intensity = "progress"
+description = "Burns the clip on from the bottom up behind a ragged edge of fire."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

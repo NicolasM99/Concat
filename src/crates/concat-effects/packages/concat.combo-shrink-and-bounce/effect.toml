@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-shrink-and-bounce"
+name = "Shrink and bounce"
+kind = "animation"
+category = "Combo"
+order = 24
+description = "The clip shrinks down and bounces back."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 - 0.3 * abs(sin(t * pi * 3)))"

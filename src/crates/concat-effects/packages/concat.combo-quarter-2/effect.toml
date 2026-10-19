@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-quarter-2"
+name = "Quarter 2"
+kind = "animation"
+category = "Combo"
+order = 90
+description = "The clip turns a quarter at a time."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "0.7"
+rotation = "(90 * floor(t * 4))"

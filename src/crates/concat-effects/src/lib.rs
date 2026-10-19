@@ -24,6 +24,7 @@
 //! `{ id, params, enabled }`, and an id the catalogue does not know is
 //! skipped at render time.
 
+pub mod animation;
 pub mod catalogue;
 pub mod cube;
 pub mod expr;
@@ -121,6 +122,78 @@ mod tests {
             Some(2)
         );
         let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    /// An animation's look is a shader package the catalogue has, and the
+    /// knobs it rides are that package's own.
+    #[test]
+    fn every_animation_rides_a_look_that_exists() {
+        let catalogue = Catalogue::builtin();
+        let mut failures = Vec::new();
+        for package in catalogue.of_kind(Kind::Animation) {
+            let Some(animation) = package.animation() else {
+                failures.push(format!("{}: no [animation]", package.id()));
+                continue;
+            };
+            let Some(look) = &package
+                .manifest
+                .animation
+                .as_ref()
+                .and_then(|spec| spec.effect.clone())
+            else {
+                continue;
+            };
+            let Some(effect) = catalogue.get(&look.id) else {
+                failures.push(format!(
+                    "{}: rides {}, which is not installed",
+                    package.id(),
+                    look.id
+                ));
+                continue;
+            };
+            if effect.shader().is_none() {
+                failures.push(format!(
+                    "{}: rides {}, which has no shader",
+                    package.id(),
+                    look.id
+                ));
+            }
+            for key in look.params.keys() {
+                if !effect.manifest.params.iter().any(|param| &param.key == key) {
+                    failures.push(format!("{}: {} has no knob `{key}`", package.id(), look.id));
+                }
+            }
+            assert_eq!(animation.look_id(), Some(look.id.as_str()));
+        }
+        assert!(failures.is_empty(), "\n{}", failures.join("\n"));
+    }
+
+    /// An In ends where the clip is and an Out starts there, so the clip
+    /// does not jump where a window opens or closes.
+    #[test]
+    fn every_in_lands_and_every_out_leaves_from_the_clip_as_placed() {
+        use animation::Slot;
+        let mut failures = Vec::new();
+        for package in Catalogue::builtin().of_kind(Kind::Animation) {
+            let animation = package.animation().expect("an animation");
+            let rest = match animation.slot() {
+                Slot::In => animation.motion_at(1.0),
+                Slot::Out => animation.motion_at(0.0),
+                Slot::Combo | Slot::Loop => continue,
+            };
+            let close = |a: f64, b: f64| (a - b).abs() < 1e-3;
+            if !(close(rest.scale, 1.0)
+                && close(rest.x, 0.0)
+                && close(rest.y, 0.0)
+                && close(rest.rotation % 360.0, 0.0)
+                && close(rest.opacity, 1.0)
+                && close(rest.sx, 1.0)
+                && close(rest.sy, 1.0))
+            {
+                failures.push(format!("{}: {rest:?}", package.id()));
+            }
+        }
+        assert!(failures.is_empty(), "\n{}", failures.join("\n"));
     }
 
     #[test]

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-shake-down"
+name = "Shake Down"
+kind = "animation"
+category = "In"
+order = 31
+description = "The clip drops in from above and shakes as it lands."
+
+[animation]
+slot = "in"
+duration = 0.5
+y = "(-(1 - (1 - pow(1 - t, 3))) * 0.4 + (0.03 * sin(t * 50) * (1 - t)))"
+opacity = "min(1, t * 3)"

@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.out-screen-wipe"
+name = "Screen Wipe"
+kind = "animation"
+category = "Out"
+order = 13
+description = "The clip is wiped off to the left."
+
+[animation]
+slot = "out"
+duration = 0.5
+
+[animation.effect]
+id = "concat.reveal-wipe"
+params = { progress = "100 * (1 - t)" }

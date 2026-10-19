@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-checker-slide-2"
+name = "Checker Slide 2"
+kind = "animation"
+category = "Combo"
+order = 71
+description = "The clip slides up in steps."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(-0.3 * (floor(t * 4) / 3 - 0.5))"

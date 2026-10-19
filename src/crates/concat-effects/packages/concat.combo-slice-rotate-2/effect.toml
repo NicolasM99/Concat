@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-slice-rotate-2"
+name = "Slice & Rotate 2"
+kind = "animation"
+category = "Combo"
+order = 45
+description = "The clip snaps round in eighth turns."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(45 * floor(t * 8))"

@@ -480,3 +480,68 @@ mod tests {
         assert_eq!(straight.resample(12), straight);
     }
 }
+
+/// What a clip's animations - its In, Out, Combo and Loop - do to it at one
+/// instant, on top of its placement and its keys: a scale is a factor, an
+/// offset an addition, a turn added, the opacity a factor.
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub struct Motion {
+    /// A factor on the scale.
+    pub scale: f64,
+    /// Frame widths added to the horizontal offset.
+    pub offset_x: f64,
+    /// Frame heights added to the vertical offset.
+    pub offset_y: f64,
+    /// Degrees added to the rotation, clockwise.
+    pub rotation: f64,
+    /// A factor on the opacity.
+    pub opacity: f64,
+    /// A factor on the width alone, over the clip's own stretch.
+    pub stretch_x: f64,
+    /// A factor on the height alone.
+    pub stretch_y: f64,
+}
+
+impl Motion {
+    /// Nothing changed.
+    pub const NONE: Motion = Motion {
+        scale: 1.0,
+        offset_x: 0.0,
+        offset_y: 0.0,
+        rotation: 0.0,
+        opacity: 1.0,
+        stretch_x: 1.0,
+        stretch_y: 1.0,
+    };
+
+    /// `base` moved by the motion.
+    pub fn transform(self, base: Transform) -> Transform {
+        Transform {
+            scale: (base.scale * self.scale).max(0.001),
+            offset_x: base.offset_x + self.offset_x,
+            offset_y: base.offset_y + self.offset_y,
+            rotation: base.rotation + self.rotation,
+            stretch_x: (base.stretch_x * self.stretch_x).max(0.001),
+            stretch_y: (base.stretch_y * self.stretch_y).max(0.001),
+        }
+    }
+}
+
+/// A clip's animations, asked for their motion at an instant. The engine
+/// knows nothing of the packages they come from: whoever builds the
+/// timeline supplies this, and every renderer reads the clip through it.
+pub trait ClipMotion: Send + Sync + std::fmt::Debug {
+    /// The motion `seconds` after the clip begins on the timeline.
+    fn motion_at(&self, seconds: f64) -> Motion;
+
+    /// The looks the animations ride at `seconds`, drawn after the clip's
+    /// own effects, `reveal_map` carried as theirs is. None by default.
+    fn passes_at(
+        &self,
+        seconds: f64,
+        reveal_map: Option<std::sync::Arc<crate::shader::RevealMap>>,
+    ) -> Vec<crate::shader::ShaderPass> {
+        let _ = (seconds, reveal_map);
+        Vec::new()
+    }
+}

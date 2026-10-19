@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.in-swing-right"
+name = "Swing Right"
+kind = "animation"
+category = "In"
+order = 24
+description = "The clip swings into place about its right corner."
+
+[animation]
+slot = "in"
+duration = 0.5
+x = "(0.5 + -0.5 * cos(((-70 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) - -0.0 * sin(((-70 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) - (0.5 + -0.5))"
+y = "(0.0 + -0.5 * sin(((-70 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) + -0.0 * cos(((-70 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) - (0.0 + -0.0))"
+rotation = "-70 * (1 - (1 - pow(1 - t, 3)))"
+opacity = "min(1, t * 3)"

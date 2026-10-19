@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.out-rotate-out-2"
+name = "Rotate Out 2"
+kind = "animation"
+category = "Out"
+order = 18
+description = "The clip spins away and shrinks to nothing."
+
+[animation]
+slot = "out"
+duration = 0.5
+scale = "(1 - pow(t, 2))"
+rotation = "-360 * pow(t, 2)"

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.out-flip"
+name = "Flip"
+kind = "animation"
+category = "Out"
+order = 23
+description = "The clip flips away on its vertical axis."
+
+[animation]
+slot = "out"
+duration = 0.5
+opacity = "min(1, (1 - t) * 4)"
+sx = "sin((1 - pow(1 - (1 - t), 3)) * pi / 2)"

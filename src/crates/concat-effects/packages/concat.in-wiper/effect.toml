@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.in-wiper"
+name = "Wiper"
+kind = "animation"
+category = "In"
+order = 43
+description = "The clip is swept on by a wiper turning round."
+
+[animation]
+slot = "in"
+duration = 0.5
+
+[animation.effect]
+id = "concat.reveal-clock"
+params = { progress = "100 * t" }

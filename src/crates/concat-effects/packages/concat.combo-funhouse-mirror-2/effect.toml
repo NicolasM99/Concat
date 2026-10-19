@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-funhouse-mirror-2"
+name = "Funhouse mirror 2"
+kind = "animation"
+category = "Combo"
+order = 67
+description = "The clip pulls in and out like a warping mirror."
+
+[animation]
+slot = "combo"
+duration = 2
+sx = "(1 + 0.2 * sin(t * pi * 6))"
+sy = "(1 + 0.2 * cos(t * pi * 6))"

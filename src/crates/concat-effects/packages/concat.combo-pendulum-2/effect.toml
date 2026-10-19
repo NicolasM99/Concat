@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-pendulum-2"
+name = "Pendulum 2"
+kind = "animation"
+category = "Combo"
+order = 18
+description = "The clip swings like a pendulum, dying away."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(30 * sin(t * pi * 5) * (1 - t))"

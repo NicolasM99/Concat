@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.out-mini-zoom"
+name = "Mini Zoom"
+kind = "animation"
+category = "Out"
+order = 19
+description = "The clip fades with a small zoom."
+
+[animation]
+slot = "out"
+duration = 0.5
+scale = "(1.1 + (1 - (1.1)) * (1 - pow(1 - (1 - t), 3)))"
+opacity = "(1 - t)"

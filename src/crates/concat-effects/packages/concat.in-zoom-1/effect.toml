@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-zoom-1"
+name = "Zoom 1"
+kind = "animation"
+category = "In"
+order = 2
+description = "The clip grows into place from half its size."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(0.5 + (1 - (0.5)) * (1 - pow(1 - t, 3)))"
+opacity = "min(1, t * 2)"

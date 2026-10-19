@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.in-retro-fadein-2"
+name = "Retro Fadein 2"
+kind = "animation"
+category = "In"
+order = 34
+description = "The clip fades in through rolling CRT bands."
+
+[animation]
+slot = "in"
+duration = 0.5
+opacity = "t"
+
+[animation.effect]
+id = "concat.crt-bands"
+params = { progress = "100 * (1 - t)" }

@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-sway-out"
+name = "Sway Out"
+kind = "animation"
+category = "Combo"
+order = 7
+description = "The clip sways and drifts away."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.3 * pow(t, 2))"
+rotation = "(10 * sin(t * pi * 4))"
+opacity = "(1 - pow(t, 4))"

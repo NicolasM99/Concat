@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.out-rotate-out-1"
+name = "Rotate Out 1"
+kind = "animation"
+category = "Out"
+order = 17
+description = "The clip turns away to one side and fades."
+
+[animation]
+slot = "out"
+duration = 0.5
+x = "0.5 * pow(t, 3)"
+rotation = "90 * pow(t, 3)"
+opacity = "(1 - t)"

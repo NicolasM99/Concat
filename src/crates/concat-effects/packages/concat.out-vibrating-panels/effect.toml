@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.out-vibrating-panels"
+name = "Vibrating Panels"
+kind = "animation"
+category = "Out"
+order = 22
+description = "The clip buzzes away, vibrating fast."
+
+[animation]
+slot = "out"
+duration = 0.5
+x = "(0.03 * sin((1 - t) * 80) * (1 - (1 - t)))"
+opacity = "(1 - t)"
+sx = "(1 + (0.05 * sin((1 - t) * 70) * (1 - (1 - t))))"
+sy = "(1 - (0.05 * sin((1 - t) * 70) * (1 - (1 - t))))"

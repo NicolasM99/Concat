@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.out-blur"
+name = "Blur Out"
+kind = "animation"
+category = "Out"
+order = 24
+description = "The clip dissolves into a blur."
+
+[animation]
+slot = "out"
+duration = 0.5
+opacity = "min(1, (1 - t) * 2)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 40 * (1 - (1 - t))" }

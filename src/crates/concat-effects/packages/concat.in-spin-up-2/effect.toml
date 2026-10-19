@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.in-spin-up-2"
+name = "Spin Up 2"
+kind = "animation"
+category = "In"
+order = 16
+description = "The clip spins up into place, growing as it rises."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(0.4 + (1 - (0.4)) * (1 - pow(1 - t, 3)))"
+y = "0.4 * (1 - (1 - pow(1 - t, 3)))"
+rotation = "360 * (1 - (1 - pow(1 - t, 3)))"

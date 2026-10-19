@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-distort-right"
+name = "Distort Right"
+kind = "animation"
+category = "Combo"
+order = 28
+description = "The clip stretches off to the right and snaps back."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.2 * sin(t * pi))"
+sx = "(1 + 0.4 * sin(t * pi))"

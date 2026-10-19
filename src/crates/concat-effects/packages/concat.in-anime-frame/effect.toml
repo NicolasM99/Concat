@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.in-anime-frame"
+name = "Anime Frame"
+kind = "animation"
+category = "In"
+order = 39
+description = "The clip bursts in with speed lines and a flash."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(1.2 + (1 - (1.2)) * (1 - pow(1 - t, 3)))"
+
+[animation.effect]
+id = "concat.anime-frame"
+params = { progress = "100 * (1 - t)" }

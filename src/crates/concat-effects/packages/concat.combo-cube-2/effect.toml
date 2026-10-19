@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-cube-2"
+name = "Cube 2"
+kind = "animation"
+category = "Combo"
+order = 47
+description = "The clip turns in like a cube's face from above."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(-0.5 * (1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) + 0.5 * pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"
+sy = "((1 - pow(1 - clamp(t / 0.25, 0, 1), 3)) * (1 - pow(clamp((t - 0.75) / 0.25, 0, 1), 3)))"

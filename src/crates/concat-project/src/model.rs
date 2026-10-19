@@ -1310,6 +1310,94 @@ pub struct Transition {
     pub duration: f64,
 }
 
+/// One of a clip's animations: an animation package from the catalogue,
+/// and how long it runs.
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+#[derive(Clone, PartialEq, Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ClipAnimation {
+    /// Which animation, e.g. "concat.anim-slide-left".
+    pub id: String,
+    /// Seconds it runs: an In's or an Out's length, a Loop's cycle. A
+    /// Combo spans the clip and ignores it.
+    #[serde(default = "half")]
+    pub duration: f64,
+}
+
+/// A clip's animations, CapCut's In, Out and Combo and a title's Loop.
+/// Each rides on top of the clip's placement and keys; a Combo is the
+/// clip's whole motion, so a document with a Combo beside an In or an Out
+/// keeps the In and the Out. The names are written into project files, so
+/// they are stable for ever.
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+#[derive(Clone, PartialEq, Debug, Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Animations {
+    /// How the clip comes in, over its first seconds.
+    #[serde(rename = "in", default, skip_serializing_if = "Option::is_none")]
+    pub enter: Option<ClipAnimation>,
+    /// How the clip goes out, over its last seconds.
+    #[serde(rename = "out", default, skip_serializing_if = "Option::is_none")]
+    pub exit: Option<ClipAnimation>,
+    /// A motion over the whole clip.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub combo: Option<ClipAnimation>,
+    /// A motion repeated for as long as the clip lasts.
+    #[serde(rename = "loop", default, skip_serializing_if = "Option::is_none")]
+    pub looping: Option<ClipAnimation>,
+}
+
+impl Animations {
+    /// Whether no slot is filled.
+    pub fn is_empty(&self) -> bool {
+        self.enter.is_none()
+            && self.exit.is_none()
+            && self.combo.is_none()
+            && self.looping.is_none()
+    }
+
+    /// Every filled slot.
+    pub fn each(&self) -> impl Iterator<Item = &ClipAnimation> {
+        [&self.enter, &self.exit, &self.combo, &self.looping]
+            .into_iter()
+            .flatten()
+    }
+
+    /// Lengths made finite and kept in range, and a Combo beside an In or
+    /// an Out dropped in their favour.
+    fn tidy(mut self) -> Option<Animations> {
+        for slot in [
+            &mut self.enter,
+            &mut self.exit,
+            &mut self.combo,
+            &mut self.looping,
+        ]
+        .into_iter()
+        .flatten()
+        {
+            let duration = if slot.duration.is_finite() {
+                slot.duration
+            } else {
+                0.5
+            };
+            slot.duration = duration.clamp(MIN_ANIMATION, MAX_ANIMATION);
+        }
+        if self.combo.is_some() && (self.enter.is_some() || self.exit.is_some()) {
+            self.combo = None;
+        }
+        (!self.is_empty()).then_some(self)
+    }
+}
+
+/// The shortest an animation may run, in seconds.
+pub const MIN_ANIMATION: f64 = 0.05;
+/// The longest an animation may run, in seconds.
+pub const MAX_ANIMATION: f64 = 60.0;
+
+fn half() -> f64 {
+    0.5
+}
+
 /// How a title's lines sit within their block, and which point of the block
 /// the clip's position pins: a centred title is placed by its middle, a
 /// left-aligned one by its block's left edge and a right-aligned one by its
@@ -1854,6 +1942,10 @@ pub struct Clip {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[serde(deserialize_with = "wire::maybe")]
     pub transition_in: Option<Transition>,
+    /// How the clip comes in, goes out or moves; see [`Animations`].
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(deserialize_with = "wire::maybe")]
+    pub animations: Option<Animations>,
     /// The clip's Enhance: the media it was cut from and the enhanced copy
     /// of it, and which of the two it shows. Absent until Enhance has made
     /// a copy; switching it off shows the original again without running
@@ -1972,6 +2064,7 @@ impl Clip {
             muted: None,
             detached_from: None,
             transition_in: None,
+            animations: None,
             enhanced: None,
             text: None,
             shape: None,
@@ -2027,6 +2120,7 @@ impl Clip {
         if let Some(transition) = self.transition_in.as_mut() {
             transition.duration = finite(transition.duration, 1.0).max(MIN_TRANSITION);
         }
+        self.animations = self.animations.take().and_then(Animations::tidy);
         self.keys
             .retain(|key| (0.0..=1.0).contains(&key.at) && key.value.is_finite());
         // A key holds what the field itself may hold. Rotation is the one

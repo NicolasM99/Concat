@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-blinds"
+name = "Blinds"
+kind = "animation"
+category = "Combo"
+order = 100
+description = "The clip flickers like blinds turning."
+
+[animation]
+slot = "combo"
+duration = 2
+sy = "(0.6 + 0.4 * abs(cos(t * pi * 4)))"

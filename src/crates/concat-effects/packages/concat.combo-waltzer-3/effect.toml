@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-waltzer-3"
+name = "Waltzer 3"
+kind = "animation"
+category = "Combo"
+order = 74
+description = "The clip twirls round faster and faster."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.1 * cos(t * t * pi * 8))"
+y = "(0.1 * sin(t * t * pi * 8))"
+rotation = "(720 * t * t)"

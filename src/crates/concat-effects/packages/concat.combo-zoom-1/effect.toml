@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-zoom-1"
+name = "Zoom 1"
+kind = "animation"
+category = "Combo"
+order = 1
+description = "The clip zooms in at the start and out at the end."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(0.3 + 0.7 * (1 - pow(1 - clamp(t / 0.25, 0, 1), 3)) - 0.7 * pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"

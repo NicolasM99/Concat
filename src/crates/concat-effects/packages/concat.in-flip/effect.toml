@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-flip"
+name = "Flip"
+kind = "animation"
+category = "In"
+order = 27
+description = "The clip flips round into view on its vertical axis."
+
+[animation]
+slot = "in"
+duration = 0.5
+opacity = "min(1, t * 4)"
+sx = "sin((1 - pow(1 - t, 3)) * pi / 2)"

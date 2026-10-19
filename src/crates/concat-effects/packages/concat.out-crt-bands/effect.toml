@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.out-crt-bands"
+name = "CRT Bands"
+kind = "animation"
+category = "Out"
+order = 11
+description = "The clip flickers out through CRT bands."
+
+[animation]
+slot = "out"
+duration = 0.5
+opacity = "min(1, (1 - t) * 2)"
+
+[animation.effect]
+id = "concat.crt-bands"
+params = { progress = "100 * (1 - (1 - t))" }

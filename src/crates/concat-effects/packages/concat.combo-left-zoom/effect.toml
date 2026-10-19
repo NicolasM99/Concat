@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-left-zoom"
+name = "Left Zoom"
+kind = "animation"
+category = "Combo"
+order = 43
+description = "The clip zooms in toward its left side."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 + 0.4 * t)"
+x = "(0.15 * t)"

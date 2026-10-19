@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-distort-and-stretch"
+name = "Distort and stretch"
+kind = "animation"
+category = "Combo"
+order = 4
+description = "The clip squashes and stretches in turn throughout."
+
+[animation]
+slot = "combo"
+duration = 2
+sx = "(1 + 0.25 * sin(t * pi * 6))"
+sy = "(1 - 0.25 * sin(t * pi * 6))"

@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.in-zoom-in"
+name = "Zoom In"
+kind = "animation"
+category = "In"
+order = 4
+description = "The clip zooms in from a speck."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(0.05 + (1 - (0.05)) * (1 - pow(1 - t, 3)))"

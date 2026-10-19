@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-whirl"
+name = "Whirl"
+kind = "animation"
+category = "In"
+order = 19
+description = "The clip whirls in from the centre, turning twice."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(1 - pow(1 - t, 3))"
+rotation = "720 * (1 - (1 - pow(1 - t, 3)))"

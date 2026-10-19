@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.out-slide-left"
+name = "Slide Left"
+kind = "animation"
+category = "Out"
+order = 8
+description = "The clip slides out to the left."
+
+[animation]
+slot = "out"
+duration = 0.5
+x = "-(1 - (1 - pow(1 - (1 - t), 3)))"

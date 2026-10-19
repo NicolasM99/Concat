@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-bisect-domino-1"
+name = "Bisect Domino 1"
+kind = "animation"
+category = "Combo"
+order = 57
+description = "The clip topples in like a domino and topples out."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(0.3 * (1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) + 0.3 * pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"
+rotation = "(-90 * (1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) + 90 * pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"

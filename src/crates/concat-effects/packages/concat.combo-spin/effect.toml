@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-spin"
+name = "Spin"
+kind = "animation"
+category = "Combo"
+order = 23
+description = "The clip spins round once over the clip."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(360 * t)"

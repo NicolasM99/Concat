@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-smartphone-2"
+name = "Smartphone 2"
+kind = "animation"
+category = "Combo"
+order = 26
+description = "The clip drifts and tilts like a phone screen."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "0.9"
+x = "(0.08 * sin(t * pi * 2))"
+rotation = "(8 * sin(t * pi * 2))"

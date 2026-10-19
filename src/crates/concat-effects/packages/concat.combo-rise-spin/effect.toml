@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-rise-spin"
+name = "Rise Spin"
+kind = "animation"
+category = "Combo"
+order = 91
+description = "The clip rises in, spins, and drops away."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "((1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) * 0.6 + pow(clamp((t - 0.75) / 0.25, 0, 1), 3) * 0.6)"
+rotation = "(360 * t)"

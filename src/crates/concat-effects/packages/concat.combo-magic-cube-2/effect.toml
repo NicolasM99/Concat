@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-magic-cube-2"
+name = "Magic Cube 2"
+kind = "animation"
+category = "Combo"
+order = 60
+description = "The clip twists back and forth like a magic cube's face."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(45 * sin(t * pi * 4))"
+sy = "(1 - 0.2 * abs(sin(t * pi * 4)))"

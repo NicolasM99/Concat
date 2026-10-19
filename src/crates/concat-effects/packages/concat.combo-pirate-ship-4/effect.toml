@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-pirate-ship-4"
+name = "Pirate ship 4"
+kind = "animation"
+category = "Combo"
+order = 54
+description = "The clip swings high like a fairground ship at full tilt."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.2 * sin(t * pi * 2))"
+y = "(-0.1 * abs(sin(t * pi * 2)))"
+rotation = "(60 * sin(t * pi * 2))"

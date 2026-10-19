@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-sway-in"
+name = "Sway In"
+kind = "animation"
+category = "Combo"
+order = 8
+description = "The clip sways in from the side and settles."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(-0.3 * pow(1 - t, 2))"
+rotation = "(10 * sin(t * pi * 4) * (1 - t))"
+opacity = "min(1, t * 4)"

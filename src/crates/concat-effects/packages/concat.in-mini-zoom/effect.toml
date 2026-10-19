@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-mini-zoom"
+name = "Mini Zoom"
+kind = "animation"
+category = "In"
+order = 6
+description = "The clip settles in with a small zoom and a fade."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(1.1 + (1 - (1.1)) * (1 - pow(1 - t, 3)))"
+opacity = "t"

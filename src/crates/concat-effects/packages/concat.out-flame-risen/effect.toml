@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.out-flame-risen"
+name = "Flame Risen"
+kind = "animation"
+category = "Out"
+order = 12
+description = "The clip burns away from the bottom up."
+
+[animation]
+slot = "out"
+duration = 0.8
+
+[animation.effect]
+id = "concat.reveal-flame"
+params = { progress = "100 * (1 - t)" }

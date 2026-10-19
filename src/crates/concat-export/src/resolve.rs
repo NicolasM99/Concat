@@ -323,6 +323,8 @@ pub(crate) fn build_timeline(
             engine_clip.retime = SpeedCurve::new(&clip.speed_curve);
         }
         engine_clip.animation = animation_of(&clip.animation);
+        engine_clip.motion = crate::motion::ClipAnimations::of(clip)
+            .map(|motion| Arc::new(motion) as Arc<dyn concat_core::animate::ClipMotion>);
         engine_clip.blend = concat_core::timeline::Blend::parse(&clip.blend);
         engine_clip.mask = clip.mask.map(|mask| mask.engine());
         engine_clip.transform = Transform {

@@ -127,6 +127,9 @@ pub fn flatten_timeline_in(
                 // 1/60 s gate here would agree at 30fps and disagree at
                 // every other rate; resolving is the kinder read of what
                 // the user placed.
+                animations: clip.animations.clone(),
+                animation_head: 0.0,
+                animation_tail: 0.0,
                 transition: clip
                     .transition_in
                     .as_ref()

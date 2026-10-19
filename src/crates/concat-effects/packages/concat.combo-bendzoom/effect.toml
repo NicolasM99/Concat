@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-bendzoom"
+name = "BendZoom"
+kind = "animation"
+category = "Combo"
+order = 21
+description = "The clip zooms in with a bend and back out."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 + 0.4 * sin(t * pi))"
+rotation = "(15 * sin(t * pi * 2))"

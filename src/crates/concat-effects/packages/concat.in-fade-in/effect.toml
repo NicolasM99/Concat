@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.in-fade-in"
+name = "Fade In"
+kind = "animation"
+category = "In"
+order = 1
+description = "The clip fades up from nothing."
+
+[animation]
+slot = "in"
+duration = 0.5
+opacity = "t"

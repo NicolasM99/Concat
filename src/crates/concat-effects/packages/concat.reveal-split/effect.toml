@@ -1,0 +1,39 @@
+format = 2
+
+[effect]
+id = "concat.reveal-split"
+name = "Reveal Split"
+kind = "effect"
+category = "Reveal"
+order = 15
+intensity = "progress"
+description = "Shows the clip as it opens out from a line through the middle."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[[param]]
+key = "direction"
+label = "Opening"
+type = "enum"
+min = 0
+max = 1
+default = 0
+step = 1
+values = [0, 1]
+labels = ["Side to side", "Up and down"]
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

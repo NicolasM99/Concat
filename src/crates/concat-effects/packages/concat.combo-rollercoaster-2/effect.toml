@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-rollercoaster-2"
+name = "Rollercoaster 2"
+kind = "animation"
+category = "Combo"
+order = 102
+description = "The clip loops the loop like a rollercoaster."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.2 * sin(t * pi * 2))"
+y = "(-0.2 * (1 - cos(t * pi * 2)))"
+rotation = "(360 * t)"

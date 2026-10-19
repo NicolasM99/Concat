@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-zoom-spin"
+name = "Zoom Spin"
+kind = "animation"
+category = "Combo"
+order = 77
+description = "The clip spins as it zooms in and out."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 - 0.5 * sin(t * pi))"
+rotation = "(360 * t)"

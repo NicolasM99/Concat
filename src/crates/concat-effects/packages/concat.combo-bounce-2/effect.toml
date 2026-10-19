@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-bounce-2"
+name = "Bounce 2"
+kind = "animation"
+category = "Combo"
+order = 6
+description = "The clip bounces in place the whole time."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(-abs(sin(t * pi * 6)) * 0.12)"

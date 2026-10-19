@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.in-spin-up-1"
+name = "Spin Up 1"
+kind = "animation"
+category = "In"
+order = 15
+description = "The clip spins up into place from below."
+
+[animation]
+slot = "in"
+duration = 0.5
+y = "0.5 * (1 - (1 - pow(1 - t, 3)))"
+rotation = "-180 * (1 - (1 - pow(1 - t, 3)))"
+opacity = "min(1, t * 2)"

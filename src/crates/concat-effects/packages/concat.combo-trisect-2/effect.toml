@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-trisect-2"
+name = "Trisect 2"
+kind = "animation"
+category = "Combo"
+order = 31
+description = "The clip drops in three steps and rises out the same way."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(-(1 - floor(clamp(t / 0.25, 0, 1) * 3) / 3) + floor(clamp((t - 0.75) / 0.25, 0, 1) * 3) / 3)"

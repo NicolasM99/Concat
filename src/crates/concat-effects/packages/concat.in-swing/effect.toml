@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-swing"
+name = "Swing"
+kind = "animation"
+category = "In"
+order = 20
+description = "The clip swings into place like a pendulum coming to rest."
+
+[animation]
+slot = "in"
+duration = 0.5
+rotation = "(25 * sin(t * 18) * (1 - t))"
+opacity = "min(1, t * 3)"

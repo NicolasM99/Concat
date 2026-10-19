@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-crystal-1"
+name = "Crystal 1"
+kind = "animation"
+category = "Combo"
+order = 96
+description = "The clip turns like a crystal catching the light."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 - 0.2 * sin(t * pi))"
+rotation = "(45 * sin(t * pi))"
+sx = "(1 - 0.15 * sin(t * pi * 2))"

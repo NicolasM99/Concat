@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.in-slide-down"
+name = "Slide Down"
+kind = "animation"
+category = "In"
+order = 9
+description = "The clip slides down into place from above."
+
+[animation]
+slot = "in"
+duration = 0.5
+y = "-(1 - (1 - pow(1 - t, 3)))"

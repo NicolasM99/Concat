@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.out-zoom-out"
+name = "Zoom Out"
+kind = "animation"
+category = "Out"
+order = 10
+description = "The clip zooms away to a speck."
+
+[animation]
+slot = "out"
+duration = 0.5
+scale = "(0.05 + (1 - (0.05)) * (1 - pow(1 - (1 - t), 3)))"

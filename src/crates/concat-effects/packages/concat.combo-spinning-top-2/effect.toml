@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-spinning-top-2"
+name = "Spinning top 2"
+kind = "animation"
+category = "Combo"
+order = 34
+description = "The clip spins faster and faster like a top, then falls."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 - 0.3 * t)"
+rotation = "(1080 * t * t)"

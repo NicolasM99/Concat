@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-roll-inout-2"
+name = "Roll InOut 2"
+kind = "animation"
+category = "Combo"
+order = 41
+description = "The clip rolls in from the right and out to the left."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "((1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) - pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"
+rotation = "(360 * (1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) - 360 * pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"

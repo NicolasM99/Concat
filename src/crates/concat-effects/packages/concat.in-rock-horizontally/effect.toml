@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-rock-horizontally"
+name = "Rock Horizontally"
+kind = "animation"
+category = "In"
+order = 8
+description = "The clip rocks side to side as it arrives."
+
+[animation]
+slot = "in"
+duration = 0.5
+x = "(0.08 * sin(t * 25) * (1 - t))"
+opacity = "min(1, t * 3)"

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-flip-4"
+name = "Flip 4"
+kind = "animation"
+category = "Combo"
+order = 82
+description = "The clip flips over three times, shrinking at each flip."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(0.85 + 0.15 * abs(cos(t * pi * 3)))"
+sx = "abs(cos(t * pi * 3))"

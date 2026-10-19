@@ -1,0 +1,19 @@
+format = 2
+
+[effect]
+id = "concat.out-blurred-fadein-1"
+name = "Blurred Fadein 1"
+kind = "animation"
+category = "Out"
+order = 4
+description = "The clip blurs and swells as it fades away."
+
+[animation]
+slot = "out"
+duration = 0.5
+scale = "(1 + 0.2 * t)"
+opacity = "(1 - t)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 40 * t" }

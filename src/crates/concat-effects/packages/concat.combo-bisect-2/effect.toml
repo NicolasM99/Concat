@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-bisect-2"
+name = "Bisect 2"
+kind = "animation"
+category = "Combo"
+order = 56
+description = "The clip drops and rises in two steps."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(-(1 - floor(clamp(t / 0.25, 0, 1) * 2) / 2) + floor(clamp((t - 0.75) / 0.25, 0, 1) * 2) / 2)"

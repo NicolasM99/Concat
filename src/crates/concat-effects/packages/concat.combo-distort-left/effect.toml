@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-distort-left"
+name = "Distort Left"
+kind = "animation"
+category = "Combo"
+order = 29
+description = "The clip stretches off to the left and snaps back."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(-0.2 * sin(t * pi))"
+sx = "(1 + 0.4 * sin(t * pi))"

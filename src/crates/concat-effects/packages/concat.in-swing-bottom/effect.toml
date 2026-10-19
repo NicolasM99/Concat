@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.in-swing-bottom"
+name = "Swing Bottom"
+kind = "animation"
+category = "In"
+order = 23
+description = "The clip swings into place about its bottom corner."
+
+[animation]
+slot = "in"
+duration = 0.5
+x = "(0.0 + -0.0 * cos(((70 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) - -0.5 * sin(((70 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) - (0.0 + -0.0))"
+y = "(0.5 + -0.0 * sin(((70 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) + -0.5 * cos(((70 * (1 - (1 - pow(1 - t, 3)))) * pi / 180)) - (0.5 + -0.5))"
+rotation = "70 * (1 - (1 - pow(1 - t, 3)))"
+opacity = "min(1, t * 3)"

@@ -112,6 +112,9 @@ const FUNCTIONS: &[(&str, usize)] = &[
     ("round", 1),
     ("sqrt", 1),
     ("pow", 2),
+    ("sin", 1),
+    ("cos", 1),
+    ("exp", 1),
     ("fixed", 2),
 ];
 
@@ -465,6 +468,10 @@ fn call(name: &str, args: &[Value]) -> Result<Value, EvalError> {
         "round" => Value::Int(num(0)?.round() as i64),
         "sqrt" => Value::Float(num(0)?.sqrt()),
         "pow" => Value::Float(num(0)?.powf(num(1)?)),
+        // In radians: what an animation's swing or wobble is drawn with.
+        "sin" => Value::Float(num(0)?.sin()),
+        "cos" => Value::Float(num(0)?.cos()),
+        "exp" => Value::Float(num(0)?.exp()),
         "fixed" => {
             let digits = num(1)?;
             if digits < 0.0 || digits.fract() != 0.0 || digits > 20.0 {

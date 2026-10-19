@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-3d-card-2"
+name = "3D card 2"
+kind = "animation"
+category = "Combo"
+order = 10
+description = "The clip flips over like a card twice."
+
+[animation]
+slot = "combo"
+duration = 2
+sx = "abs(cos(t * pi * 2))"

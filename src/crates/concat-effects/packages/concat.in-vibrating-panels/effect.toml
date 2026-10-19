@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.in-vibrating-panels"
+name = "Vibrating Panels"
+kind = "animation"
+category = "In"
+order = 32
+description = "The clip buzzes into place, vibrating fast."
+
+[animation]
+slot = "in"
+duration = 0.5
+x = "(0.03 * sin(t * 80) * (1 - t))"
+opacity = "t"
+sx = "(1 + (0.05 * sin(t * 70) * (1 - t)))"
+sy = "(1 - (0.05 * sin(t * 70) * (1 - t)))"

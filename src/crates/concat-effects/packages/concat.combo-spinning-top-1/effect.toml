@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-spinning-top-1"
+name = "Spinning top 1"
+kind = "animation"
+category = "Combo"
+order = 33
+description = "The clip spins and wobbles like a top."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.05 * sin(t * pi * 8))"
+rotation = "(720 * t)"

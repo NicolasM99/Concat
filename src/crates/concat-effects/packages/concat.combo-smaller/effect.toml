@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-smaller"
+name = "Smaller"
+kind = "animation"
+category = "Combo"
+order = 76
+description = "The clip shrinks steadily over the clip."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 - 0.5 * t)"

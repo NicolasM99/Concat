@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-3d-card-1"
+name = "3D card 1"
+kind = "animation"
+category = "Combo"
+order = 9
+description = "The clip turns like a card in space, showing its edge."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(8 * sin(t * pi * 2))"
+sx = "abs(cos(t * pi))"

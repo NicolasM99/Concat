@@ -53,6 +53,10 @@ pub struct Manifest {
     /// The two-input backend, when the package is a transition.
     #[serde(default)]
     pub transition: Option<Transition>,
+    /// The motion, when the package is an animation; see
+    /// [`crate::animation`].
+    #[serde(default)]
+    pub animation: Option<crate::animation::AnimationSpec>,
     /// A look-up table the package ships: the shader reads it through
     /// `lut()`, and a chain names its file as `{lut}`.
     #[serde(default)]
@@ -197,6 +201,10 @@ pub enum Kind {
     Transition,
     /// A generator: no input, an image out.
     Generator,
+    /// An animation: how a clip comes in, goes out or moves through its
+    /// time - a motion over a window of the clip, and a look ridden over
+    /// it. See [`crate::animation`].
+    Animation,
 }
 
 impl Kind {
@@ -610,7 +618,27 @@ impl Manifest {
                 "intensity names `{intensity}`, which is not a parameter"
             )));
         }
-        if self.effect.kind == Kind::Transition {
+        if self.effect.kind != Kind::Animation && self.animation.is_some() {
+            return Err(self.invalid("[animation] is only for an animation package"));
+        }
+        if self.effect.kind == Kind::Animation {
+            // An animation draws nothing of its own: its motion rides on the
+            // clip's placement and its look is another package's.
+            let Some(spec) = &self.animation else {
+                return Err(self.invalid("an animation needs an [animation] table"));
+            };
+            if self.ffmpeg.is_some() || self.wgsl.is_some() || self.transition.is_some() {
+                return Err(self.invalid(
+                    "an animation's backend is [animation], not a shader, a chain or a transition",
+                ));
+            }
+            if !self.params.is_empty() {
+                return Err(self.invalid(
+                    "an animation has no knobs of its own: its length is the clip's to set",
+                ));
+            }
+            crate::animation::Animation::new(spec.clone()).map_err(|error| self.invalid(error))?;
+        } else if self.effect.kind == Kind::Transition {
             // A transition's whole backend is its two-input shader; the
             // per-clip chain and single-input shader machinery do not apply.
             let Some(transition) = &self.transition else {

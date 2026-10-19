@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-pendulum-1"
+name = "Pendulum 1"
+kind = "animation"
+category = "Combo"
+order = 17
+description = "The clip swings like a pendulum from above."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.1 * sin(t * pi * 4))"
+rotation = "(20 * sin(t * pi * 4))"

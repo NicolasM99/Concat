@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-triplets-2"
+name = "Triplets 2"
+kind = "animation"
+category = "Combo"
+order = 88
+description = "The clip jumps between three heights in turn."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "0.7"
+y = "(0.25 * (floor(t * 3) - 1))"

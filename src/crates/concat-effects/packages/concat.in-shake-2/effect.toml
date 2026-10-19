@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.in-shake-2"
+name = "Shake 2"
+kind = "animation"
+category = "In"
+order = 29
+description = "The clip shakes in every direction as it appears."
+
+[animation]
+slot = "in"
+duration = 0.5
+x = "(0.05 * sin(t * 45) * (1 - t))"
+y = "(0.04 * sin(t * 37) * (1 - t))"
+opacity = "min(1, t * 3)"

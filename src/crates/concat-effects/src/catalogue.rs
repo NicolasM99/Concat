@@ -59,6 +59,9 @@ pub struct Package {
     pub folder: Option<std::path::PathBuf>,
     /// The table the manifest's `[lut]` names, read at load.
     lut: Option<Arc<Lut>>,
+    /// The motion, when the package is an animation, its expressions
+    /// parsed at load.
+    animation: Option<Arc<crate::animation::Animation>>,
 }
 
 /// Where a fixture's parameters start from.
@@ -178,6 +181,11 @@ struct FixtureFile {
 }
 
 impl Package {
+    /// The motion, when the package is an animation.
+    pub fn animation(&self) -> Option<&crate::animation::Animation> {
+        self.animation.as_deref()
+    }
+
     /// Compiles a package from the text of its manifest and, if it ships
     /// them, its fixtures file and its shader.
     pub fn from_sources(
@@ -262,6 +270,7 @@ impl Package {
             && transition.is_none()
             && manifest.ffmpeg.is_none()
             && manifest.effect.kind != Kind::Audio
+            && manifest.effect.kind != Kind::Animation
         {
             return Err(invalid(
                 "the package has neither a shader nor a chain".to_owned(),
@@ -386,6 +395,14 @@ impl Package {
             Some((folder, lut)) => (Some(folder), Some(lut)),
             None => (None, None),
         };
+        // The manifest's own check has parsed it once already; a failure
+        // here cannot happen, but is said rather than unwrapped.
+        let animation = match &manifest.animation {
+            Some(spec) => Some(Arc::new(
+                crate::animation::Animation::new(spec.clone()).map_err(invalid)?,
+            )),
+            None => None,
+        };
         let package = Package {
             manifest,
             chain,
@@ -395,6 +412,7 @@ impl Package {
             probes,
             folder,
             lut,
+            animation,
         };
         // Render at every bound now, so a type error in an expression is a
         // load failure and never a silent gap in an export.

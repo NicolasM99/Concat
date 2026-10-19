@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.in-shake-3"
+name = "Shake 3"
+kind = "animation"
+category = "In"
+order = 30
+description = "The clip arrives with a hard shake and a twist."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(1.15 + (1 - (1.15)) * (1 - pow(1 - t, 3)))"
+x = "(0.06 * sin(t * 50) * (1 - t))"
+rotation = "(6 * sin(t * 40) * (1 - t))"
+opacity = "min(1, t * 3)"

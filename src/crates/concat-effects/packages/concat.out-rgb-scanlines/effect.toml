@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.out-rgb-scanlines"
+name = "RGB Scanlines"
+kind = "animation"
+category = "Out"
+order = 2
+description = "The clip breaks up into split colour and scan lines."
+
+[animation]
+slot = "out"
+duration = 0.5
+opacity = "min(1, (1 - t) * 2)"
+
+[animation.effect]
+id = "concat.rgb-scanlines"
+params = { progress = "100 * (1 - (1 - t))" }

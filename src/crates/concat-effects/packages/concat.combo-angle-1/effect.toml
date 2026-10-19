@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-angle-1"
+name = "Angle 1"
+kind = "animation"
+category = "Combo"
+order = 98
+description = "The clip leans at an angle and straightens."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(15 * cos(t * pi))"

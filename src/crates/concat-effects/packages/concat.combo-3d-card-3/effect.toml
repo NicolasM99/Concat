@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-3d-card-3"
+name = "3D card 3"
+kind = "animation"
+category = "Combo"
+order = 11
+description = "The clip tilts back and forth like a card held up."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(6 * sin(t * pi * 2))"
+sy = "(0.7 + 0.3 * abs(cos(t * pi * 2)))"

@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-checker-slide-1"
+name = "Checker Slide 1"
+kind = "animation"
+category = "Combo"
+order = 70
+description = "The clip slides in steps across the frame."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.3 * (floor(t * 4) / 3 - 0.5))"

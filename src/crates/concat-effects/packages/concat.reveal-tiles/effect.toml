@@ -1,0 +1,36 @@
+format = 2
+
+[effect]
+id = "concat.reveal-tiles"
+name = "Reveal Tiles"
+kind = "effect"
+category = "Reveal"
+order = 14
+intensity = "progress"
+description = "Shows the clip tile by tile in a scattered order, like a puzzle filling in."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[[param]]
+key = "tiles"
+label = "Tiles"
+min = 2
+max = 24
+default = 6
+step = 1
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

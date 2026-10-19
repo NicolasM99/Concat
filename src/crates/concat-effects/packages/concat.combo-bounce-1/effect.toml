@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-bounce-1"
+name = "Bounce 1"
+kind = "animation"
+category = "Combo"
+order = 5
+description = "The clip bounces in from above and bounces out again."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 - 0.1 * abs(sin(t * pi * 6)))"
+y = "(-abs(cos(t * pi * 3)) * 0.4 * (1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) - 0.8 * pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"

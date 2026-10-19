@@ -273,6 +273,7 @@ impl Titles {
                     flip_v: clip.flip_v,
                     blend: clip.blend.clone(),
                     effects: clip.video_effects.clone(),
+                    animations: clip.animations.clone(),
                     scale: clip.scale,
                     offset_x: clip.offset_x,
                     offset_y: clip.offset_y,

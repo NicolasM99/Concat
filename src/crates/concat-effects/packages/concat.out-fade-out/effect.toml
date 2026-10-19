@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.out-fade-out"
+name = "Fade Out"
+kind = "animation"
+category = "Out"
+order = 1
+description = "The clip fades away to nothing."
+
+[animation]
+slot = "out"
+duration = 0.5
+opacity = "(1 - t)"

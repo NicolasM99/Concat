@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.out-whirl"
+name = "Whirl"
+kind = "animation"
+category = "Out"
+order = 21
+description = "The clip whirls away into the centre."
+
+[animation]
+slot = "out"
+duration = 0.5
+scale = "(1 - pow(1 - (1 - t), 3))"
+rotation = "720 * (1 - (1 - pow(1 - (1 - t), 3)))"

@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.out-slide-right"
+name = "Slide Right"
+kind = "animation"
+category = "Out"
+order = 7
+description = "The clip slides out to the right."
+
+[animation]
+slot = "out"
+duration = 0.5
+x = "(1 - (1 - pow(1 - (1 - t), 3)))"

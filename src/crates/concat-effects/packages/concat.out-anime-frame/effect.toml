@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.out-anime-frame"
+name = "Anime Frame"
+kind = "animation"
+category = "Out"
+order = 16
+description = "The clip bursts away with speed lines and a flash."
+
+[animation]
+slot = "out"
+duration = 0.5
+scale = "(1.2 + (1 - (1.2)) * (1 - pow(1 - (1 - t), 3)))"
+
+[animation.effect]
+id = "concat.anime-frame"
+params = { progress = "100 * (1 - (1 - t))" }

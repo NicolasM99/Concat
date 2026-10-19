@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-spin-in"
+name = "Spin In"
+kind = "animation"
+category = "Combo"
+order = 78
+description = "The clip spins in from nothing and stays."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 - pow(1 - clamp(t / 0.25, 0, 1), 3))"
+rotation = "(-360 * (1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))))"

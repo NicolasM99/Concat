@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-zoom-out"
+name = "Zoom Out"
+kind = "animation"
+category = "In"
+order = 5
+description = "The clip zooms out to its place from very close."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(3 + (1 - (3)) * (1 - pow(1 - t, 3)))"
+opacity = "min(1, t * 3)"

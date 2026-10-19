@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-flip-5"
+name = "Flip 5"
+kind = "animation"
+category = "Combo"
+order = 83
+description = "The clip flips in at the start and out at the end."
+
+[animation]
+slot = "combo"
+duration = 2
+sx = "((1 - pow(1 - clamp(t / 0.25, 0, 1), 3)) * (1 - pow(clamp((t - 0.75) / 0.25, 0, 1), 3)))"

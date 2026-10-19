@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.combo-waltzer-2"
+name = "Waltzer 2"
+kind = "animation"
+category = "Combo"
+order = 73
+description = "The clip whirls round in a wider circle."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "0.8"
+x = "(0.2 * cos(t * pi * 2))"
+y = "(0.15 * sin(t * pi * 2))"
+rotation = "(360 * t)"

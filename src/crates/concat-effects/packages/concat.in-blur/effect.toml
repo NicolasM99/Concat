@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.in-blur"
+name = "Blur In"
+kind = "animation"
+category = "In"
+order = 44
+description = "The clip sharpens out of a blur."
+
+[animation]
+slot = "in"
+duration = 0.5
+opacity = "min(1, t * 2)"
+
+[animation.effect]
+id = "concat.gaussian-blur"
+params = { radius = "1 + 40 * (1 - t)" }

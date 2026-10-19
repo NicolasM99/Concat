@@ -13,10 +13,10 @@ use std::sync::Arc;
 use serde::{Deserialize, Serialize};
 
 use crate::model::{
-    AppliedFilter, AudioTrack, Background, Clip, ClipKind, ClipMask, ColorRange, ColorSpace, Crop,
-    CustomFont, Cutout, CutoutMode, Enhanced, Framing, KeyEase, KeyProperty, MediaItem, MediaKind,
-    MediaOrigin, Project, ShapeStyle, SpeedPoint, Stabilize, Stroke, TextStyle, Timeline, Track,
-    Transition, VideoSettings,
+    Animations, AppliedFilter, AudioTrack, Background, Clip, ClipKind, ClipMask, ColorRange,
+    ColorSpace, Crop, CustomFont, Cutout, CutoutMode, Enhanced, Framing, KeyEase, KeyProperty,
+    MediaItem, MediaKind, MediaOrigin, Project, ShapeStyle, SpeedPoint, Stabilize, Stroke,
+    TextStyle, Timeline, Track, Transition, VideoSettings,
 };
 
 mod audio;
@@ -151,6 +151,15 @@ pub struct ClipPatch {
     )]
     #[cfg_attr(feature = "schema", schemars(with = "Option<Transition>"))]
     pub transition_in: Option<Option<Transition>>,
+    /// The clip's animations, same three-way wire semantics as
+    /// `transition_in`: a value replaces every slot at once.
+    #[serde(
+        default,
+        with = "double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    #[cfg_attr(feature = "schema", schemars(with = "Option<Animations>"))]
+    pub animations: Option<Option<Animations>>,
     /// The title styling, same three-way wire semantics as `transition_in`.
     /// Setting a style also renames the clip after its first line.
     #[serde(
@@ -1094,6 +1103,11 @@ impl Command {
                         .iter()
                         .flatten()
                         .any(|tr| bad([tr.duration]))
+                    || patch
+                        .animations
+                        .iter()
+                        .flatten()
+                        .any(|set| set.each().any(|anim| bad([anim.duration])))
                     || matches!(
                         patch.background,
                         Some(Some(Background::Blur { amount })) if !amount.is_finite()

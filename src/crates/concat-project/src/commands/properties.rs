@@ -71,6 +71,9 @@ pub(super) fn apply(
             if let Some(effects) = patch.video_effects {
                 applied |= assign(&mut clip.video_effects, effects);
             }
+            if let Some(animations) = patch.animations {
+                applied |= assign(&mut clip.animations, animations);
+            }
             if let Some(transition) = patch.transition_in {
                 applied |= assign(&mut clip.transition_in, transition);
             }

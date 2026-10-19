@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.out-slide-up"
+name = "Slide Up"
+kind = "animation"
+category = "Out"
+order = 6
+description = "The clip slides up out of the frame."
+
+[animation]
+slot = "out"
+duration = 0.5
+y = "-(1 - (1 - pow(1 - (1 - t), 3)))"

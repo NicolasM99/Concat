@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.in-spin-left"
+name = "Spin Left"
+kind = "animation"
+category = "In"
+order = 17
+description = "The clip spins in from the right."
+
+[animation]
+slot = "in"
+duration = 0.5
+x = "0.6 * (1 - (1 - pow(1 - t, 3)))"
+rotation = "-90 * (1 - (1 - pow(1 - t, 3)))"
+opacity = "min(1, t * 2)"

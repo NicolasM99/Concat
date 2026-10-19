@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.out-zoom-in"
+name = "Zoom In"
+kind = "animation"
+category = "Out"
+order = 9
+description = "The clip zooms in past the viewer and fades."
+
+[animation]
+slot = "out"
+duration = 0.5
+scale = "(3 + (1 - (3)) * (1 - pow(1 - (1 - t), 3)))"
+opacity = "min(1, (1 - t) * 3)"

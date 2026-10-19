@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.out-rotation-closing"
+name = "Rotation Closing"
+kind = "animation"
+category = "Out"
+order = 14
+description = "The clip turns closed and fades."
+
+[animation]
+slot = "out"
+duration = 0.5
+scale = "(0.6 + (1 - (0.6)) * (1 - pow(1 - (1 - t), 3)))"
+rotation = "90 * (1 - (1 - pow(1 - (1 - t), 3)))"
+opacity = "(1 - t)"

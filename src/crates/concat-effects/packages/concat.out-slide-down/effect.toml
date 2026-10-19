@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.out-slide-down"
+name = "Slide Down"
+kind = "animation"
+category = "Out"
+order = 5
+description = "The clip slides down out of the frame."
+
+[animation]
+slot = "out"
+duration = 0.5
+y = "(1 - (1 - pow(1 - (1 - t), 3)))"

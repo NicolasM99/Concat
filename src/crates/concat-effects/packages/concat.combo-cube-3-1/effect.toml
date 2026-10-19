@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-cube-3-1"
+name = "Cube 3 (1)"
+kind = "animation"
+category = "Combo"
+order = 50
+description = "The clip keeps turning like a cube, face after face."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.3 * sin(t * pi * 2))"
+sx = "abs(cos(t * pi * 2))"

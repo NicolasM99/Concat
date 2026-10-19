@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-rotate"
+name = "Rotate"
+kind = "animation"
+category = "In"
+order = 13
+description = "The clip spins in, growing as it turns."
+
+[animation]
+slot = "in"
+duration = 0.5
+scale = "(0.2 + (1 - (0.2)) * (1 - pow(1 - t, 3)))"
+rotation = "-360 * (1 - (1 - pow(1 - t, 3)))"

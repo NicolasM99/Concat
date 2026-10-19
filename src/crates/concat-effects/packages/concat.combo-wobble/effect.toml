@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-wobble"
+name = "Wobble"
+kind = "animation"
+category = "Combo"
+order = 19
+description = "The clip wobbles like jelly."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(3 * sin(t * pi * 7))"
+sx = "(1 + 0.08 * sin(t * pi * 10))"
+sy = "(1 - 0.08 * sin(t * pi * 10))"

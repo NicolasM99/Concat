@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-pirate-ship-2"
+name = "Pirate ship 2"
+kind = "animation"
+category = "Combo"
+order = 52
+description = "The clip rocks harder, like a ship in a swell."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(0.08 * sin(t * pi * 6))"
+rotation = "(25 * sin(t * pi * 3))"

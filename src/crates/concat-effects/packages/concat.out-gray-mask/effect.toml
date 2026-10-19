@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.out-gray-mask"
+name = "Gray Mask"
+kind = "animation"
+category = "Out"
+order = 20
+description = "The clip drains to grey."
+
+[animation]
+slot = "out"
+duration = 0.5
+
+[animation.effect]
+id = "concat.gray-mask"
+params = { progress = "100 * (1 - (1 - t))" }

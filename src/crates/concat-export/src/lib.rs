@@ -22,6 +22,7 @@
 
 pub mod chains;
 pub mod flatten;
+mod motion;
 mod resolve;
 
 use resolve::{
@@ -246,6 +247,16 @@ pub struct ExportClip {
     /// black and for every other clip. See `Timeline::background_of`.
     #[serde(default)]
     pub backdrop: Option<ExportBackdrop>,
+    /// The clip's In, Out, Combo and Loop, as the document holds them.
+    #[serde(default)]
+    pub animations: Option<concat_project::model::Animations>,
+    /// Seconds a transition's overlap has added before the clip's own first
+    /// frame: where its animations' windows are measured from.
+    #[serde(default)]
+    pub animation_head: f64,
+    /// Seconds an overlap has added after the clip's own last frame.
+    #[serde(default)]
+    pub animation_tail: f64,
 }
 
 /// A clip's background, resolved for drawing: the document's
@@ -327,6 +338,9 @@ impl ExportClip {
             stretch_x: 1.0,
             stretch_y: 1.0,
             opacity: 1.0,
+            animations: None,
+            animation_head: 0.0,
+            animation_tail: 0.0,
             transition: None,
             video_fade_in: 0.0,
             hold: false,
@@ -943,6 +957,8 @@ fn extend(clip: &mut ExportClip, head: f64, tail: f64) {
     }
     clip.start -= head;
     clip.duration = new;
+    clip.animation_head += head.max(0.0);
+    clip.animation_tail += tail.max(0.0);
     if clip.kind != ClipKind::Image {
         clip.source_start = (clip.source_start - head * clip.speed).max(0.0);
     }
@@ -954,6 +970,9 @@ fn extend(clip: &mut ExportClip, head: f64, tail: f64) {
 fn last_frame_held(clip: &ExportClip, start: f64, length: f64, frame: f64) -> ExportClip {
     let mut hold = clip.clone();
     hold.hold = true;
+    // A held frame stands in for footage there is none of: it moves as
+    // the clip's keys leave it, and plays none of its animations.
+    hold.animations = None;
     hold.start = start;
     hold.duration = length;
     if clip.kind != ClipKind::Image {
@@ -1885,13 +1904,23 @@ fn passes_at(
     clip: ClipId,
     time: Rational,
 ) -> Vec<ShaderPass> {
-    let Some(effects) = chains.get(&clip) else {
-        return Vec::new();
+    let engine_clip = timeline.clip(clip);
+    let reveal_map = reveal_maps.get(&clip).cloned();
+    let mut passes = match chains.get(&clip) {
+        Some(effects) => {
+            let at = engine_clip.map_or(0.0, |engine_clip| engine_clip.fraction_at(time));
+            Catalogue::builtin().shader_passes_at(effects, at, reveal_map.clone())
+        }
+        None => Vec::new(),
     };
-    let at = timeline
-        .clip(clip)
-        .map_or(0.0, |engine_clip| engine_clip.fraction_at(time));
-    Catalogue::builtin().shader_passes_at(effects, at, reveal_maps.get(&clip).cloned())
+    // An animation's look rides after the clip's own effects, over its
+    // window only.
+    if let Some(engine_clip) = engine_clip
+        && let Some(motion) = &engine_clip.motion
+    {
+        passes.extend(motion.passes_at((time - engine_clip.start).as_f64(), reveal_map));
+    }
+    passes
 }
 
 /// Only the shader clock moves. Planning, source decoding, animated effect
@@ -2489,6 +2518,57 @@ pub fn preview_moments(
 
 #[cfg(test)]
 mod tests {
+    /// A clip's In moves it over its first seconds and leaves it where it
+    /// was placed; its Out fades it over its last; between them the clip is
+    /// as placed, and its look rides only inside its window.
+    #[test]
+    fn a_clips_animations_move_it_over_their_windows_only() {
+        use concat_core::time::Rational;
+        use concat_project::model::{Animations, ClipAnimation};
+
+        let mut clip = ExportClip::blank(ClipKind::Image, 0.0, 4.0, 0);
+        clip.path = "still.png".to_owned();
+        clip.animations = Some(Animations {
+            enter: Some(ClipAnimation {
+                id: "concat.in-slide-left".to_owned(),
+                duration: 1.0,
+            }),
+            exit: Some(ClipAnimation {
+                id: "concat.out-blurred-fadein".to_owned(),
+                duration: 1.0,
+            }),
+            ..Animations::default()
+        });
+        let plan = preview_plan(&[clip], 64, 36, 30, 1, ColorSpace::Sdr);
+        let timeline = &plan.built.timeline;
+        let id = timeline
+            .tracks()
+            .flat_map(|(_, track)| track.clips().to_vec())
+            .next()
+            .expect("the clip is on the timeline");
+        let engine = timeline.clip(id).expect("the clip");
+        let at = |seconds: f64| Rational::approximate(seconds).expect("a time");
+
+        // Half way through a slide from the right with an ease out.
+        let half = engine.transform_at(at(0.5)).offset_x;
+        assert!((half - 0.125).abs() < 1e-6, "half way in: {half}");
+        assert_eq!(engine.transform_at(at(1.5)).offset_x, 0.0, "settled");
+        assert_eq!(engine.opacity_at(at(2.0)), 1.0, "between the windows");
+        let fading = engine.opacity_at(at(3.5));
+        assert!((fading - 0.5).abs() < 1e-3, "half way out: {fading}");
+
+        let motion = engine.motion.as_ref().expect("the clip has animations");
+        assert!(
+            motion.passes_at(2.0, None).is_empty(),
+            "no look between the windows"
+        );
+        assert_eq!(
+            motion.passes_at(3.5, None).len(),
+            1,
+            "the Out's blur rides its window"
+        );
+    }
+
     /// A treatment on track 1 runs over what track 0 drew and not over what
     /// track 2 draws on top of it, and its strength blends the result back.
     #[test]

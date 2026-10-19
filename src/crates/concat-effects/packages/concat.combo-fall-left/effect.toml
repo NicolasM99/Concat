@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-fall-left"
+name = "Fall Left"
+kind = "animation"
+category = "Combo"
+order = 65
+description = "The clip falls in from the top right and out to the left."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "((1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) - pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"
+y = "(-(1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) * 0.5 + pow(clamp((t - 0.75) / 0.25, 0, 1), 3) * 0.5)"
+rotation = "(-30 * pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-flip-ii"
+name = "Flip II"
+kind = "animation"
+category = "Combo"
+order = 85
+description = "The clip flips once over the clip, with a tilt."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(10 * sin(t * pi))"
+sx = "abs(cos(t * pi))"

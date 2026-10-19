@@ -1,0 +1,47 @@
+format = 2
+
+[effect]
+id = "concat.reveal-blinds"
+name = "Reveal Blinds"
+kind = "effect"
+category = "Reveal"
+order = 11
+intensity = "progress"
+description = "Shows the clip through blinds that open; the progress is how far."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[[param]]
+key = "direction"
+label = "Direction"
+type = "enum"
+min = 0
+max = 3
+default = 0
+step = 1
+values = [0, 1, 2, 3]
+labels = ["Left to right", "Right to left", "Top to bottom", "Bottom to top"]
+
+[[param]]
+key = "count"
+label = "Blinds"
+min = 2
+max = 24
+default = 8
+step = 1
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

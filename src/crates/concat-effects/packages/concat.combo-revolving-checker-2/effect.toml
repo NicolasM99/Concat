@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-revolving-checker-2"
+name = "Revolving Checker 2"
+kind = "animation"
+category = "Combo"
+order = 69
+description = "The clip revolves the other way in quarter steps, pulsing."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(0.85 + 0.15 * cos(t * pi * 8))"
+rotation = "(-90 * floor(t * 4))"

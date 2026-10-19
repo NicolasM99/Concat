@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-rollercoaster-1"
+name = "Rollercoaster 1"
+kind = "animation"
+category = "Combo"
+order = 101
+description = "The clip dips and climbs like a rollercoaster car."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(0.3 * (t - 0.5))"
+y = "(0.2 * sin(t * pi * 2))"
+rotation = "(20 * cos(t * pi * 2))"

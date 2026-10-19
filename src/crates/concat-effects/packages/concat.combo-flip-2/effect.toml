@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-flip-2"
+name = "Flip 2"
+kind = "animation"
+category = "Combo"
+order = 80
+description = "The clip flips over on its vertical axis twice."
+
+[animation]
+slot = "combo"
+duration = 2
+sx = "abs(cos(t * pi * 2))"

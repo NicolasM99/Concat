@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-revolving-checker-1"
+name = "Revolving Checker 1"
+kind = "animation"
+category = "Combo"
+order = 68
+description = "The clip revolves in quarter steps."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(90 * floor(t * 4) + 90 * pow((t * 4 - floor(t * 4)), 3))"

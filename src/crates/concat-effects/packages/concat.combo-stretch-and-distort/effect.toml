@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-stretch-and-distort"
+name = "Stretch and distort"
+kind = "animation"
+category = "Combo"
+order = 3
+description = "The clip stretches wide, squashes tall, and settles before stretching away."
+
+[animation]
+slot = "combo"
+duration = 2
+sx = "(1 + 0.4 * sin(t * pi * 4) * (1 - abs(t - 0.5) * 2))"
+sy = "(1 - 0.3 * sin(t * pi * 4) * (1 - abs(t - 0.5) * 2))"

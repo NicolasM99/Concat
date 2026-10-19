@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-yoyo-1"
+name = "Yoyo 1"
+kind = "animation"
+category = "Combo"
+order = 61
+description = "The clip drops and springs back up like a yoyo."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(0.5 * pow(sin(t * pi * 2), 2))"
+rotation = "(180 * sin(t * pi * 2))"

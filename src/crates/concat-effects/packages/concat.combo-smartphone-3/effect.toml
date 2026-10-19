@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-smartphone-3"
+name = "Smartphone 3"
+kind = "animation"
+category = "Combo"
+order = 27
+description = "The clip rotates a quarter turn and back like a phone."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 - 0.35 * sin(t * pi))"
+rotation = "(90 * sin(t * pi))"

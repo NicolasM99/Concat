@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.in-rock-vertically"
+name = "Rock Vertically"
+kind = "animation"
+category = "In"
+order = 7
+description = "The clip rocks up and down as it arrives."
+
+[animation]
+slot = "in"
+duration = 0.5
+y = "(0.08 * sin(t * 25) * (1 - t))"
+opacity = "min(1, t * 3)"

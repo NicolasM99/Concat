@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-funhouse-mirror-1"
+name = "Funhouse mirror 1"
+kind = "animation"
+category = "Combo"
+order = 66
+description = "The clip stretches tall and thin, then short and wide, like a funhouse mirror."
+
+[animation]
+slot = "combo"
+duration = 2
+sx = "(1 + 0.35 * sin(t * pi * 2))"
+sy = "(1 - 0.35 * sin(t * pi * 2))"

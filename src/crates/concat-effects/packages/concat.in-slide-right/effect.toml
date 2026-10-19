@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.in-slide-right"
+name = "Slide Right"
+kind = "animation"
+category = "In"
+order = 11
+description = "The clip slides in from the left."
+
+[animation]
+slot = "in"
+duration = 0.5
+x = "-(1 - (1 - pow(1 - t, 3)))"

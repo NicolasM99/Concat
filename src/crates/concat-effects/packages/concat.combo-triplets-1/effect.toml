@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-triplets-1"
+name = "Triplets 1"
+kind = "animation"
+category = "Combo"
+order = 87
+description = "The clip jumps between three places in turn."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "0.7"
+x = "(0.25 * (floor(t * 3) - 1))"

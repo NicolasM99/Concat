@@ -1,0 +1,14 @@
+format = 2
+
+[effect]
+id = "concat.combo-bisect-1"
+name = "Bisect 1"
+kind = "animation"
+category = "Combo"
+order = 55
+description = "The clip arrives and leaves in two steps."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "(-(1 - floor(clamp(t / 0.25, 0, 1) * 2) / 2) + floor(clamp((t - 0.75) / 0.25, 0, 1) * 2) / 2)"

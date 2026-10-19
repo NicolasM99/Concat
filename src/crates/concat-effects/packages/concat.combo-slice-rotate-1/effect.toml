@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-slice-rotate-1"
+name = "Slice & Rotate 1"
+kind = "animation"
+category = "Combo"
+order = 44
+description = "The clip turns in slices of a quarter turn."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(0.8 + 0.2 * abs(cos(t * pi * 4)))"
+rotation = "(90 * floor(t * 4))"

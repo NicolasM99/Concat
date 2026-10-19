@@ -1,0 +1,18 @@
+format = 2
+
+[effect]
+id = "concat.in-retro-fadein"
+name = "Retro Fadein"
+kind = "animation"
+category = "In"
+order = 33
+description = "The clip fades in out of a grey, faded print."
+
+[animation]
+slot = "in"
+duration = 0.5
+opacity = "t"
+
+[animation.effect]
+id = "concat.gray-mask"
+params = { progress = "100 * (1 - t)" }

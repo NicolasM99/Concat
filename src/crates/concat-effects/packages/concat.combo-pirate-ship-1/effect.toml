@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-pirate-ship-1"
+name = "Pirate ship 1"
+kind = "animation"
+category = "Combo"
+order = 51
+description = "The clip rocks like a ship at sea."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(0.04 * sin(t * pi * 8))"
+rotation = "(15 * sin(t * pi * 4))"

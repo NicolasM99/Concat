@@ -1,0 +1,37 @@
+format = 2
+
+[effect]
+id = "concat.reveal-words"
+name = "Reveal Words"
+kind = "effect"
+category = "Reveal"
+order = 16
+intensity = "progress"
+description = "On a title, shows its words one after another; the progress is how many."
+
+[[param]]
+key = "progress"
+label = "Progress"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+animate = true
+
+[[param]]
+key = "softness"
+label = "Softness"
+min = 0
+max = 100
+default = 0
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+
+[card.params]
+progress = 60

@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-crystal-2"
+name = "Crystal 2"
+kind = "animation"
+category = "Combo"
+order = 97
+description = "The clip turns and glints like a cut crystal."
+
+[animation]
+slot = "combo"
+duration = 2
+rotation = "(-45 * sin(t * pi))"
+sy = "(1 - 0.15 * sin(t * pi * 2))"

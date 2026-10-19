@@ -1,0 +1,17 @@
+format = 2
+
+[effect]
+id = "concat.in-blinds"
+name = "Blinds"
+kind = "animation"
+category = "In"
+order = 41
+description = "The clip appears as blinds open."
+
+[animation]
+slot = "in"
+duration = 0.5
+
+[animation.effect]
+id = "concat.reveal-blinds"
+params = { progress = "100 * t" }

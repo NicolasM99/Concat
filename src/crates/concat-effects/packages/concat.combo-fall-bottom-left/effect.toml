@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-fall-bottom-left"
+name = "Fall Bottom Left"
+kind = "animation"
+category = "Combo"
+order = 64
+description = "The clip falls away to the bottom left."
+
+[animation]
+slot = "combo"
+duration = 2
+x = "((1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) * 0.5 - pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"
+y = "(-(1 - (1 - pow(1 - clamp(t / 0.25, 0, 1), 3))) * 0.5 + pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"
+rotation = "(-45 * pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"
