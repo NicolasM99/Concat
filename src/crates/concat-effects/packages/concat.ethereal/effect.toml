@@ -1,0 +1,30 @@
+format = 2
+
+[effect]
+id = "concat.ethereal"
+name = "Ethereal"
+kind = "effect"
+category = "Light"
+order = 31
+description = "A dreamy, glowing double of the picture slowly turns over it."
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[[param]]
+key = "rotate"
+label = "Turn"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

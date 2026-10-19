@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.camera-glow"
+name = "Camera Glow"
+kind = "transition"
+category = "Light"
+order = 32
+description = "The outgoing shot blooms into a soft, bright glow, as a lens does facing the light, and the incoming one comes out of it."
+
+[[param]]
+key = "glow"
+label = "Glow"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

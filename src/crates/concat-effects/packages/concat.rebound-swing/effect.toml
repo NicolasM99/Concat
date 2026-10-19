@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.rebound-swing"
+name = "Rebound Swing"
+kind = "effect"
+category = "Camera"
+order = 21
+intensity = "size"
+description = "The picture swings out and rebounds back, settling with each swing."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

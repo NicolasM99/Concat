@@ -1,0 +1,51 @@
+format = 2
+
+[effect]
+id = "concat.fuzzy"
+name = "Fuzzy"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 28
+intensity = "strength"
+description = "A fuzzy, smeared picture with colour fringes, like a bad tape."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[[param]]
+key = "chroma_x"
+label = "Horizontal split"
+min = 0
+max = 100
+default = 75
+step = 1
+unit = "%"
+
+[[param]]
+key = "chroma_y"
+label = "Vertical split"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

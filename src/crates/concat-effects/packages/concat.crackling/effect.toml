@@ -1,0 +1,38 @@
+format = 2
+
+[effect]
+id = "concat.crackling"
+name = "Crackling"
+kind = "effect"
+category = "Body"
+order = 69
+intensity = "strength"
+description = "Short sparks crackle close around the subject. Drawn about the point you place on the subject."
+
+[[param]]
+key = "centre"
+label = "Subject"
+type = "point"
+default = 0.5
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

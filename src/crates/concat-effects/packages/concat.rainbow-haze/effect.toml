@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.rainbow-haze"
+name = "Rainbow Haze"
+kind = "effect"
+category = "Light"
+order = 33
+intensity = "strength"
+description = "A haze of rainbow light drifts over the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

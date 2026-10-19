@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.wide-angle"
+name = "Wide Angle"
+kind = "effect"
+category = "Distort"
+order = 33
+intensity = "strength"
+description = "A wide-angle lens: the edges stretched, the middle drawn in."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 45
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.splice"
+name = "Splice"
+kind = "effect"
+category = "Fun"
+order = 26
+description = "The picture cut into strips and spliced back slightly out of line."
+
+[wgsl]
+entry = "effect.wgsl"

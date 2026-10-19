@@ -1,0 +1,37 @@
+format = 2
+
+[effect]
+id = "concat.heart-magnifier"
+name = "Heart Magnifier"
+kind = "effect"
+category = "Distort"
+order = 35
+intensity = "strength"
+description = "A heart-shaped lens enlarges part of the picture."
+
+[[param]]
+key = "centre"
+label = "Position"
+type = "point"
+default = 0.5
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Zoom"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

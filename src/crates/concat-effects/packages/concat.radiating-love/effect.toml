@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.radiating-love"
+name = "Radiating Love"
+kind = "effect"
+category = "Love"
+order = 26
+intensity = "strength"
+description = "Rings of pink love radiate out from the centre."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

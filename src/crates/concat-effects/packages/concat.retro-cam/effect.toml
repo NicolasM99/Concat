@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.retro-cam"
+name = "Retro Cam"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 41
+description = "An old digital camera: crushed contrast, cool cast and a little noise."
+
+[[param]]
+key = "look"
+label = "Strength"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

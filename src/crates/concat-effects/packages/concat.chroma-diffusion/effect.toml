@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.chroma-diffusion"
+name = "Chroma Diffusion"
+kind = "effect"
+category = "Body"
+order = 19
+intensity = "strength"
+description = "The colours of the picture diffuse outward in red, green and blue ghosts."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

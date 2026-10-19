@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.noise-fx"
+name = "Noise"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 24
+intensity = "noise"
+description = "Coloured video noise over the picture."
+
+[[param]]
+key = "noise"
+label = "Noise"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.seventies"
+name = "70's"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 45
+description = "A 1970s broadcast: warm, faded, bleeding colour with soft scan lines."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

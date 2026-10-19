@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.super-like-transition"
+name = "Super Like"
+kind = "transition"
+category = "Fun"
+order = 91
+description = "A big heart beats once in the middle of the frame and opens out to the incoming shot."
+
+[[param]]
+key = "softness"
+label = "Softness"
+min = 0
+max = 100
+default = 20
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "circleopen"
+fallback = "cross-fade"

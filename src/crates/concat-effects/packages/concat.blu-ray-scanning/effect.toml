@@ -1,0 +1,51 @@
+format = 2
+
+[effect]
+id = "concat.blu-ray-scanning"
+name = "Blu-ray Scanning"
+kind = "effect"
+category = "Light"
+shelves = ["Distortion & Glitch"]
+order = 34
+intensity = "luminance"
+description = "A blue laser line scans the picture, leaving a soft glow."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "luminance"
+label = "Glow"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "blur"
+label = "Blur"
+min = 0
+max = 100
+default = 30
+step = 1
+unit = "%"
+
+[[param]]
+key = "range"
+label = "Width"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

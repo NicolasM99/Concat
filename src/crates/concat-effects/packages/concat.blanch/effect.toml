@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.blanch"
+name = "Blanch"
+kind = "transition"
+category = "Light"
+order = 36
+description = "The outgoing shot bleaches out to a washed white and the incoming one develops back out of it."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 90
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

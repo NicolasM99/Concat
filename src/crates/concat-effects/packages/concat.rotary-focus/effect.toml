@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.rotary-focus"
+name = "Rotary Focus"
+kind = "effect"
+category = "Camera"
+order = 25
+intensity = "strength"
+description = "The picture turns with a spinning blur that comes and goes."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

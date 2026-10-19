@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.zoom-lens"
+name = "Zoom Lens"
+kind = "effect"
+category = "Camera"
+order = 15
+intensity = "range"
+description = "The lens pushes in and pulls back out, again and again."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "range"
+label = "Range"
+min = 0
+max = 100
+default = 30
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

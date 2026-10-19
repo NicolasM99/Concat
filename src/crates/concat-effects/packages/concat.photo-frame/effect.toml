@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.photo-frame"
+name = "Photo Frame"
+kind = "effect"
+category = "Frame"
+order = 24
+description = "The picture as an instant photo with a white border, thicker at the bottom."
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.bw-flash"
+name = "B&W Flash"
+kind = "transition"
+category = "Light"
+order = 27
+description = "The cut strobes between black and white frames, both shots drained to black and white as it passes."
+
+[[param]]
+key = "flashes"
+label = "Flashes"
+min = 1
+max = 8
+default = 4
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

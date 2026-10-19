@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.color-fringe"
+name = "Color Fringe"
+kind = "effect"
+category = "Body"
+order = 18
+intensity = "strength"
+description = "Bright colour fringes split off the outlines. Drawn around the edges in the picture; place it on a clip with a clear subject."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

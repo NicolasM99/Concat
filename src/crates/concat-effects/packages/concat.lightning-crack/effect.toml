@@ -1,0 +1,30 @@
+format = 2
+
+[effect]
+id = "concat.lightning-crack"
+name = "Lightning Crack"
+kind = "effect"
+category = "Light"
+order = 28
+description = "Lightning cracks across the picture, lighting it in flashes."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[[param]]
+key = "distortion"
+label = "Shake"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

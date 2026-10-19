@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.shake-transition"
+name = "Shake 3"
+kind = "transition"
+category = "Basic"
+order = 41
+description = "Both shots shake hard, like a handheld camera knocked, as one cuts to the other."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

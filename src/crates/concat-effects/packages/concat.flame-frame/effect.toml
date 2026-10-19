@@ -1,0 +1,40 @@
+format = 2
+
+[effect]
+id = "concat.flame-frame"
+name = "Flame Frame"
+kind = "effect"
+category = "Frame"
+order = 30
+intensity = "strength"
+description = "Flames burn all around the edge of the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

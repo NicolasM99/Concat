@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.dual-screens"
+name = "Dual Screens"
+kind = "effect"
+category = "Split"
+order = 10
+description = "The picture twice, side by side."
+
+[[param]]
+key = "gap"
+label = "Border"
+min = 0
+max = 100
+default = 0
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

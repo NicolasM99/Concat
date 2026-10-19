@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.switch"
+name = "Switch"
+kind = "transition"
+category = "Slide"
+order = 45
+description = "The two shots trade places: the outgoing one slides back and aside as the incoming one comes forward from the other side."
+
+[[param]]
+key = "spread"
+label = "Spread"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

@@ -1,0 +1,34 @@
+format = 2
+
+[effect]
+id = "concat.bottom-left"
+name = "Bottom Left II"
+kind = "transition"
+category = "Slide"
+order = 30
+description = "Both shots slide together toward a corner of the frame, smeared with motion as they go."
+
+[[param]]
+key = "direction"
+label = "Direction"
+type = "enum"
+min = 0
+max = 3
+default = 0
+step = 1
+values = [0, 1, 2, 3]
+labels = ["Bottom Left", "Bottom Right", "Top Left", "Top Right"]
+
+[[param]]
+key = "blur"
+label = "Blur"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "slidedown"
+fallback = "cross-fade"

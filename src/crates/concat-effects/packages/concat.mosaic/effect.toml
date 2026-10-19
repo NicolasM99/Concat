@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.mosaic"
+name = "Mosaic"
+kind = "effect"
+category = "Blur"
+order = 18
+intensity = "size"
+description = "The picture as a mosaic of square tiles."
+
+[[param]]
+key = "size"
+label = "Tile size"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

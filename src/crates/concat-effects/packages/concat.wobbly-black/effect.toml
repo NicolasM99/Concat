@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.wobbly-black"
+name = "Wobbly Black"
+kind = "effect"
+category = "Camera"
+order = 27
+intensity = "size"
+description = "A black frame closes in from the edges and wobbles like jelly."
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,32 @@
+format = 2
+
+[effect]
+id = "concat.tv-lines"
+name = "TV Lines"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 23
+intensity = "texture"
+description = "Heavy television scan lines with a slight wave."
+
+[[param]]
+key = "texture"
+label = "Lines"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[[param]]
+key = "distortion"
+label = "Wave"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.fold-over"
+name = "Fold Over"
+kind = "transition"
+category = "Slide"
+order = 78
+description = "The right half of the outgoing shot folds over onto the left like paper, the incoming shot printed on its back."
+
+[[param]]
+key = "depth"
+label = "Depth"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

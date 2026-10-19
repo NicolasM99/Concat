@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.rippling"
+name = "Rippling"
+kind = "effect"
+category = "Distort"
+order = 39
+intensity = "strength"
+description = "The picture ripples in bands as through a heat haze."
+
+[[param]]
+key = "range"
+label = "Range"
+min = 0
+max = 100
+default = 35
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 35
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

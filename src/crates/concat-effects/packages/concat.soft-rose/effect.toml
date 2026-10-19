@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.soft-rose"
+name = "Soft Rose"
+kind = "effect"
+category = "Light"
+order = 20
+intensity = "strength"
+description = "A rosy haze softly tints and drifts over the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.quick-math"
+name = "Quick Math"
+kind = "effect"
+category = "Fun"
+order = 23
+description = "Equations and symbols swirl over a thinking face, a meme classic."
+
+[wgsl]
+entry = "effect.wgsl"

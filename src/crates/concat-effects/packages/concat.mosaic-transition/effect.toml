@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.mosaic-transition"
+name = "Mosaic"
+kind = "transition"
+category = "Glitch"
+order = 79
+description = "The outgoing shot breaks into ever larger tiles and the incoming one resolves out of them."
+
+[[param]]
+key = "size"
+label = "Tile size"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "pixelize"
+fallback = "cross-fade"

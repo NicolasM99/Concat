@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.white-ink"
+name = "White Ink"
+kind = "transition"
+category = "Dissolve"
+order = 84
+description = "Blots of white ink spread until they cover the outgoing shot, then draw back off the incoming one."
+
+[[param]]
+key = "blots"
+label = "Blot size"
+min = 1
+max = 10
+default = 3
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+xfade = "fadewhite"
+fallback = "cross-fade"

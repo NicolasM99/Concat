@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.star-trails"
+name = "Star Trails"
+kind = "effect"
+category = "Body"
+order = 23
+intensity = "strength"
+description = "Glittering trails stream behind the picture's bright parts."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

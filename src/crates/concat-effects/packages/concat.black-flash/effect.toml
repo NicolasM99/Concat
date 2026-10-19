@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.black-flash"
+name = "Black Flash"
+kind = "effect"
+category = "Light"
+order = 52
+description = "The picture flashes to black on a beat."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

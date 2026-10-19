@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.color-phosphor"
+name = "Color Phosphor"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 35
+description = "The picture drawn in the coloured dots of a CRT's phosphors."
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 30
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

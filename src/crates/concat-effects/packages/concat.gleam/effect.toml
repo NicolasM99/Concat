@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.gleam"
+name = "Gleam"
+kind = "effect"
+category = "Light"
+order = 25
+intensity = "luminance"
+description = "A diagonal gleam of light sweeps across the bright parts of the picture."
+
+[[param]]
+key = "size"
+label = "Width"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "luminance"
+label = "Brightness"
+min = 0
+max = 100
+default = 55
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

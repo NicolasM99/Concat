@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.negative-strobe"
+name = "Negative Strobe"
+kind = "effect"
+category = "Party"
+shelves = ["Party & Club"]
+order = 61
+description = "The picture strobes between itself and its negative."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 45
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 85
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

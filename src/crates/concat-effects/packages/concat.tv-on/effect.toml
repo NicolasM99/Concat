@@ -1,0 +1,52 @@
+format = 2
+
+[effect]
+id = "concat.tv-on"
+name = "TV On"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 19
+description = "An old TV switching on: a bright line opens out into the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Flare"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "chroma_x"
+label = "Horizontal split"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "chroma_y"
+label = "Vertical split"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+moment = 0.5

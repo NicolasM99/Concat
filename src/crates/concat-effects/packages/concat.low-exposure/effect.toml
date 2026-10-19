@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.low-exposure"
+name = "Low Exposure"
+kind = "effect"
+category = "Light"
+order = 57
+description = "The picture breathes darker and back, underexposed."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

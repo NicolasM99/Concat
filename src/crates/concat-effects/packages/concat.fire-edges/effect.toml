@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.fire-edges"
+name = "Fire Edges"
+kind = "effect"
+category = "Frame"
+order = 31
+description = "Fire rises from the bottom edge of the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

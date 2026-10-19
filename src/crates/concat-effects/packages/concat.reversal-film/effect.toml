@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.reversal-film"
+name = "Reversal Film"
+kind = "effect"
+category = "Retro"
+order = 22
+intensity = "strength"
+description = "Slide film: rich, contrasty colour with deep blacks and grain."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.the-end"
+name = "The End"
+kind = "effect"
+category = "Basic"
+order = 49
+description = "An iris closes to black on the picture as the clip ends, the way old films finished."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 20
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

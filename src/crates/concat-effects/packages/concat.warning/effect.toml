@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.warning"
+name = "Warning"
+kind = "effect"
+category = "Fun"
+order = 21
+description = "Flashing red alarm light and hazard stripes at the edges."
+
+[wgsl]
+entry = "effect.wgsl"

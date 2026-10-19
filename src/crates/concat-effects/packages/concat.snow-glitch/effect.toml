@@ -1,0 +1,40 @@
+format = 2
+
+[effect]
+id = "concat.snow-glitch"
+name = "Snow Glitch"
+kind = "effect"
+category = "Glitch"
+shelves = ["Distortion & Glitch"]
+order = 17
+description = "Bursts of video snow break up the picture."
+
+[[param]]
+key = "range"
+label = "Range"
+min = 0
+max = 100
+default = 15
+step = 1
+unit = "%"
+
+[[param]]
+key = "noise"
+label = "Noise"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "chroma_x"
+label = "Split"
+min = 0
+max = 100
+default = 55
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.camera-shake"
+name = "Camera Shake"
+kind = "effect"
+category = "Camera"
+order = 13
+intensity = "strength"
+description = "A handheld camera's restless drift and wobble."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Range"
+min = 0
+max = 100
+default = 15
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

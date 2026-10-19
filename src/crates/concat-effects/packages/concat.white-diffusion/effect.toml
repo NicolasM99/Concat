@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.white-diffusion"
+name = "White Diffusion"
+kind = "effect"
+category = "Blur"
+order = 23
+description = "Bright light diffuses into a white bloom that breathes."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

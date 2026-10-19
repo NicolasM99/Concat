@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.dot-shadow"
+name = "Dot Shadow"
+kind = "effect"
+category = "Body"
+order = 35
+intensity = "strength"
+description = "A halftone-dot shadow of the picture falls behind it."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

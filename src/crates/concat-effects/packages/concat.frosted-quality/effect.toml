@@ -1,0 +1,40 @@
+format = 2
+
+[effect]
+id = "concat.frosted-quality"
+name = "Frosted Quality"
+kind = "effect"
+category = "Blur"
+order = 17
+intensity = "strength"
+description = "The picture seen through frosted glass: grainy, diffused, softly shimmering."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 15
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "noise"
+label = "Grain"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

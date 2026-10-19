@@ -1,0 +1,52 @@
+format = 2
+
+[effect]
+id = "concat.gold-sparkles"
+name = "Gold Sparkles"
+kind = "effect"
+category = "Sparkle"
+order = 24
+intensity = "density"
+description = "Gold sparkles glint and wink over a warmer picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "density"
+label = "Amount"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Size"
+min = 10
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "look"
+label = "Background"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+moment = 1.5

@@ -1,0 +1,41 @@
+format = 2
+
+[effect]
+id = "concat.edgy"
+name = "Edgy"
+kind = "effect"
+category = "Glitch"
+shelves = ["Distortion & Glitch"]
+order = 18
+description = "Hard, jagged colour edges flicker around everything in the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "chroma_x"
+label = "Horizontal split"
+min = 0
+max = 100
+default = 75
+step = 1
+unit = "%"
+
+[[param]]
+key = "chroma_y"
+label = "Vertical split"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

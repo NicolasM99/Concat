@@ -1,0 +1,43 @@
+format = 2
+
+[effect]
+id = "concat.sparkle-spiral"
+name = "Sparkle Spiral"
+kind = "effect"
+category = "Sparkle"
+order = 37
+intensity = "density"
+description = "Sparkles wheel round the centre of the picture in a spiral."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "density"
+label = "Amount"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Size"
+min = 10
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+moment = 1.5

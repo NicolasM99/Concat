@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.wave-right"
+name = "Wave Right"
+kind = "transition"
+category = "Wipe"
+order = 60
+description = "A rippling wave carries the incoming shot across the frame from left to right."
+
+[[param]]
+key = "waves"
+label = "Waves"
+min = 1
+max = 8
+default = 3
+step = 1
+
+[[param]]
+key = "height"
+label = "Height"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "wiperight"
+fallback = "cross-fade"

@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.speed-streaks"
+name = "Speed Streaks"
+kind = "effect"
+category = "Body"
+order = 28
+intensity = "strength"
+description = "The picture streaks sideways as if moving at speed, speed lines across it."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

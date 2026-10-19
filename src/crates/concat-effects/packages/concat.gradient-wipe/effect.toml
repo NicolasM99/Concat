@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.gradient-wipe"
+name = "Gradient Wipe"
+kind = "transition"
+category = "Wipe"
+order = 24
+description = "A wide, soft gradient sweeps the incoming shot across the outgoing one."
+
+[[param]]
+key = "angle"
+label = "Angle"
+min = 0
+max = 360
+default = 0
+step = 1
+unit = "°"
+
+[[param]]
+key = "softness"
+label = "Softness"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

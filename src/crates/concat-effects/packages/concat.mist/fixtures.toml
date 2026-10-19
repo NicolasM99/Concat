@@ -1,0 +1,19 @@
+# Colours in the working space: linear light, 1.0 the white of an SDR
+# picture. Pinned from what the shader renders on a GPU.
+
+[[probe]]
+name = "default"
+input = [0.3, 0.2, 0.12, 1]
+expect = [0.37427, 0.28564, 0.2146, 1]
+
+[[probe]]
+name = "minimum"
+at = "min"
+input = [0.3, 0.2, 0.12, 1]
+expect = [0.30005, 0.19995, 0.12, 1]
+
+[[probe]]
+name = "maximum"
+at = "max"
+input = [0.3, 0.2, 0.12, 1]
+expect = [0.40601, 0.32251, 0.25513, 1]

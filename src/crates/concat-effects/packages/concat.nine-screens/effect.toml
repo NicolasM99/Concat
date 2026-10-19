@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.nine-screens"
+name = "Nine Screens"
+kind = "effect"
+category = "Split"
+order = 14
+description = "The picture nine times, in a three-by-three grid."
+
+[[param]]
+key = "gap"
+label = "Border"
+min = 0
+max = 100
+default = 0
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

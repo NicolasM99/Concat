@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.open"
+name = "Open"
+kind = "transition"
+category = "Wipe"
+order = 44
+description = "A rectangle of the incoming shot opens from the centre out to the frame's edges."
+
+[[param]]
+key = "softness"
+label = "Softness"
+min = 0
+max = 100
+default = 10
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "rectcrop"
+fallback = "cross-fade"

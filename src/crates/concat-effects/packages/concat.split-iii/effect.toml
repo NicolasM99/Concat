@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.split-iii"
+name = "Split III"
+kind = "transition"
+category = "Slide"
+order = 65
+description = "The outgoing shot breaks into three strips that slide away in opposite directions."
+
+[[param]]
+key = "stagger"
+label = "Stagger"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

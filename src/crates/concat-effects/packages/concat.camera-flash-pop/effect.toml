@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.camera-flash-pop"
+name = "Flash 2"
+kind = "effect"
+category = "Light"
+order = 36
+description = "Paparazzi flashes go off from different spots around the frame."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

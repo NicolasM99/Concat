@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.flicker"
+name = "Flicker"
+kind = "effect"
+category = "Light"
+order = 59
+description = "The light flickers unsteadily, like a failing bulb."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

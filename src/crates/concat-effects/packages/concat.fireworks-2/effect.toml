@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.fireworks-2"
+name = "Fireworks 2"
+kind = "effect"
+category = "Party"
+shelves = ["Party & Club"]
+order = 33
+description = "Fireworks burst in bright showers of sparks over a darkened sky."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

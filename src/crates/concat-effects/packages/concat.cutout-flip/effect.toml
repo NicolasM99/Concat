@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.cutout-flip"
+name = "Cutout Flip"
+kind = "transition"
+category = "Spin"
+order = 74
+description = "Tiles of the frame flip over one after another in a sweep, each showing the incoming shot on its back."
+
+[[param]]
+key = "tiles"
+label = "Tiles"
+min = 2
+max = 16
+default = 6
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

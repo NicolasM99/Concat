@@ -1,0 +1,24 @@
+format = 2
+
+[effect]
+id = "concat.split"
+name = "Split"
+kind = "transition"
+category = "Slide"
+order = 64
+description = "The outgoing shot splits in two halves that slide off up and down, uncovering the incoming one."
+
+[[param]]
+key = "direction"
+label = "Direction"
+type = "enum"
+min = 0
+max = 1
+default = 0
+step = 1
+values = [0, 1]
+labels = ["Vertical", "Horizontal"]
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

@@ -1,0 +1,30 @@
+format = 2
+
+[effect]
+id = "concat.stuck-frame"
+name = "Stuck Frame"
+kind = "effect"
+category = "Camera"
+order = 29
+description = "The picture catches and jumps like a projector that keeps slipping."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Jump"
+min = 0
+max = 100
+default = 30
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

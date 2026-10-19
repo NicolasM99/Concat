@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.windmill"
+name = "Windmill"
+kind = "transition"
+category = "Wipe"
+order = 75
+description = "Windmill blades sweep round the centre, each blade uncovering a slice of the incoming shot."
+
+[[param]]
+key = "blades"
+label = "Blades"
+min = 2
+max = 12
+default = 4
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+xfade = "radial"
+fallback = "cross-fade"

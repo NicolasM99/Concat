@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.horizontal-blur"
+name = "Horizontal Blur"
+kind = "transition"
+category = "Blur"
+order = 33
+description = "The cut smears both shots sideways and they resolve on the incoming one."
+
+[[param]]
+key = "amount"
+label = "Amount"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "hblur"
+fallback = "cross-fade"

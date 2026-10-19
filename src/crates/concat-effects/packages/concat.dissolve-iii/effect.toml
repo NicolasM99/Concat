@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.dissolve-iii"
+name = "Dissolve III"
+kind = "transition"
+category = "Dissolve"
+order = 23
+description = "The outgoing shot dissolves from its shadows to its highlights, the incoming one showing through the dark parts first."
+
+[[param]]
+key = "softness"
+label = "Softness"
+min = 0
+max = 100
+default = 20
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

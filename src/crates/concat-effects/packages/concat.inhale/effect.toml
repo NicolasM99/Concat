@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.inhale"
+name = "Inhale"
+kind = "transition"
+category = "Zoom"
+order = 40
+description = "The outgoing shot is drawn in, pinched and shrinking, to a point at the centre, uncovering the incoming one."
+
+[[param]]
+key = "pinch"
+label = "Pinch"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "zoomin"
+fallback = "cross-fade"

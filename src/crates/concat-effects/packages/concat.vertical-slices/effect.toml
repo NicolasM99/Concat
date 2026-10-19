@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.vertical-slices"
+name = "Vertical Slices"
+kind = "transition"
+category = "Slide"
+order = 68
+description = "The incoming shot slides in as vertical slices, alternate ones from above and below."
+
+[[param]]
+key = "slices"
+label = "Slices"
+min = 2
+max = 20
+default = 6
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+xfade = "vuslice"
+fallback = "cross-fade"

@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.hazy"
+name = "Hazy"
+kind = "effect"
+category = "Blur"
+order = 21
+intensity = "haze"
+description = "A milky haze over the picture, as on a humid day."
+
+[[param]]
+key = "blur"
+label = "Blur"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "haze"
+label = "Haze"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

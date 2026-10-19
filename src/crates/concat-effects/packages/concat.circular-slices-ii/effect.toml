@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.circular-slices-ii"
+name = "Circular Slices II"
+kind = "transition"
+category = "Wipe"
+order = 63
+description = "Concentric rings turn in alternate directions, each turning over to the incoming shot in its own time."
+
+[[param]]
+key = "rings"
+label = "Rings"
+min = 2
+max = 12
+default = 5
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+xfade = "radial"
+fallback = "cross-fade"

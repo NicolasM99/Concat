@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.energy"
+name = "Energy"
+kind = "effect"
+category = "Light"
+order = 19
+description = "Arcs of energy crackle across the picture."
+
+[wgsl]
+entry = "effect.wgsl"

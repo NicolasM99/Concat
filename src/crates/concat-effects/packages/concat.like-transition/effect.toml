@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.like-transition"
+name = "Like"
+kind = "transition"
+category = "Fun"
+order = 90
+description = "A burst of little hearts pops up all over the frame and the incoming shot is there when they clear."
+
+[[param]]
+key = "hearts"
+label = "Hearts"
+min = 3
+max = 16
+default = 7
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

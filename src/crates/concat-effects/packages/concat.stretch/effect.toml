@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.stretch"
+name = "Stretch"
+kind = "transition"
+category = "Distort"
+order = 46
+description = "The outgoing shot stretches wide and smears away; the incoming one arrives stretched and springs back to shape."
+
+[[param]]
+key = "amount"
+label = "Amount"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "squeezeh"
+fallback = "cross-fade"

@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.flames-2"
+name = "Flames 2"
+kind = "effect"
+category = "Frame"
+order = 33
+description = "Blue-hot flames lick up the sides of the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

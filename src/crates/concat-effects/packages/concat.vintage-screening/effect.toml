@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.vintage-screening"
+name = "Vintage Screening"
+kind = "transition"
+category = "Light"
+order = 42
+description = "A flickering old projector: the frame rolls, scratches and dust flash by, and the next reel begins."
+
+[[param]]
+key = "wear"
+label = "Wear"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

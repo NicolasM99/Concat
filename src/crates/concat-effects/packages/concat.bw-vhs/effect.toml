@@ -1,0 +1,33 @@
+format = 2
+
+[effect]
+id = "concat.bw-vhs"
+name = "B&W VHS"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 37
+intensity = "strength"
+description = "Black-and-white VHS tape: smeared, noisy, with tracking wobble."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

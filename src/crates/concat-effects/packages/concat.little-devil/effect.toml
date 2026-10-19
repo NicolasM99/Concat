@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.little-devil"
+name = "Little Devil"
+kind = "transition"
+category = "Fun"
+order = 92
+description = "A mischievous red flicker: the frame tints devil-red, little horns flash and the cut snaps to the next shot."
+
+[[param]]
+key = "mischief"
+label = "Mischief"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

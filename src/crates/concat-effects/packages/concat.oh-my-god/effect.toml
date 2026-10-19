@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.oh-my-god"
+name = "Oh My God"
+kind = "effect"
+category = "Fun"
+order = 25
+description = "Shock: the picture zooms in hard with speed lines and a red flash."
+
+[wgsl]
+entry = "effect.wgsl"

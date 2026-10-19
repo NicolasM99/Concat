@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.four-screens"
+name = "Four Screens"
+kind = "effect"
+category = "Split"
+order = 12
+description = "The picture four times, in a two-by-two grid."
+
+[[param]]
+key = "gap"
+label = "Border"
+min = 0
+max = 100
+default = 0
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

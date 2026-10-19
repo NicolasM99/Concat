@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.page-turning"
+name = "Page Turning"
+kind = "transition"
+category = "Slide"
+order = 77
+description = "The outgoing shot is turned like a page from its bottom-right corner, uncovering the incoming one."
+
+[[param]]
+key = "radius"
+label = "Curl"
+min = 5
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "coverleft"
+fallback = "cross-fade"

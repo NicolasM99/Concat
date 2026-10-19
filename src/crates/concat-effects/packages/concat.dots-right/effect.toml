@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.dots-right"
+name = "Dots Right"
+kind = "transition"
+category = "Wipe"
+order = 62
+description = "A field of dots grows from left to right, each one a window onto the incoming shot, until they join."
+
+[[param]]
+key = "dots"
+label = "Dots"
+min = 4
+max = 40
+default = 16
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+xfade = "dissolve"
+fallback = "cross-fade"

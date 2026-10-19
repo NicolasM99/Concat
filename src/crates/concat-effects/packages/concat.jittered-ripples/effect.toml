@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.jittered-ripples"
+name = "Jittered Ripples"
+kind = "effect"
+category = "Distort"
+order = 40
+description = "Ripples that stutter and jump instead of flowing."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

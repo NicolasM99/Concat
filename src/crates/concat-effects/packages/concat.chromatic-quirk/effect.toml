@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.chromatic-quirk"
+name = "Chromatic Quirk"
+kind = "effect"
+category = "Glitch"
+shelves = ["Distortion & Glitch"]
+order = 30
+description = "A steady, quirky split of the picture's colours."
+
+[[param]]
+key = "chroma_x"
+label = "Horizontal split"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "chroma_y"
+label = "Vertical split"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

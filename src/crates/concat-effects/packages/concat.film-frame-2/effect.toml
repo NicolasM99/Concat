@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.film-frame-2"
+name = "Film Frame 2"
+kind = "effect"
+category = "Frame"
+order = 21
+description = "The picture as a frame on a rolling strip of film, its edge numbers showing."
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.tri-layer-mirror"
+name = "Tri-layer Mirror"
+kind = "effect"
+category = "Split"
+order = 16
+description = "Three bands of the picture, the outer two mirrored and dimmed."
+
+[[param]]
+key = "shift"
+label = "Shift"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

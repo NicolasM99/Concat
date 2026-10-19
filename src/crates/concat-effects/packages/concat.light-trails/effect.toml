@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.light-trails"
+name = "Light Trails"
+kind = "effect"
+category = "Body"
+order = 26
+intensity = "strength"
+description = "Streaks of light trail behind the bright parts of the picture."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

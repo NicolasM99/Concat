@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.diagonal-slices"
+name = "Diagonal Slices"
+kind = "transition"
+category = "Slide"
+order = 69
+description = "The incoming shot slides in as diagonal slices, alternate ones from opposite corners."
+
+[[param]]
+key = "slices"
+label = "Slices"
+min = 2
+max = 20
+default = 6
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+xfade = "diagtl"
+fallback = "cross-fade"

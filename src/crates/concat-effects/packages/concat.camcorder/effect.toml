@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.camcorder"
+name = "Camcorder"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 38
+description = "A home camcorder: REC light, time code bars and a soft video look."
+
+[[param]]
+key = "look"
+label = "Lines"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

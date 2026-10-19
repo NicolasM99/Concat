@@ -1,0 +1,40 @@
+format = 2
+
+[effect]
+id = "concat.electro-heart"
+name = "Electro Heart"
+kind = "effect"
+category = "Love"
+order = 38
+intensity = "strength"
+description = "A crackling electric heart pulses around the middle of the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 42
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 47
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

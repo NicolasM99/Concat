@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.horizontal-lines"
+name = "Horizontal Lines"
+kind = "transition"
+category = "Wipe"
+order = 70
+description = "Thin horizontal lines draw the incoming shot in, alternate lines from opposite sides."
+
+[[param]]
+key = "lines"
+label = "Lines"
+min = 4
+max = 80
+default = 24
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+xfade = "hlwind"
+fallback = "cross-fade"

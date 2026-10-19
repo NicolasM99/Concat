@@ -1,0 +1,32 @@
+format = 2
+
+[effect]
+id = "concat.glitch"
+name = "Glitch"
+kind = "effect"
+category = "Glitch"
+shelves = ["Distortion & Glitch"]
+order = 10
+intensity = "range"
+description = "Rows of the picture tear sideways and its colours split in bursts."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "range"
+label = "Range"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

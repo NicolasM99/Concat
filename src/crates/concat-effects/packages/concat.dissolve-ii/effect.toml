@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.dissolve-ii"
+name = "Dissolve II"
+kind = "transition"
+category = "Dissolve"
+order = 22
+description = "The incoming shot appears through the outgoing one grain by grain."
+
+[[param]]
+key = "grain"
+label = "Grain"
+min = 1
+max = 32
+default = 3
+step = 1
+unit = "px"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

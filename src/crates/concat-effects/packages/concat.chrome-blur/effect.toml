@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.chrome-blur"
+name = "Chrome Blur"
+kind = "effect"
+category = "Blur"
+order = 16
+intensity = "blur"
+description = "A soft blur with its colours split, like light through cheap glass."
+
+[[param]]
+key = "blur"
+label = "Blur"
+min = 0
+max = 100
+default = 25
+step = 1
+unit = "%"
+
+[[param]]
+key = "chromatic"
+label = "Split"
+min = 0
+max = 100
+default = 55
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

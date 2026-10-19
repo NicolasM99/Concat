@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.blinds-2"
+name = "Blinds 2"
+kind = "effect"
+category = "Light"
+order = 24
+intensity = "strength"
+description = "Vertical blind shadows sway across the picture."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

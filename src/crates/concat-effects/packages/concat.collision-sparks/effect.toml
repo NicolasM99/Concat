@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.collision-sparks"
+name = "Collision Sparks"
+kind = "effect"
+category = "Light"
+order = 34
+description = "Sparks fly from a grinding collision at the bottom of the frame."
+
+[wgsl]
+entry = "effect.wgsl"

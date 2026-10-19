@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.color-flame"
+name = "Color Flame"
+kind = "effect"
+category = "Light"
+order = 28
+intensity = "strength"
+description = "Coloured flames of light lick up from the picture's edges."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[[param]]
+key = "color"
+label = "Colour"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

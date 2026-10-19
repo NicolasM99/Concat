@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.montage-snippets"
+name = "Montage Snippets"
+kind = "transition"
+category = "Basic"
+order = 20
+description = "Quick snippets of both shots cut back and forth, each landing with a punch-in and a flash, settling on the incoming shot."
+
+[[param]]
+key = "cuts"
+label = "Snippets"
+min = 2
+max = 12
+default = 6
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

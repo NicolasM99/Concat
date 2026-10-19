@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.heartbeat"
+name = "Heartbeat"
+kind = "effect"
+category = "Camera"
+order = 18
+intensity = "strength"
+description = "A double beat, like a heart: the picture thumps twice, then rests, its edges flushing red."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.flash"
+name = "Flash"
+kind = "effect"
+category = "Light"
+order = 55
+description = "A camera flash goes off now and then, overexposing the picture for an instant."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

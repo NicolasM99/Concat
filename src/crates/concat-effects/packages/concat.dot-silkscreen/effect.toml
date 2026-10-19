@@ -1,0 +1,30 @@
+format = 2
+
+[effect]
+id = "concat.dot-silkscreen"
+name = "Dot Silkscreen"
+kind = "effect"
+category = "Stylize"
+order = 17
+description = "The picture screen-printed in coloured halftone dots."
+
+[[param]]
+key = "size"
+label = "Dot size"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "color"
+label = "Colour"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.flip-ii"
+name = "Flip II"
+kind = "transition"
+category = "Spin"
+order = 38
+description = "The frame turns over like a card on its horizontal axis, the incoming shot on its back."
+
+[[param]]
+key = "depth"
+label = "Depth"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

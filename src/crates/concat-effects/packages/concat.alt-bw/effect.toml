@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.alt-bw"
+name = "Alt. B&W"
+kind = "effect"
+category = "Black & White"
+order = 17
+intensity = "strength"
+description = "A punchy, high-contrast black and white."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

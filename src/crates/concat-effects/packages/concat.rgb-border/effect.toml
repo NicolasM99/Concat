@@ -1,0 +1,30 @@
+format = 2
+
+[effect]
+id = "concat.rgb-border"
+name = "RGB Border"
+kind = "effect"
+category = "Frame"
+order = 27
+description = "Red, green and blue borders shift around the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 67
+step = 1
+unit = "%"
+
+[[param]]
+key = "shift"
+label = "Shift"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,25 @@
+format = 2
+
+[effect]
+id = "concat.apparate"
+name = "Apparate 1"
+kind = "effect"
+category = "Body"
+order = 31
+description = "The picture shimmers into being out of a twist of light at the start of the clip."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"
+
+[card]
+moment = 0.4

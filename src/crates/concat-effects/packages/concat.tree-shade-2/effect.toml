@@ -1,0 +1,52 @@
+format = 2
+
+[effect]
+id = "concat.tree-shade-2"
+name = "Tree Shade 2"
+kind = "effect"
+category = "Light"
+order = 50
+intensity = "density"
+description = "Soft green-gold dapples of sunlight sway over the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 15
+step = 1
+unit = "%"
+
+[[param]]
+key = "density"
+label = "Amount"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Size"
+min = 10
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "look"
+label = "Background"
+min = 0
+max = 100
+default = 35
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+moment = 1.5

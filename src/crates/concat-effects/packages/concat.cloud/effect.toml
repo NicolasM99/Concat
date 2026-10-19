@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.cloud"
+name = "Cloud"
+kind = "transition"
+category = "Dissolve"
+order = 85
+description = "Clouds drift in across the outgoing shot and blow away to show the incoming one."
+
+[[param]]
+key = "thickness"
+label = "Thickness"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

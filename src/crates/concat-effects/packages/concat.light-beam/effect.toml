@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.light-beam"
+name = "Light Beam"
+kind = "transition"
+category = "Light"
+order = 35
+description = "Shafts of light sweep across the frame as the shots cross."
+
+[[param]]
+key = "beams"
+label = "Beams"
+min = 1
+max = 8
+default = 4
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

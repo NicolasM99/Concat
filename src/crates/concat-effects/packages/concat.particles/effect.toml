@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.particles"
+name = "Particles"
+kind = "transition"
+category = "Dissolve"
+order = 81
+description = "The outgoing shot breaks into specks of light that drift away, leaving the incoming one."
+
+[[param]]
+key = "size"
+label = "Speck size"
+min = 2
+max = 24
+default = 6
+step = 1
+unit = "px"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "dissolve"
+fallback = "cross-fade"

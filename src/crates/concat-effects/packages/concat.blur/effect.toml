@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.blur"
+name = "Blur"
+kind = "effect"
+category = "Blur"
+order = 10
+intensity = "blur"
+description = "The whole picture softened out of focus."
+
+[[param]]
+key = "blur"
+label = "Blur"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

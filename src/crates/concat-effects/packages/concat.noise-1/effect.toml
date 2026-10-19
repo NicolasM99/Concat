@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.noise-1"
+name = "Noise 1"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 25
+description = "Grey static drifts over the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

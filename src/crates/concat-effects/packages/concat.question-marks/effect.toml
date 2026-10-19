@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.question-marks"
+name = "Question Marks"
+kind = "effect"
+category = "Fun"
+order = 22
+description = "Question marks pop up around a puzzled picture."
+
+[wgsl]
+entry = "effect.wgsl"

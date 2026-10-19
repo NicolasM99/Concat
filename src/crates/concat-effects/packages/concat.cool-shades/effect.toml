@@ -1,0 +1,37 @@
+format = 2
+
+[effect]
+id = "concat.cool-shades"
+name = "Cool"
+kind = "effect"
+category = "Body"
+order = 47
+description = "Pixel sunglasses drop down onto the face. Drawn about the point you place on the subject."
+
+[[param]]
+key = "centre"
+label = "Subject"
+type = "point"
+default = 0.5
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

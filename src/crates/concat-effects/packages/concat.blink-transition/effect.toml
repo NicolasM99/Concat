@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.blink-transition"
+name = "Blink"
+kind = "transition"
+category = "Basic"
+order = 80
+description = "The frame blinks like an eye closing on the outgoing shot and opening on the incoming one."
+
+[[param]]
+key = "softness"
+label = "Softness"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "fadeblack"
+fallback = "cross-fade"

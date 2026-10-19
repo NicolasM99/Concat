@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.wave-left"
+name = "Wave Left"
+kind = "transition"
+category = "Wipe"
+order = 61
+description = "A rippling wave carries the incoming shot across the frame from right to left."
+
+[[param]]
+key = "waves"
+label = "Waves"
+min = 1
+max = 8
+default = 3
+step = 1
+
+[[param]]
+key = "height"
+label = "Height"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "wipeleft"
+fallback = "cross-fade"

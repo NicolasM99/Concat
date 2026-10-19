@@ -1,0 +1,30 @@
+format = 2
+
+[effect]
+id = "concat.rolling-film"
+name = "Rolling Film"
+kind = "effect"
+category = "Frame"
+order = 22
+description = "The picture rolls by on a film strip as through a projector gate."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "look"
+label = "Sepia"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

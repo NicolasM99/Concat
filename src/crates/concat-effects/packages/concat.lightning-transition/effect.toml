@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.lightning-transition"
+name = "Lightning"
+kind = "transition"
+category = "Light"
+order = 38
+description = "A bolt of lightning cracks down the frame and the incoming shot is there in its flash."
+
+[[param]]
+key = "glow"
+label = "Glow"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.strobe-transition"
+name = "Strobe"
+kind = "transition"
+category = "Light"
+order = 39
+description = "The two shots strobe against each other, faster and faster, ending on the incoming one."
+
+[[param]]
+key = "rate"
+label = "Rate"
+min = 2
+max = 16
+default = 8
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

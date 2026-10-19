@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.curling-wave"
+name = "Curling Wave"
+kind = "transition"
+category = "Wipe"
+order = 76
+description = "A curling wave rolls across the frame, bending the outgoing shot under as the incoming one follows."
+
+[[param]]
+key = "curl"
+label = "Curl"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "wiperight"
+fallback = "cross-fade"

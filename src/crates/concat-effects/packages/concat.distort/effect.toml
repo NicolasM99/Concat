@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.distort"
+name = "Distort"
+kind = "effect"
+category = "Distort"
+order = 48
+description = "The picture bends and wobbles out of shape."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

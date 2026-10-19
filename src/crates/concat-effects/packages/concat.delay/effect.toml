@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.delay"
+name = "Delay"
+kind = "effect"
+category = "Camera"
+order = 28
+intensity = "strength"
+description = "Ghost copies of the picture trail behind it, out of step."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

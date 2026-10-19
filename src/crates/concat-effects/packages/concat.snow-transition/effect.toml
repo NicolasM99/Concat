@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.snow-transition"
+name = "Snow"
+kind = "transition"
+category = "Light"
+order = 83
+description = "A flurry of snow thickens to a white-out over the outgoing shot and settles away from the incoming one."
+
+[[param]]
+key = "flakes"
+label = "Flakes"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "fadewhite"
+fallback = "cross-fade"

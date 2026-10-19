@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.cartoon-swirl"
+name = "Cartoon Swirl"
+kind = "transition"
+category = "Spin"
+order = 54
+description = "A cartoon spiral spins across the cut, the pictures flattened to poster colours as they pass."
+
+[[param]]
+key = "bands"
+label = "Bands"
+min = 1
+max = 12
+default = 6
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

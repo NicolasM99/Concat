@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.vertical-blur-ii"
+name = "Vertical Blur II"
+kind = "transition"
+category = "Blur"
+order = 32
+description = "A heavier vertical smear: the outgoing shot streaks away top to bottom as the incoming one streaks in."
+
+[[param]]
+key = "amount"
+label = "Amount"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "fade"
+fallback = "cross-fade"

@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.folds-4"
+name = "Folds 4"
+kind = "effect"
+category = "Texture"
+order = 12
+intensity = "texture"
+description = "A picture on paper folded into quarters."
+
+[[param]]
+key = "texture"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

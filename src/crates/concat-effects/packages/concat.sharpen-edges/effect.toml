@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.sharpen-edges"
+name = "Sharpen Edges"
+kind = "effect"
+category = "Blur"
+order = 19
+intensity = "sharpen"
+description = "Edges crisped and darkened, as an over-sharpened camera draws them."
+
+[[param]]
+key = "sharpen"
+label = "Sharpen"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

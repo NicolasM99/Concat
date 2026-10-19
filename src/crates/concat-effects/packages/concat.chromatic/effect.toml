@@ -1,0 +1,41 @@
+format = 2
+
+[effect]
+id = "concat.chromatic"
+name = "Chromatic"
+kind = "effect"
+category = "Glitch"
+shelves = ["Distortion & Glitch"]
+order = 29
+intensity = "strength"
+description = "The colours of the picture pull apart and back on a beat."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[[param]]
+key = "chroma_x"
+label = "Split"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

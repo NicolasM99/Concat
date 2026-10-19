@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.open-vertically"
+name = "Open Vertically"
+kind = "transition"
+category = "Slide"
+order = 43
+description = "The outgoing shot splits across the middle and its halves slide apart up and down."
+
+[[param]]
+key = "gap"
+label = "Depth"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "vertopen"
+fallback = "cross-fade"

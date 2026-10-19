@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.then-and-now"
+name = "Then and Now"
+kind = "transition"
+category = "Basic"
+order = 21
+description = "The outgoing shot ages into an old sepia photograph, then a flash brings the incoming one in, in colour."
+
+[[param]]
+key = "age"
+label = "Age"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

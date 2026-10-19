@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.grain"
+name = "Grain"
+kind = "effect"
+category = "Texture"
+order = 15
+intensity = "texture"
+description = "Fine film grain over the picture."
+
+[[param]]
+key = "texture"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

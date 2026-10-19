@@ -1,0 +1,38 @@
+format = 2
+
+[effect]
+id = "concat.technology-2"
+name = "Technology 2"
+kind = "effect"
+category = "Body"
+order = 81
+intensity = "strength"
+description = "A tech HUD of rings and ticks locks on to the subject. Drawn about the point you place on the subject."
+
+[[param]]
+key = "centre"
+label = "Subject"
+type = "point"
+default = 0.5
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

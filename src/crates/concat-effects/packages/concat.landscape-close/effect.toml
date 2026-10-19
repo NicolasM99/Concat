@@ -1,0 +1,33 @@
+format = 2
+
+[effect]
+id = "concat.landscape-close"
+name = "Landscape Close"
+kind = "effect"
+category = "Basic"
+order = 46
+description = "Black bars slide in to frame the picture in a wide, cinematic strip."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "ratio"
+label = "Width"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+moment = 1

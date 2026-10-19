@@ -1514,7 +1514,7 @@ fn treated(
     gpu.used.values_mut().for_each(|used| *used = 0);
     gpu.composites += 1;
     let source = written(gpu, size, picture);
-    let drawn = gpu.run_passes(size.0, size.1, source, passes, 0.0, 0.0);
+    let drawn = gpu.run_passes(size.0, size.1, source, passes, 0.0, [0.0, 0.0]);
     let out = read_floats(gpu, size, drawn);
     gpu.retire();
     out

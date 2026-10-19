@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.axis-rotation"
+name = "Axis Rotation"
+kind = "transition"
+category = "Spin"
+order = 39
+description = "The frame pulls back, swings round its vertical axis to the incoming shot and comes forward again."
+
+[[param]]
+key = "depth"
+label = "Depth"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

@@ -1,0 +1,39 @@
+format = 2
+
+[effect]
+id = "concat.diamond-zoom"
+name = "Diamond Zoom"
+kind = "effect"
+category = "Distort"
+order = 50
+description = "A diamond-shaped window zooms into the picture, turning as it grows."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 52
+step = 1
+unit = "%"
+
+[[param]]
+key = "rotate"
+label = "Turn"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

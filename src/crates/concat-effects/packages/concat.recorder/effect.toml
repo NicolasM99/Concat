@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.recorder"
+name = "Recorder"
+kind = "transition"
+category = "Basic"
+order = 87
+description = "A camcorder viewfinder: corner marks, a blinking REC light and a burst of static at the cut."
+
+[[param]]
+key = "static_amount"
+label = "Static"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

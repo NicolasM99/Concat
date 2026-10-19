@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.girls-secrets"
+name = "Girl's Secrets"
+kind = "effect"
+category = "Love"
+order = 25
+intensity = "strength"
+description = "A soft, pastel pink grade with glowing highlights."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

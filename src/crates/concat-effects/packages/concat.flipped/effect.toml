@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.flipped"
+name = "Flipped"
+kind = "effect"
+category = "Camera"
+order = 26
+description = "The picture flips over, left for right, on a beat."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

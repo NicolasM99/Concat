@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.blocks"
+name = "Blocks"
+kind = "transition"
+category = "Wipe"
+order = 73
+description = "The frame breaks into blocks that pop over to the incoming shot in a scattered order."
+
+[[param]]
+key = "blocks"
+label = "Blocks"
+min = 2
+max = 30
+default = 10
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+xfade = "pixelize"
+fallback = "cross-fade"

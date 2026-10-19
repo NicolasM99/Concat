@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.club-mood"
+name = "Club Mood"
+kind = "effect"
+category = "Party"
+shelves = ["Party & Club"]
+order = 11
+description = "Coloured club lights wash over the picture in turn."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

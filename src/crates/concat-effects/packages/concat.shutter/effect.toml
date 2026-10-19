@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.shutter"
+name = "Shutter"
+kind = "transition"
+category = "Wipe"
+order = 71
+description = "Shutter slats close over the outgoing shot and open on the incoming one."
+
+[[param]]
+key = "slats"
+label = "Slats"
+min = 2
+max = 24
+default = 8
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.rgb-glitch"
+name = "RGB Glitch"
+kind = "transition"
+category = "Glitch"
+order = 29
+description = "The red, green and blue of both shots tear apart in steps and snap back together on the incoming one."
+
+[[param]]
+key = "split"
+label = "Split"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.distortion"
+name = "Distortion"
+kind = "transition"
+category = "Distort"
+order = 52
+description = "A heat-haze ripple warps the outgoing shot into the incoming one."
+
+[[param]]
+key = "amount"
+label = "Amount"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

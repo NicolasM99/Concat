@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.graphic-3"
+name = "Graphic 3"
+kind = "effect"
+category = "Fun"
+order = 27
+description = "Bold graphic shapes slide and spin over the corners of the picture."
+
+[wgsl]
+entry = "effect.wgsl"

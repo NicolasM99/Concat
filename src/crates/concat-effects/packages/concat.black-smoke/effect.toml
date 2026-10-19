@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.black-smoke"
+name = "Black Smoke"
+kind = "transition"
+category = "Dissolve"
+order = 25
+description = "Black smoke billows over the outgoing shot and clears from the incoming one."
+
+[[param]]
+key = "density"
+label = "Density"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

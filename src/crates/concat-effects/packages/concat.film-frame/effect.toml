@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.film-frame"
+name = "Film Frame"
+kind = "effect"
+category = "Frame"
+order = 20
+description = "The picture inside a strip of film, sprocket holes down both sides."
+
+[wgsl]
+entry = "effect.wgsl"

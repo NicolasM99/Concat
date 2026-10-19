@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.neon-doodle"
+name = "Neon Doodle"
+kind = "effect"
+category = "Body"
+order = 14
+intensity = "strength"
+description = "Shaky neon doodle lines trace the outlines, jumping frame to frame. Drawn around the edges in the picture; place it on a clip with a clear subject."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

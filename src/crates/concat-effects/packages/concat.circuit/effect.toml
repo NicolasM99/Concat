@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.circuit"
+name = "Circuit"
+kind = "effect"
+category = "Stylize"
+order = 20
+description = "Glowing circuit traces light up across the picture."
+
+[wgsl]
+entry = "effect.wgsl"

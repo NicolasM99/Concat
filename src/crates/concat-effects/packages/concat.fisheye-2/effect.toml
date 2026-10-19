@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.fisheye-2"
+name = "Fisheye 2"
+kind = "effect"
+category = "Distort"
+order = 31
+intensity = "distortion"
+description = "A round fisheye view on black, the picture bent into a circle."
+
+[[param]]
+key = "distortion"
+label = "Distortion"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

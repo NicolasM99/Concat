@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.blue-lines"
+name = "Blue Lines"
+kind = "transition"
+category = "Light"
+order = 86
+description = "Glowing blue scan lines sweep down the frame, laying the incoming shot down behind them."
+
+[[param]]
+key = "glow"
+label = "Glow"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+xfade = "wipedown"
+fallback = "cross-fade"

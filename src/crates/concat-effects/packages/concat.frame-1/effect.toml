@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.frame-1"
+name = "Frame 1"
+kind = "effect"
+category = "Frame"
+order = 23
+description = "A noisy, flickering dark border around the picture."
+
+[[param]]
+key = "noise"
+label = "Noise"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

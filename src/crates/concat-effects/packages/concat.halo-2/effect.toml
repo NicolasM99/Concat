@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.halo-2"
+name = "Halo 2"
+kind = "effect"
+category = "Light"
+order = 16
+intensity = "strength"
+description = "Rings of iridescent light ripple outward from the centre."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

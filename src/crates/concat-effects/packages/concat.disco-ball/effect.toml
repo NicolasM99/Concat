@@ -1,0 +1,53 @@
+format = 2
+
+[effect]
+id = "concat.disco-ball"
+name = "Disco Ball 1"
+kind = "effect"
+category = "Party"
+shelves = ["Party & Club"]
+order = 46
+intensity = "density"
+description = "Spots of light from a mirror ball sweep the darkened room."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "density"
+label = "Amount"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Size"
+min = 10
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "look"
+label = "Background"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+moment = 1.5

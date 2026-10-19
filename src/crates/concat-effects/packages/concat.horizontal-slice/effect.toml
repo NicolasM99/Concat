@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.horizontal-slice"
+name = "Horizontal Slice"
+kind = "transition"
+category = "Slide"
+order = 67
+description = "The incoming shot slides in as horizontal slices, alternate ones from opposite sides."
+
+[[param]]
+key = "slices"
+label = "Slices"
+min = 2
+max = 20
+default = 6
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+xfade = "hlslice"
+fallback = "cross-fade"

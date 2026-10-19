@@ -1,0 +1,30 @@
+format = 2
+
+[effect]
+id = "concat.black-flash-2"
+name = "Black Flash 2"
+kind = "effect"
+category = "Light"
+order = 53
+description = "Black flashes that buckle the picture as they hit."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[[param]]
+key = "distortion"
+label = "Distortion"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

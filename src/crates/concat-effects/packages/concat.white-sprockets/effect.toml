@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.white-sprockets"
+name = "White Sprockets"
+kind = "effect"
+category = "Frame"
+order = 26
+description = "White sprocket holes run along the top and bottom of the picture."
+
+[[param]]
+key = "texture"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

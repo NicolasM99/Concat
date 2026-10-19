@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.camcorder-2"
+name = "Camcorder 2"
+kind = "effect"
+category = "Retro"
+shelves = ["Distortion & Glitch"]
+order = 39
+description = "A camcorder viewfinder with a centre cross and a grainy, warm image."
+
+[[param]]
+key = "look"
+label = "Grain"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

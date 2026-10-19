@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.neon-variation"
+name = "Neon Variation"
+kind = "effect"
+category = "Body"
+order = 15
+intensity = "strength"
+description = "Neon outlines that cycle through colours on a dark picture. Drawn around the edges in the picture; place it on a clip with a clear subject."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

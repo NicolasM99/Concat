@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.phantom"
+name = "Phantom"
+kind = "effect"
+category = "Body"
+order = 21
+intensity = "strength"
+description = "A pale phantom of the picture drifts off it and fades."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

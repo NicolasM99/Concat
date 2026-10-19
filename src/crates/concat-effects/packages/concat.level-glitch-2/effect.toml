@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.level-glitch-2"
+name = "Level Glitch 2"
+kind = "effect"
+category = "Glitch"
+shelves = ["Distortion & Glitch"]
+order = 12
+description = "Bands of the picture slip and split their colours."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

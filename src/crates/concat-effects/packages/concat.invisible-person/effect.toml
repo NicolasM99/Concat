@@ -1,0 +1,33 @@
+format = 2
+
+[effect]
+id = "concat.invisible-person"
+name = "Invisible Person"
+kind = "effect"
+category = "Glitch"
+shelves = ["Distortion & Glitch"]
+order = 43
+intensity = "strength"
+description = "A shimmering, refracting cloak bends the picture as if something invisible moved through it."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

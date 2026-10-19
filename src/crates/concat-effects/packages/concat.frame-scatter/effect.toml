@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.frame-scatter"
+name = "Frame Scatter"
+kind = "effect"
+category = "Body"
+order = 29
+intensity = "strength"
+description = "Copies of the picture scatter and jump around it."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

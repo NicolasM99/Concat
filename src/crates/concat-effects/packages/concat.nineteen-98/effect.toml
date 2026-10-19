@@ -1,0 +1,23 @@
+format = 2
+
+[effect]
+id = "concat.nineteen-98"
+name = "1998"
+kind = "effect"
+category = "Retro"
+order = 23
+intensity = "strength"
+description = "A late-nineties snapshot: warm, soft and slightly faded."
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 100
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

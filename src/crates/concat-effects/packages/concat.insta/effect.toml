@@ -1,0 +1,12 @@
+format = 2
+
+[effect]
+id = "concat.insta"
+name = "Insta"
+kind = "effect"
+category = "Frame"
+order = 36
+description = "A square photo post: the picture cropped square on a white card."
+
+[wgsl]
+entry = "effect.wgsl"

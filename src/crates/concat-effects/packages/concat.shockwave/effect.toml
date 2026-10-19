@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.shockwave"
+name = "Shockwave"
+kind = "effect"
+category = "Distort"
+order = 45
+description = "A shockwave bursts out from the centre, warping the picture as it passes."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

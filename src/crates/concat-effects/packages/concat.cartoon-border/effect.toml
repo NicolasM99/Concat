@@ -1,0 +1,30 @@
+format = 2
+
+[effect]
+id = "concat.cartoon-border"
+name = "Cartoon Border"
+kind = "effect"
+category = "Frame"
+order = 35
+description = "A wobbly, hand-drawn cartoon outline frames the picture."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "blur"
+label = "Wobble"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

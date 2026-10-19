@@ -1,0 +1,38 @@
+format = 2
+
+[effect]
+id = "concat.scan-2"
+name = "Scan 2"
+kind = "effect"
+category = "Body"
+order = 80
+intensity = "strength"
+description = "A holographic scan ring travels down the subject. Drawn about the point you place on the subject."
+
+[[param]]
+key = "centre"
+label = "Subject"
+type = "point"
+default = 0.5
+
+[[param]]
+key = "size"
+label = "Size"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[[param]]
+key = "strength"
+label = "Strength"
+min = 0
+max = 100
+default = 80
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+space = "display"

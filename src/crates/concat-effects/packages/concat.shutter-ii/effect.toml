@@ -1,0 +1,21 @@
+format = 2
+
+[effect]
+id = "concat.shutter-ii"
+name = "Shutter II"
+kind = "transition"
+category = "Wipe"
+order = 72
+description = "Vertical blinds turn one after another from the outgoing shot to the incoming one."
+
+[[param]]
+key = "blinds"
+label = "Blinds"
+min = 2
+max = 24
+default = 8
+step = 1
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

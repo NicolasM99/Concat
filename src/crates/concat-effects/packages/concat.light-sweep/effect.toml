@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.light-sweep"
+name = "Light Sweep II"
+kind = "transition"
+category = "Light"
+order = 33
+description = "A bright band of light sweeps diagonally across, carrying the incoming shot behind it."
+
+[[param]]
+key = "width"
+label = "Width"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[[param]]
+key = "warmth"
+label = "Warmth"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

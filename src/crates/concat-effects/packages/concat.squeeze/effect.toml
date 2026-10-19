@@ -1,0 +1,25 @@
+format = 2
+
+[effect]
+id = "concat.squeeze"
+name = "Squeeze"
+kind = "transition"
+category = "Distort"
+order = 50
+description = "The outgoing shot is squeezed to a sliver at the centre and the incoming one expands out of it."
+
+[[param]]
+key = "direction"
+label = "Direction"
+type = "enum"
+min = 0
+max = 1
+default = 0
+step = 1
+values = [0, 1]
+labels = ["Horizontal", "Vertical"]
+
+[transition]
+entry = "effect.wgsl"
+xfade = "squeezeh"
+fallback = "cross-fade"

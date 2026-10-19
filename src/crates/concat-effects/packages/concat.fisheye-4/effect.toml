@@ -1,0 +1,31 @@
+format = 2
+
+[effect]
+id = "concat.fisheye-4"
+name = "Fisheye 4"
+kind = "effect"
+category = "Distort"
+order = 32
+intensity = "distortion"
+description = "A wide fisheye with a dark lens rim and a hint of glass texture."
+
+[[param]]
+key = "distortion"
+label = "Distortion"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "rim"
+label = "Rim"
+min = 0
+max = 100
+default = 55
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

@@ -1,0 +1,30 @@
+format = 2
+
+[effect]
+id = "concat.lightning-fx"
+name = "Lightning"
+kind = "effect"
+category = "Light"
+order = 29
+description = "Forks of lightning flash across a stormy, darkened sky."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[[param]]
+key = "luminance"
+label = "Flash"
+min = 0
+max = 100
+default = 40
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"

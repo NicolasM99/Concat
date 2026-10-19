@@ -1,0 +1,22 @@
+format = 2
+
+[effect]
+id = "concat.transform-shimmer"
+name = "Transform Shimmer"
+kind = "transition"
+category = "Light"
+order = 41
+description = "A shimmer of glints passes over the frame as the outgoing shot transforms into the incoming one."
+
+[[param]]
+key = "shimmer"
+label = "Shimmer"
+min = 0
+max = 100
+default = 70
+step = 1
+unit = "%"
+
+[transition]
+entry = "effect.wgsl"
+fallback = "cross-fade"

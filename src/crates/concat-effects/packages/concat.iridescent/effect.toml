@@ -1,0 +1,52 @@
+format = 2
+
+[effect]
+id = "concat.iridescent"
+name = "Iridescent"
+kind = "effect"
+category = "Sparkle"
+order = 38
+intensity = "density"
+description = "Iridescent flecks shimmer over a pearly sheen."
+
+[[param]]
+key = "speed"
+label = "Speed"
+min = 0
+max = 100
+default = 33
+step = 1
+unit = "%"
+
+[[param]]
+key = "density"
+label = "Amount"
+min = 0
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "size"
+label = "Size"
+min = 10
+max = 100
+default = 60
+step = 1
+unit = "%"
+
+[[param]]
+key = "look"
+label = "Background"
+min = 0
+max = 100
+default = 50
+step = 1
+unit = "%"
+
+[wgsl]
+entry = "effect.wgsl"
+
+[card]
+moment = 1.5
