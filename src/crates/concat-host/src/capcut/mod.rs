@@ -104,11 +104,12 @@ pub fn import(draft: &Path, location: &str) -> Result<Imported, String> {
     let bytes = std::fs::read(&file)
         .map_err(|error| format!("could not read {}: {error}", file.display()))?;
     let document = parse(&bytes, &file)?;
-    let mut converted = convert(&document, &folder, &|path| {
+    let probe = |path: &str| {
         crate::media::probe(path)
             .ok()
             .map(|summary| summary.to_new_media())
-    });
+    };
+    let mut converted = convert_with(&document, &folder, &probe, true);
     let video = converted.project.timelines[0].video;
     // A second import of the same draft is a project of its own beside the
     // first: the first free name of "Name", "Name 2", "Name 3"...
@@ -424,6 +425,11 @@ struct Builder<'a> {
     notes: Vec<String>,
     pending: Vec<(String, f64, Transition)>,
     skipped: BTreeMap<String, usize>,
+    /// Whether a clip of a file that is not on disk is left out, as an
+    /// import leaves it so the project exports; the file's name by its
+    /// material, for the note that says where its clips were.
+    drop_missing: bool,
+    gone: HashMap<String, String>,
 }
 
 /// The draft as a Concat project. `probe` describes a file on disk, or
@@ -433,6 +439,19 @@ pub fn convert(
     document: &Value,
     folder: &Path,
     probe: &dyn Fn(&str) -> Option<NewMedia>,
+) -> Converted {
+    convert_with(document, folder, probe, false)
+}
+
+/// [`convert`], leaving out the clips of files that are not on disk when
+/// `drop_missing` says to: a project with a clip of a file that is gone does
+/// not export, and the most common such file is a sound CapCut kept in its
+/// cache and has since cleared.
+fn convert_with(
+    document: &Value,
+    folder: &Path,
+    probe: &dyn Fn(&str) -> Option<NewMedia>,
+    drop_missing: bool,
 ) -> Converted {
     let canvas = &document["canvas_config"];
     let width = number(&canvas["width"], 1920.0).max(2.0) as u32;
@@ -473,6 +492,8 @@ pub fn convert(
         notes: Vec::new(),
         pending: Vec::new(),
         skipped: BTreeMap::new(),
+        drop_missing,
+        gone: HashMap::new(),
     };
     builder.draft(document, Place::ROOT, None);
     builder.finish(name, video)
@@ -543,6 +564,18 @@ impl Builder<'_> {
             };
             let probed = path.is_file().then(|| (self.probe)(&path_text)).flatten();
             if !path.is_file() {
+                if self.drop_missing {
+                    let name = path
+                        .file_name()
+                        .map(|n| n.to_string_lossy().into_owned())
+                        .unwrap_or_else(|| path_text.clone());
+                    self.notes.push(format!(
+                        "{} is not on this machine; its clips are left out",
+                        path.display()
+                    ));
+                    self.gone.insert(material_id.clone(), name);
+                    continue;
+                }
                 self.notes.push(format!(
                     "{} is missing; relink it in the bin",
                     path.display()
@@ -721,6 +754,12 @@ impl Builder<'_> {
         let head = start - shifted;
         let duration = end - start;
         let material_id = text(segment, "material_id");
+        if let Some(name) = self.gone.get(material_id) {
+            self.notes.push(format!(
+                "the clip of {name} at {start:.2}s is left out: its file is gone"
+            ));
+            return;
+        }
         let Some((list, material)) = by_id.get(material_id) else {
             return;
         };
@@ -757,6 +796,7 @@ impl Builder<'_> {
                     return;
                 };
                 let media = self.project.media_by_id(&media_id);
+
                 let kind = match media.map(|m| m.kind) {
                     Some(MediaKind::Image) => ClipKind::Image,
                     Some(MediaKind::Audio) => ClipKind::Audio,
@@ -1629,8 +1669,12 @@ mod tests {
             "a second import is a project of its own"
         );
         let session = crate::session::Session::open_info(&imported.info).expect("opens");
+        // The draft's files are nowhere on this machine, so their clips are
+        // left out and the title and the effect come in.
         let clips = &session.project().active().clips;
-        assert_eq!(clips.len(), 5);
+        assert_eq!(clips.len(), 2);
+        assert!(clips.iter().all(|clip| clip.media_id.is_empty()));
+        assert!(imported.notes.iter().any(|note| note.contains("left out")));
         assert!(Path::new(&imported.info.path).join(REPORT).is_file());
         assert!(!session.flattened_clips().is_empty());
         let _ = std::fs::remove_dir_all(&dir);
