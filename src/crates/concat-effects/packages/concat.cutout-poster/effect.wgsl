@@ -92,5 +92,5 @@ fn effect(uv: vec2<f32>) -> vec4<f32> {
     let poster = floor(clamp(c.rgb, vec3<f32>(0.0), vec3<f32>(1.0)) * levels + 0.5) / levels;
     let e = smoothstep(0.2, 0.4, edge_at(uv));
     let rgb = mix(saturation(poster, 1.4), vec3<f32>(0.02), e);
-    return vec4<f32>(mix(c.rgb, rgb, params.strength / 100.0), c.a);
+    return vec4<f32>(mix(c.rgb, rgb, params.strength / 100.0) + max(c.rgb - vec3<f32>(1.0), vec3<f32>(0.0)), c.a);
 }

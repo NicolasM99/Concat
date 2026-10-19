@@ -1,0 +1,13 @@
+[[case]]
+name = "default"
+chain = "aphaser=type=t:speed=2.00:decay=0.7,acrusher=bits=11:mix=0.4,alimiter=limit=0.94"
+
+[[case]]
+name = "minimum"
+at = "min"
+chain = "aphaser=type=t:speed=0.80:decay=0.7,acrusher=bits=15:mix=0.4,alimiter=limit=0.94"
+
+[[case]]
+name = "maximum"
+at = "max"
+chain = "aphaser=type=t:speed=3.50:decay=0.7,acrusher=bits=6:mix=0.4,alimiter=limit=0.94"

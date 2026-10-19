@@ -1,0 +1,21 @@
+name: Custom build
+
+# The capcut-parity build: every platform build-app.yml ships, built from
+# this branch on a push or by hand, its installers left as the run's
+# artifacts. Nothing is published.
+on:
+  push:
+    branches: [capcut-parity]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: custom-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-app.yml
+    secrets: inherit

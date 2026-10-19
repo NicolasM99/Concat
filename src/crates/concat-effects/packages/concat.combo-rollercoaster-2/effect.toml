@@ -5,7 +5,7 @@ id = "concat.combo-rollercoaster-2"
 name = "Rollercoaster 2"
 kind = "animation"
 category = "Combo"
-order = 102
+order = 104
 description = "The clip loops the loop like a rollercoaster."
 
 [animation]

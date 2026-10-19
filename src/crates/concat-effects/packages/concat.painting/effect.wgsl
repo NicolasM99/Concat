@@ -58,6 +58,6 @@ fn effect(uv: vec2<f32>) -> vec4<f32> {
     let levels = 6.0;
     let poster = floor(clamp(daub, vec3<f32>(0.0), vec3<f32>(1.0)) * levels + 0.5) / levels;
     let ink = 1.0 - edge_at(uv) * 0.6;
-    let rgb = mix(c.rgb, saturation(poster, 1.2) * ink, params.texture / 100.0);
+    let rgb = mix(c.rgb, saturation(poster, 1.2) * ink, params.texture / 100.0) + max(c.rgb - vec3<f32>(1.0), vec3<f32>(0.0));
     return vec4<f32>(rgb, c.a);
 }

@@ -16,3 +16,6 @@ text = true
 [animation.effect]
 id = "concat.reveal-wipe"
 params = { progress = "100 * t", direction = "3", softness = "0" }
+
+[card]
+progress = 0.5

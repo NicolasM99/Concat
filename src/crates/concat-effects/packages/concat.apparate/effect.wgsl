@@ -94,17 +94,6 @@ fn reach(uv: vec2<f32>, at: vec2<f32>) -> f32 {
     return length((uv - at) * vec2<f32>(frame.size.x / frame.size.y, 1.0));
 }
 
-/// How much `uv` is an outline in the picture, softened a little so a
-/// glow can be built on it.
-fn outline(uv: vec2<f32>, spread: f32) -> f32 {
-    let t = texel() * spread;
-    var e = edge_at(uv);
-    e = max(e, edge_at(uv + vec2<f32>(t.x, 0.0)) * 0.7);
-    e = max(e, edge_at(uv - vec2<f32>(t.x, 0.0)) * 0.7);
-    e = max(e, edge_at(uv + vec2<f32>(0.0, t.y)) * 0.7);
-    e = max(e, edge_at(uv - vec2<f32>(0.0, t.y)) * 0.7);
-    return smoothstep(0.08, 0.5, e);
-}
 
 struct Params { speed: f32 }
 

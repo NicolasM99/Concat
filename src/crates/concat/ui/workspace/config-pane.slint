@@ -10,7 +10,7 @@ import { EffectData } from "../demo/effects-panel.slint";
 import {
     AdjustPanel, AppliedEntryData, AppliedParamData, AudioPanel, BackgroundRows, ProcessorRows,
     CatalogueEntryData, ColourKnobData, EnhancePanel, FilterPanel, PresetStack, SpeedPanel,
-    TransitionPanel, VideoPanel,
+    AnimationPanel, TransitionPanel, VideoPanel,
 } from "../inspector/clip-inspector.slint";
 import {
     CurveData, CurveGroupData, WheelData, WheelGroupData,
@@ -211,6 +211,8 @@ export component ConfigPane inherits Rectangle {
     callback clip-enhance-run();
     callback transition-remove();
     callback transition-duration-set(seconds: float);
+    callback animation-remove(slot: int);
+    callback animation-duration-set(slot: int, seconds: float);
 
 
     // The tab strip follows the selection, and stays short: three tabs at
@@ -276,7 +278,7 @@ export component ConfigPane inherits Rectangle {
 
     /// The sections of the current tab, as the dropdown lists them.
     property <[string]> sections: root.heading == "Video"
-            ? (root.is-shape ? ["Basic"] : ["Basic", "Enhance", "Adjust"])
+            ? (root.is-shape ? ["Basic", "Animation"] : ["Basic", "Enhance", "Adjust", "Animation"])
         // Audio's chain library is a page of its own, beside the level,
         // fades and treatments rather than under them, the way Video's
         // Adjust sits beside its Basic. Named apart from Video's "Basic"
@@ -285,17 +287,18 @@ export component ConfigPane inherits Rectangle {
         : root.heading == "Audio"
             ? (root.selected.batch-volume ? ["Sound"] : ["Sound", "AudioEffects"])
         : root.heading == "Effects" ? ["Effects"]
-        : root.heading == "Text" ? ["Text"]
+        : root.heading == "Text" ? ["Text", "Animation"]
         : ["Layer", "Adjust", "Effects"];
     /// The sections as the dropdown shows them; see `tabs-shown`.
     property <[string]> sections-shown: root.heading == "Video"
-            ? (root.is-shape ? [I18n.t("configPane.basic")]
-                : [I18n.t("configPane.basic"), I18n.t("common.enhance"), I18n.t("common.adjust")])
+            ? (root.is-shape ? [I18n.t("configPane.basic"), I18n.t("configPane.animation")]
+                : [I18n.t("configPane.basic"), I18n.t("common.enhance"), I18n.t("common.adjust"),
+                    I18n.t("configPane.animation")])
         : root.heading == "Audio"
             ? (root.selected.batch-volume ? [I18n.t("configPane.basic")]
                 : [I18n.t("configPane.basic"), I18n.t("configPane.audioEffects")])
         : root.heading == "Effects" ? [I18n.t("common.effects")]
-        : root.heading == "Text" ? [I18n.t("common.text")]
+        : root.heading == "Text" ? [I18n.t("common.text"), I18n.t("configPane.animation")]
         : [I18n.t("common.layer"), I18n.t("common.adjust"), I18n.t("common.effects")];
 
     // Each tab remembers its own section, so flipping to Audio and back
@@ -336,6 +339,13 @@ export component ConfigPane inherits Rectangle {
             root.tab = 0;
             root.section-layer = root.jump-section == "Adjust" ? 1
                 : root.jump-section == "Effects" ? 2 : 0;
+            return;
+        }
+        // An animation lands on its own section, the last of the Video or
+        // the Text tab.
+        if (root.jump-section == "Animation") {
+            root.tab = 0;
+            root.pick-section(root.sections.length - 1);
             return;
         }
         if (root.jump-tab == "Video") { root.tab = 0; }
@@ -703,6 +713,13 @@ export component ConfigPane inherits Rectangle {
                     commit => { root.clip-commit(); }
                     import-font => { root.import-font(); }
                     set-default => { root.text-style-default(); }
+                }
+
+                if root.showing == "Animation": AnimationPanel {
+                    selected: root.selected;
+                    text: root.is-text;
+                    remove(slot) => { root.animation-remove(slot); }
+                    duration-set(slot, seconds) => { root.animation-duration-set(slot, seconds); }
                 }
 
                 // Audio: the level and fades, then the voice and room chain

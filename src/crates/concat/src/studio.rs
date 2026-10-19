@@ -30,6 +30,7 @@ use std::rc::Rc;
 use std::sync::Arc;
 
 use concat_effects::Catalogue;
+use concat_effects::animation::Slot as AnimationSlot;
 use concat_effects::manifest::Kind as PackageKind;
 use concat_effects::manifest::ParamType;
 use concat_host::playback::ClipSpec;
@@ -373,11 +374,12 @@ pub struct LibraryView {
 /// Which library a shelf index names. The numbers are the panel's own -
 /// `PresetStack.shelf`, and `Library.view`'s shelf argument everywhere else -
 /// and the order the tabs sit in.
-pub const SHELF_KINDS: [PackageKind; 4] = [
+pub const SHELF_KINDS: [PackageKind; 5] = [
     PackageKind::Filter,
     PackageKind::Effect,
     PackageKind::Audio,
     PackageKind::Transition,
+    PackageKind::Animation,
 ];
 
 /// `name` under the home directory, as a path string; empty when there is
@@ -625,10 +627,12 @@ pub struct Models {
     pub catalogue_luts: Rc<VecModel<CatalogueEntryData>>,
     pub catalogue_audio: Rc<VecModel<CatalogueEntryData>>,
     pub catalogue_transitions: Rc<VecModel<CatalogueEntryData>>,
+    pub catalogue_animations: Rc<VecModel<CatalogueEntryData>>,
     pub effect_groups: Rc<VecModel<SharedString>>,
     pub filter_groups: Rc<VecModel<SharedString>>,
     pub audio_groups: Rc<VecModel<SharedString>>,
     pub transition_groups: Rc<VecModel<SharedString>>,
+    pub animation_groups: Rc<VecModel<SharedString>>,
     /// The selected clip's two chains and their knobs.
     pub applied_visual: Rc<VecModel<AppliedEntryData>>,
     pub applied_audio: Rc<VecModel<AppliedEntryData>>,
@@ -717,10 +721,12 @@ impl Models {
             catalogue_luts: Rc::new(VecModel::default()),
             catalogue_audio: Rc::new(VecModel::default()),
             catalogue_transitions: Rc::new(VecModel::default()),
+            catalogue_animations: Rc::new(VecModel::default()),
             effect_groups: Rc::new(VecModel::default()),
             filter_groups: Rc::new(VecModel::default()),
             audio_groups: Rc::new(VecModel::default()),
             transition_groups: Rc::new(VecModel::default()),
+            animation_groups: Rc::new(VecModel::default()),
             applied_visual: Rc::new(VecModel::default()),
             applied_audio: Rc::new(VecModel::default()),
             visual_params: Rc::new(VecModel::default()),
@@ -795,8 +801,8 @@ pub struct Studio {
     pub host: Host,
     pub prefs: Preferences,
     /// What each effect library is showing, indexed the way `SHELF_KINDS`
-    /// is: 0 filters, 1 effects, 2 audio.
-    pub library: [LibraryView; 4],
+    /// is: 0 filters, 1 effects, 2 audio, 3 transitions, 4 animations.
+    pub library: [LibraryView; 5],
 
     // ── the edit ──
     pub session: Option<Session>,
@@ -4225,6 +4231,114 @@ impl Studio {
         self.selected_transition()
             .map(|clip| clip.id.clone())
             .or_else(|| self.sole_selection())
+    }
+
+    /// An animation from the library on the selected clip, in the slot its
+    /// package names, at its package's length. A Combo is the clip's whole
+    /// motion, so it takes the place of an In and an Out, and either of
+    /// those takes the place of a Combo.
+    pub fn apply_animation(&mut self, id: &str) {
+        let Some(clip_id) = self.sole_selection() else {
+            self.notify(&t("studio.selectClipTimelineFirst"), true);
+            return;
+        };
+        let Some(clip) = self.clip(&clip_id).cloned() else {
+            return;
+        };
+        if matches!(clip.kind, model::ClipKind::Audio | model::ClipKind::Layer) {
+            self.notify(&t("studio.selectVideoImageText"), true);
+            return;
+        }
+        let Some(animation) = Catalogue::builtin()
+            .get(id)
+            .and_then(|package| package.animation())
+        else {
+            return;
+        };
+        let applied = model::ClipAnimation {
+            id: id.to_owned(),
+            duration: animation.duration().min(clip.duration.max(0.05)),
+        };
+        let mut set = clip.animations.clone().unwrap_or_default();
+        match animation.slot() {
+            AnimationSlot::In => {
+                set.enter = Some(applied);
+                set.combo = None;
+            }
+            AnimationSlot::Out => {
+                set.exit = Some(applied);
+                set.combo = None;
+            }
+            AnimationSlot::Combo => {
+                set.combo = Some(applied);
+                set.enter = None;
+                set.exit = None;
+            }
+            AnimationSlot::Loop => set.looping = Some(applied),
+        }
+        self.apply(Command::UpdateClip {
+            clip_id,
+            patch: ClipPatch {
+                animations: Some(Some(set)),
+                ..ClipPatch::default()
+            },
+        });
+        // Show it where its length is set.
+        let tab = if clip.kind == model::ClipKind::Text {
+            "Text"
+        } else {
+            "Video"
+        };
+        self.inspector_jump = (self.inspector_jump.0 + 1, tab, "Animation");
+    }
+
+    /// Takes the animation in `slot` - 0 In, 1 Out, 2 Combo, 3 Loop - off
+    /// the selected clip.
+    pub fn remove_animation(&mut self, slot: i32) {
+        self.change_animation(slot, |_| None);
+    }
+
+    /// Sets the length of the selected clip's animation in `slot`.
+    pub fn set_animation_duration(&mut self, slot: i32, seconds: f64) {
+        self.change_animation(slot, |applied| {
+            Some(model::ClipAnimation {
+                duration: seconds.clamp(model::MIN_ANIMATION, model::MAX_ANIMATION),
+                ..applied
+            })
+        });
+    }
+
+    fn change_animation(
+        &mut self,
+        slot: i32,
+        change: impl FnOnce(model::ClipAnimation) -> Option<model::ClipAnimation>,
+    ) {
+        let Some(clip_id) = self.sole_selection() else {
+            return;
+        };
+        let Some(clip) = self.clip(&clip_id) else {
+            return;
+        };
+        let mut set = clip.animations.clone().unwrap_or_default();
+        let place = match slot {
+            0 => &mut set.enter,
+            1 => &mut set.exit,
+            2 => &mut set.combo,
+            3 => &mut set.looping,
+            _ => return,
+        };
+        let Some(applied) = place.take() else {
+            return;
+        };
+        *place = change(applied);
+        let set = (!set.is_empty()).then_some(set);
+        self.apply(Command::UpdateClip {
+            clip_id,
+            patch: ClipPatch {
+                animations: Some(set),
+                ..ClipPatch::default()
+            },
+        });
     }
 
     /// Takes the transition off its clip, leaving a plain cut.
@@ -10228,6 +10342,24 @@ impl Studio {
                 .as_ref()
                 .map(|transition| transition.duration as f32)
                 .unwrap_or(0.5),
+            animation_names: ModelRc::new(VecModel::from(
+                animation_slots(clip)
+                    .iter()
+                    .map(|slot| {
+                        slot.and_then(|applied| Catalogue::builtin().get(&applied.id))
+                            .map(|package| {
+                                SharedString::from(package.manifest.effect.name.as_str())
+                            })
+                            .unwrap_or_default()
+                    })
+                    .collect::<Vec<_>>(),
+            )),
+            animation_durations: ModelRc::new(VecModel::from(
+                animation_slots(clip)
+                    .iter()
+                    .map(|slot| slot.map_or(0.5, |applied| applied.duration as f32))
+                    .collect::<Vec<_>>(),
+            )),
             scale: shown(clip, model::KeyProperty::Scale, at) as f32,
             offset_x: shown(clip, model::KeyProperty::OffsetX, at) as f32,
             offset_y: shown(clip, model::KeyProperty::OffsetY, at) as f32,
@@ -10672,6 +10804,16 @@ impl Studio {
             );
             sync(&models.transition_groups, groups);
             sync(&models.catalogue_transitions, entries);
+            let (groups, entries) = shelves(
+                SHELF_KINDS[4],
+                &self.library[4],
+                starred,
+                &self.look_art,
+                &self.card_paths,
+                |_| true,
+            );
+            sync(&models.animation_groups, groups);
+            sync(&models.catalogue_animations, entries);
             *self.shelf_stamp.borrow_mut() = Some(stamp);
         }
         sync(
@@ -12038,6 +12180,19 @@ pub(crate) fn audio_specs(clips: &[concat_export::ExportClip]) -> Vec<ClipSpec> 
             chain: piece.filter_chain,
         })
         .collect()
+}
+
+/// A clip's animation slots in the panel's order: In, Out, Combo, Loop.
+fn animation_slots(clip: &Clip) -> [Option<&model::ClipAnimation>; 4] {
+    match &clip.animations {
+        Some(set) => [
+            set.enter.as_ref(),
+            set.exit.as_ref(),
+            set.combo.as_ref(),
+            set.looping.as_ref(),
+        ],
+        None => [None; 4],
+    }
 }
 
 #[cfg(test)]

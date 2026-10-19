@@ -19,7 +19,6 @@ unit = "%"
 
 [wgsl]
 entry = "effect.wgsl"
-space = "display"
 
 [card]
 moment = 0.4

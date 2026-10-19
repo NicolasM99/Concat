@@ -109,7 +109,7 @@ export global Library {
     callback favourite(id: string, on: bool);
 
     pure public function view(shelf: int) -> LibraryViewData {
-        if (Library.views.length < 4) {
+        if (Library.views.length < 5) {
             return { query: "", group: 0, favourites: false, category: "" };
         }
         return Library.views[shelf];
@@ -2073,6 +2073,113 @@ export component EnhancePanel inherits VerticalLayout {
 /// rides into, its length, and the way to take it off. Its own panel and
 /// not a section of the clip's, since it belongs to the cut between two
 /// clips rather than to either of them.
+/// One slot of a clip's animations: what is in it, a way to take it off,
+/// and its length.
+component AnimationSlot inherits VerticalLayout {
+    in property <string> title;
+    in property <string> name;
+    in property <float> length;
+    /// Whether the slot's length means anything: a Combo spans the clip.
+    in property <bool> timed: true;
+    callback remove();
+    callback length-set(seconds: float);
+
+    property <float> seconds;
+    init => { root.seconds = root.length; }
+    changed length => { root.seconds = root.length; }
+
+    HorizontalLayout {
+        padding-left: Theme.pad;
+        padding-right: Theme.pad;
+        padding-top: 4px;
+        spacing: 4px;
+
+        VerticalLayout {
+            horizontal-stretch: 1;
+            alignment: center;
+            Text {
+                text: root.title;
+                color: Theme.fg-muted;
+                font-size: Theme.fs-sm;
+            }
+            Text {
+                text: root.name == "" ? I18n.t("clipInspector.noAnimation") : root.name;
+                color: root.name == "" ? Theme.fg-muted : Theme.fg;
+                font-size: Theme.fs;
+                font-weight: root.name == "" ? Theme.weight-body : Theme.weight-title;
+                overflow: elide;
+            }
+        }
+        if root.name != "": VerticalLayout {
+            alignment: center;
+            IconButton {
+                glyph: Glyph.trash;
+                label: I18n.t1("clipInspector.remove", root.name);
+                danger: true;
+                clicked => { root.remove(); }
+            }
+        }
+    }
+    if root.name != "" && root.timed: Param {
+        label: I18n.t("common.duration");
+        value <=> root.seconds;
+        minimum: 0.1;
+        maximum: 5;
+        step: 0.05;
+        default-value: 0.5;
+        fmt: ParamFormat.seconds2;
+        changed(v) => { root.length-set(v); }
+    }
+}
+
+/// A clip's animations: CapCut's In, Out and Combo for a picture, and In,
+/// Out and Loop for a title. They are picked on the library's Animations
+/// page; here each is named, timed and taken off.
+export component AnimationPanel inherits VerticalLayout {
+    in property <SelectedClipData> selected;
+    /// A title: In, Out and Loop rather than In, Out and Combo.
+    in property <bool> text;
+    callback remove(slot: int);
+    callback duration-set(slot: int, seconds: float);
+
+    Section {
+        SectionHeader {
+            title: I18n.t("configPane.animation");
+            summary: I18n.t("clipInspector.animationHint");
+        }
+        SectionBody {
+            AnimationSlot {
+                title: I18n.t("clipInspector.animationIn");
+                name: root.selected.animation-names[0];
+                length: root.selected.animation-durations[0];
+                remove => { root.remove(0); }
+                length-set(v) => { root.duration-set(0, v); }
+            }
+            AnimationSlot {
+                title: I18n.t("clipInspector.animationOut");
+                name: root.selected.animation-names[1];
+                length: root.selected.animation-durations[1];
+                remove => { root.remove(1); }
+                length-set(v) => { root.duration-set(1, v); }
+            }
+            if !root.text: AnimationSlot {
+                title: I18n.t("clipInspector.animationCombo");
+                name: root.selected.animation-names[2];
+                length: root.selected.animation-durations[2];
+                timed: false;
+                remove => { root.remove(2); }
+            }
+            if root.text || root.selected.animation-names[3] != "": AnimationSlot {
+                title: I18n.t("clipInspector.animationLoop");
+                name: root.selected.animation-names[3];
+                length: root.selected.animation-durations[3];
+                remove => { root.remove(3); }
+                length-set(v) => { root.duration-set(3, v); }
+            }
+        }
+    }
+}
+
 export component TransitionPanel inherits VerticalLayout {
     in property <SelectedTransitionData> transition;
 

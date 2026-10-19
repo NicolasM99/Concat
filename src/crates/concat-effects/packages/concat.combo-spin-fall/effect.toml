@@ -1,0 +1,16 @@
+format = 2
+
+[effect]
+id = "concat.combo-spin-fall"
+name = "Spin Fall"
+kind = "animation"
+category = "Combo"
+order = 102
+description = "The clip spins in place, then falls away."
+
+[animation]
+slot = "combo"
+duration = 2
+y = "(0.8 * pow(clamp((t - 0.75) / 0.25, 0, 1), 3))"
+rotation = "(540 * t)"
+opacity = "(1 - clamp((t - 0.75) / 0.25, 0, 1))"

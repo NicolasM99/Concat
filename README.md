@@ -57,7 +57,7 @@ Everything runs locally on a native Rust engine with a GPU compositor. Install i
 - 🗣️ **Text-to-speech + voice cloning.** Free local voices, or any voice from a few seconds of a recording.
 - 🧍 **Background removal.** People, objects, or paint the mask yourself.
 - 🎞️ **Keyframes.** Position, scale, rotation, opacity, volume, effect parameters. Curve editor built in.
-- ✨ **100 effects, filters and transitions.** GPU-rendered, live in the preview.
+- ✨ **900+ effects, filters, transitions and animations**, CapCut's catalogue among them ([what covers what](docs/CAPCUT_PARITY.md)). GPU-rendered, live in the preview.
 - ✂️ **Cut fast.** Split, trim, ripple, merge, freeze frame, speed. Magnetic timeline if you want it.
 - 🎚️ **Multi-track, multi-timeline.** Several cuts in one project. Blend modes, crop, flips.
 - 📝 **Titles.** Fonts, stroke, shadow, background plate. Presets to start from.

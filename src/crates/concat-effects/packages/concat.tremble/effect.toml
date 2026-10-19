@@ -1,0 +1,19 @@
+[effect]
+id = "concat.tremble"
+name = "Tremble"
+kind = "audio"
+category = "Voice"
+order = 56
+intensity = "depth"
+description = "A trembling, shaky voice."
+
+[[param]]
+key = "depth"
+label = "Depth"
+min = 1
+max = 10
+default = 5
+step = 0.5
+
+[ffmpeg]
+chain = "vibrato=f=8:d={fixed(0.1 + depth * 0.07, 2)},tremolo=f=6:d={fixed(0.1 + depth * 0.04, 2)},alimiter=limit=0.94"

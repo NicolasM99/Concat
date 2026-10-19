@@ -1,0 +1,23 @@
+[effect]
+id = "concat.queen"
+name = "Queen"
+kind = "audio"
+category = "Character"
+order = 43
+intensity = "pitch"
+description = "A higher, regal voice with a touch of hall."
+
+[[param]]
+key = "pitch"
+label = "Pitch"
+min = 1
+max = 5
+default = 2
+step = 0.5
+unit = "st"
+
+[ffmpeg]
+let = [
+  "ratio = pow(2, pitch / 12)",
+]
+chain = "aresample=48000,asetrate={fixed(48000 * ratio, 6)},aresample=48000,atempo={fixed(1 / ratio, 8)},aecho=0.8:0.7:60:0.25,alimiter=limit=0.94"

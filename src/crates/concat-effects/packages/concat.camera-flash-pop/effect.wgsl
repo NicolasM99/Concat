@@ -87,8 +87,7 @@ fn effect(uv: vec2<f32>) -> vec4<f32> {
     let ph = fract(t);
     let at = vec2<f32>(hash(vec2<f32>(n, 1.0), 1.0), hash(vec2<f32>(n, 2.0), 1.0));
     let d = length((uv - at) * vec2<f32>(frame.size.x / frame.size.y, 1.0));
-    let on = step(0.5, hash(vec2<f32>(n, 3.0), 1.0));
-    let flash = exp(-ph * 10.0) * on;
+    let flash = exp(-ph * 10.0);
     let star = glint((uv - at) * vec2<f32>(frame.size.x / frame.size.y, 1.0), 0.3);
     return vec4<f32>(c.rgb * (1.0 + flash * 1.5 * exp(-d * 2.0)) + vec3<f32>(star * flash * 2.0), c.a);
 }

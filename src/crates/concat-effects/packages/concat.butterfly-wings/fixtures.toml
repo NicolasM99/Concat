@@ -4,7 +4,7 @@
 [[probe]]
 name = "default"
 input = [0.3, 0.2, 0.12, 1]
-expect = [0.075562, 1.0488, 0.016525, 1]
+expect = [0.22144, 0.89795, 0.066284, 1]
 
 [[probe]]
 name = "minimum"

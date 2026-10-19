@@ -222,7 +222,7 @@ impl Animation {
     /// The table checked and its expressions parsed: what a load refuses a
     /// package over.
     pub fn new(spec: AnimationSpec) -> Result<Animation, String> {
-        if !(spec.duration > 0.0 && spec.duration <= MAX_DURATION) {
+        if !(spec.duration.is_finite() && spec.duration > 0.0 && spec.duration <= MAX_DURATION) {
             return Err(format!(
                 "[animation] duration {} is outside 0..{MAX_DURATION} seconds",
                 spec.duration
@@ -364,7 +364,9 @@ impl Animation {
 /// where it changes nothing. `duration` is what the clip set, already
 /// fitted ([`fitted`]).
 pub fn progress(slot: Slot, duration: f64, at: f64, length: f64) -> Option<f64> {
-    if !(length > 0.0) || !(duration > 0.0) || at < 0.0 || at > length {
+    // NaN fails every comparison, so it is taken as no window at all.
+    let positive = |x: f64| x.is_finite() && x > 0.0;
+    if !positive(length) || !positive(duration) || at < 0.0 || at > length {
         return None;
     }
     match slot {

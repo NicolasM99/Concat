@@ -1,0 +1,15 @@
+format = 2
+
+[effect]
+id = "concat.combo-zoomroll"
+name = "ZoomRoll"
+kind = "animation"
+category = "Combo"
+order = 101
+description = "The clip rolls round as it zooms in and back out."
+
+[animation]
+slot = "combo"
+duration = 2
+scale = "(1 + 0.5 * sin(t * pi))"
+rotation = "(360 * t)"

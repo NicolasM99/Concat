@@ -1,0 +1,13 @@
+[[case]]
+name = "default"
+chain = "aresample=48000,asetrate=67882.250994,aresample=48000,atempo=0.70710678,chorus=0.6:0.8:40:0.4:0.3:2,alimiter=limit=0.94"
+
+[[case]]
+name = "minimum"
+at = "min"
+chain = "aresample=48000,asetrate=57081.941520,aresample=48000,atempo=0.84089642,chorus=0.6:0.8:40:0.4:0.3:2,alimiter=limit=0.94"
+
+[[case]]
+name = "maximum"
+at = "max"
+chain = "aresample=48000,asetrate=80726.055864,aresample=48000,atempo=0.59460356,chorus=0.6:0.8:40:0.4:0.3:2,alimiter=limit=0.94"

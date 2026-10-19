@@ -360,6 +360,11 @@ export struct SelectedClipData {
     transition-name: string,
     transition-duration: float,
 
+    // the clip's animations by slot - In, Out, Combo, Loop - each name empty
+    // where the slot is, and its length
+    animation-names: [string],
+    animation-durations: [float],
+
     // transform — video and stills
     scale: float,
     offset-x: float,

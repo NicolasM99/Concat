@@ -360,10 +360,12 @@ fn start(project: Option<std::path::PathBuf>, smoke: bool) -> Result<(), slint::
         editor.set_catalogue_luts(ModelRc::from(models.catalogue_luts.clone()));
         editor.set_catalogue_audio(ModelRc::from(models.catalogue_audio.clone()));
         editor.set_catalogue_transitions(ModelRc::from(models.catalogue_transitions.clone()));
+        editor.set_catalogue_animations(ModelRc::from(models.catalogue_animations.clone()));
         editor.set_effect_groups(ModelRc::from(models.effect_groups.clone()));
         editor.set_filter_groups(ModelRc::from(models.filter_groups.clone()));
         editor.set_audio_groups(ModelRc::from(models.audio_groups.clone()));
         editor.set_transition_groups(ModelRc::from(models.transition_groups.clone()));
+        editor.set_animation_groups(ModelRc::from(models.animation_groups.clone()));
         editor.set_applied_visual(ModelRc::from(models.applied_visual.clone()));
         editor.set_applied_audio(ModelRc::from(models.applied_audio.clone()));
         editor.set_visual_params(ModelRc::from(models.visual_params.clone()));
@@ -896,6 +898,9 @@ fn start(project: Option<std::path::PathBuf>, smoke: bool) -> Result<(), slint::
     }));
     editor.on_library_apply_audio(on_window!(|state, id: SharedString| {
         state.apply_catalogue(id.as_str(), false);
+    }));
+    editor.on_library_apply_animation(on_window!(|state, id: SharedString| {
+        state.apply_animation(id.as_str());
     }));
     editor.on_library_apply_transition(on_window!(|state, id: SharedString| {
         state.apply_transition(id.as_str());
@@ -1479,6 +1484,12 @@ fn start(project: Option<std::path::PathBuf>, smoke: bool) -> Result<(), slint::
     }));
     editor.on_transition_remove(on_window!(|state| {
         state.remove_transition();
+    }));
+    editor.on_animation_remove(on_window!(|state, slot: i32| {
+        state.remove_animation(slot);
+    }));
+    editor.on_animation_duration_set(on_window!(|state, slot: i32, seconds: f32| {
+        state.set_animation_duration(slot, f64::from(seconds));
     }));
     editor.on_transition_duration_set(on_window!(|state, seconds: f32| {
         state.set_transition_duration(seconds as f64);

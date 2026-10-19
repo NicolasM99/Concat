@@ -20,3 +20,6 @@ unit = "%"
 [transition]
 entry = "effect.wgsl"
 fallback = "cross-fade"
+
+[card]
+progress = 0.22

@@ -116,6 +116,8 @@ export global Editor {
     callback library-add-shape(shape: string, label: string);
     callback library-apply-effect(effect-id: string);
     callback library-apply-transition(transition-id: string);
+    /// An animation from the Animations page, on the selected clip.
+    callback library-apply-animation(animation-id: string);
     /// Filters page: lay the look down as a layer at the playhead.
     callback library-apply-filter(filter-id: string, label: string);
     /// Filters page: show the look over the whole picture without laying
@@ -178,10 +180,12 @@ export global Editor {
     in-out property <image> adjustment-art;
     in-out property <[CatalogueEntryData]> catalogue-audio;
     in-out property <[CatalogueEntryData]> catalogue-transitions;
+    in-out property <[CatalogueEntryData]> catalogue-animations;
     in-out property <[string]> effect-groups;
     in-out property <[string]> filter-groups;
     in-out property <[string]> audio-groups;
     in-out property <[string]> transition-groups;
+    in-out property <[string]> animation-groups;
     in-out property <[AppliedEntryData]> applied-visual;
     in-out property <[AppliedEntryData]> applied-audio;
     in-out property <[AppliedParamData]> visual-params;
@@ -299,6 +303,10 @@ export global Editor {
     /// The transition riding into the selected clip; see VideoPanel.
     callback transition-remove();
     callback transition-duration-set(seconds: float);
+    /// The selected clip's animations, by slot: 0 In, 1 Out, 2 Combo,
+    /// 3 Loop; see AnimationPanel.
+    callback animation-remove(slot: int);
+    callback animation-duration-set(slot: int, seconds: float);
 
     // ── the timeline ──
     in-out property <[TimelineTabData]> timeline-tabs;

@@ -4,16 +4,16 @@
 [[probe]]
 name = "default"
 input = [0.3, 0.2, 0.12, 1]
-expect = [0, 0, 0, 0]
+expect = [0.35254, 0.25977, 0.18591, 1]
 
 [[probe]]
 name = "minimum"
 at = "min"
 input = [0.3, 0.2, 0.12, 1]
-expect = [0, 0, 0, 0]
+expect = [0.30005, 0.19995, 0.12, 1]
 
 [[probe]]
 name = "maximum"
 at = "max"
 input = [0.3, 0.2, 0.12, 1]
-expect = [0, 0, 0, 0]
+expect = [0.50977, 0.43994, 0.38379, 1]

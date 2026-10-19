@@ -772,10 +772,11 @@ impl Manifest {
             }
         }
         let transition = self.effect.kind == Kind::Transition;
+        let animation = self.effect.kind == Kind::Animation;
         if let Some(progress) = card.progress {
-            if !transition {
+            if !transition && !animation {
                 return Err(self.invalid(
-                    "[card] progress places a transition's card; an effect's is placed by moment",
+                    "[card] progress places a transition's or an animation's card; an effect's is placed by moment",
                 ));
             }
             if !(0.0..=1.0).contains(&progress) {
@@ -945,7 +946,7 @@ mod tests {
         assert_eq!(card.moment, Some(2.5));
         rejects(&with("params = { sigma = 20 }"), "not a parameter");
         rejects(&with("params = { radius = 99 }"), "outside 1..50");
-        rejects(&with("progress = 0.5"), "places a transition's card");
+        rejects(&with("progress = 0.5"), "an effect's is placed by moment");
         rejects(&with("moment = -1"), "outside 0..60");
         rejects(&with("screen = \"green\""), "#rrggbb");
         let keyed = Manifest::parse(&with("screen = \"#20c040\"")).expect("parses");

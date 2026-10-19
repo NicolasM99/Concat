@@ -1018,9 +1018,10 @@ fn catalogue(kind: Option<&str>) -> Result<Vec<PackageInfo>, ApiError> {
         Some("audio") => Some(Kind::Audio),
         Some("transition") => Some(Kind::Transition),
         Some("generator") => Some(Kind::Generator),
+        Some("animation") => Some(Kind::Animation),
         Some(other) => {
             return Err(ApiError::invalid(format!(
-                "{other:?} is not a kind: effect, filter, audio, transition or generator"
+                "{other:?} is not a kind: effect, filter, audio, transition, generator or animation"
             )));
         }
     };

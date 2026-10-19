@@ -26,9 +26,11 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
+use concat_core::animate::Motion;
 use concat_core::frame::Frame;
 use concat_core::shader::{RevealMap, ShaderPass, TransitionPass};
 use concat_core::time::Rational;
+use concat_effects::animation::Slot;
 use concat_effects::{At, Catalogue, Package};
 use concat_media::{DecodeOptions, Decoder, FrameSource};
 use concat_render::{Compositor, FramePlan, PlannedLayer, WgpuCompositor, detached_clip};
@@ -58,6 +60,10 @@ const MOMENT: f64 = 0.9;
 /// view, the incoming one not yet past the middle.
 const CUT_AT: f32 = 0.4;
 
+/// Seconds a card's clip runs past its moment: what a look timed to the
+/// clip's end is drawn against.
+const CARD_TAIL: f64 = 0.5;
+
 /// The words a text effect's card sets over the still.
 const TITLE: &str = "Big Title";
 
@@ -77,6 +83,25 @@ enum Drawing {
     Title(ShaderPass),
     /// A cut from the still to its turned copy.
     Cut(TransitionPass),
+    /// An animation part way through: the still, or a title over it,
+    /// moved as the animation moves it and through its look.
+    Motion {
+        motion: Motion,
+        look: Option<ShaderPass>,
+        title: bool,
+    },
+}
+
+/// How far through its window an animation's card shows it, by slot, when
+/// its `[card]` does not say: an In arriving, an Out leaving, a Combo early
+/// in its arrival, a Loop a quarter round.
+fn card_progress(slot: Slot) -> f64 {
+    match slot {
+        Slot::In => 0.4,
+        Slot::Out => 0.6,
+        Slot::Combo => 0.15,
+        Slot::Loop => 0.3,
+    }
 }
 
 /// One package's card: where it is kept, and what it draws.
@@ -102,7 +127,26 @@ impl Card {
         let mut set = package.params_at(At::Default);
         set.extend(settings.params.clone());
         let moment = settings.moment.unwrap_or(MOMENT);
-        let drawing = if package.transition().is_some() {
+        let drawing = if let Some(animation) = package.animation() {
+            let t = settings.progress.unwrap_or(card_progress(animation.slot()));
+            let m = animation.motion_at(t);
+            let look = animation
+                .look_at(t)
+                .and_then(|(id, values)| catalogue.get(id)?.pass(&values, None));
+            Drawing::Motion {
+                motion: Motion {
+                    scale: m.scale,
+                    offset_x: m.x,
+                    offset_y: m.y,
+                    rotation: m.rotation,
+                    opacity: m.opacity,
+                    stretch_x: m.sx,
+                    stretch_y: m.sy,
+                },
+                look,
+                title: animation.for_text(),
+            }
+        } else if package.transition().is_some() {
             Drawing::Cut(catalogue.transition_pass(
                 package.id(),
                 &settings.params,
@@ -221,6 +265,31 @@ fn fingerprint(drawing: &Drawing, moment: f64) -> u64 {
             feed(&cut.progress.to_le_bytes());
             feed(&cut.lut.as_ref().map_or(0, |lut| lut.id).to_le_bytes());
         }
+        Drawing::Motion {
+            motion,
+            look,
+            title,
+        } => {
+            feed(b"motion");
+            for value in [
+                motion.scale,
+                motion.offset_x,
+                motion.offset_y,
+                motion.rotation,
+                motion.opacity,
+                motion.stretch_x,
+                motion.stretch_y,
+            ] {
+                feed(&value.to_le_bytes());
+            }
+            feed(&[u8::from(*title)]);
+            if *title {
+                feed(TITLE.as_bytes());
+            }
+            if let Some(look) = look {
+                pass(&mut feed, look);
+            }
+        }
     }
     hash
 }
@@ -288,6 +357,10 @@ impl Painter {
                 let mut picture = PlannedLayer::picture(detached_clip(), subject);
                 picture.track = 1;
                 picture.effects = vec![pass.clone()];
+                // A clip a little longer than the moment, so a look timed
+                // to the clip's end is seen closing.
+                picture.clip_duration =
+                    moment + Rational::approximate(CARD_TAIL).unwrap_or(Rational::ZERO);
                 self.compositor.render(&FramePlan {
                     time: moment,
                     layers: vec![ground, picture],
@@ -305,6 +378,45 @@ impl Painter {
                 self.compositor.render(&FramePlan {
                     time: moment,
                     layers: vec![ground, words],
+                    ..FramePlan::empty(width, height)
+                })
+            }
+            Drawing::Motion {
+                motion,
+                look,
+                title,
+            } => {
+                let mut layers = Vec::new();
+                let mut moving = if *title {
+                    layers.push(PlannedLayer::picture(
+                        detached_clip(),
+                        Arc::clone(&self.still),
+                    ));
+                    let (words, reveal) = self.title(width, height)?;
+                    let mut layer = PlannedLayer::picture(detached_clip(), words);
+                    if let Some(look) = look {
+                        let mut look = look.clone();
+                        look.reveal_map = Some(reveal);
+                        layer.effects = vec![look];
+                    }
+                    layer
+                } else {
+                    layers.push(PlannedLayer::picture(
+                        detached_clip(),
+                        Arc::clone(&self.checker),
+                    ));
+                    let mut layer = PlannedLayer::picture(detached_clip(), Arc::clone(&self.still));
+                    layer.effects = look.iter().cloned().collect();
+                    layer
+                };
+                moving.track = 1;
+                moving.transform = motion.transform(moving.transform);
+                moving.opacity =
+                    (f64::from(moving.opacity) * motion.opacity).clamp(0.0, 1.0) as f32;
+                layers.push(moving);
+                self.compositor.render(&FramePlan {
+                    time: moment,
+                    layers,
                     ..FramePlan::empty(width, height)
                 })
             }

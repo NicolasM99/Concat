@@ -8,6 +8,7 @@ import { Glyph, Icon } from "../icons.slint";
 import { Editor } from "../editor.slint";
 import { Lanes } from "../timeline/lanes.slint";
 import { ClipField, ClipKind, SelectedClipData } from "../timeline/model.slint";
+import { AnimationPanel } from "../inspector/clip-inspector.slint";
 import { Param, ParamFormat, SwitchRow } from "../inspector/controls.slint";
 import { PreviewPane } from "../workspace/preview-pane.slint";
 import { ContextMenu } from "../primitives/context-menu.slint";
@@ -385,6 +386,7 @@ export component PhoneEditor inherits Rectangle {
             : name == "filters" ? I18n.t("mediaPane.filters")
             : name == "adjustments" ? I18n.t("mediaPane.adjustments")
             : name == "transitions" ? I18n.t("mediaPane.transitions")
+            : name == "animations" ? I18n.t("mediaPane.animations")
             : name == "project" ? I18n.t("phone.project")
             : name == "canvas" || name == "clip-canvas" ? I18n.t("phone.canvas")
             : name == "clip-video" ? I18n.t("phone.edit")
@@ -1040,6 +1042,12 @@ export component PhoneEditor inherits Rectangle {
                 current: root.sheet == "transitions";
                 clicked => { root.show("transitions", true); }
             }
+            if Editor.selected-clip.kind != ClipKind.audio && Editor.selected-clip.kind != ClipKind.filter: ToolItem {
+                glyph: Glyph.keyframe;
+                label: I18n.t("mediaPane.animations");
+                current: root.sheet == "animations";
+                clicked => { root.show("animations", true); }
+            }
             ToolItem {
                 glyph: Glyph.copy;
                 label: I18n.t("phone.duplicate");
@@ -1364,6 +1372,30 @@ export component PhoneEditor inherits Rectangle {
                 glyph: Glyph.transition;
                 auditions: false;
                 applied(id, label) => { Editor.library-apply-transition(id); }
+            }
+        }
+
+        // ── animations: onto the selected clip, each in its slot ──
+        if root.sheet == "animations": VerticalLayout {
+            padding: 12px;
+            spacing: 8px;
+
+            if !root.has-clip: SheetNote { text: I18n.t("phone.selectClipFirst"); }
+            if root.has-clip: AnimationPanel {
+                selected: Editor.selected-clip;
+                text: Editor.selected-clip.kind == ClipKind.text;
+                remove(slot) => { Editor.animation-remove(slot); }
+                duration-set(slot, seconds) => { Editor.animation-duration-set(slot, seconds); }
+            }
+            ShelfSearch {
+                shelf: 4;
+                placeholder: I18n.t1("common.searchKind", I18n.t("mediaPane.animation"));
+            }
+            ShelfGrid {
+                entries: Editor.catalogue-animations;
+                glyph: Glyph.keyframe;
+                auditions: false;
+                applied(id, label) => { Editor.library-apply-animation(id); }
             }
         }
 

@@ -1746,10 +1746,14 @@ export component MediaPane inherits Rectangle {
     in property <[CatalogueEntryData]> catalogue-audio;
     in property <[CatalogueEntryData]> catalogue-filters;
     in property <[CatalogueEntryData]> catalogue-transitions;
+    /// The Animations page: In, Out and Combo for clips, and the titles'
+    /// In, Out and Loop, each its own shelf.
+    in property <[CatalogueEntryData]> catalogue-animations;
     in property <[string]> effect-groups;
     in property <[string]> audio-groups;
     in property <[string]> filter-groups;
     in property <[string]> transition-groups;
+    in property <[string]> animation-groups;
     /// Text page: add a title at the playhead, in the look `preset` names.
     callback add-text(preset: string);
     /// Stickers page: add the figure `shape` names at the playhead, as a
@@ -1758,6 +1762,7 @@ export component MediaPane inherits Rectangle {
     /// Catalogue pages: apply to the selected clip; Rust validates & explains.
     callback apply-effect(effect-id: string);
     callback apply-transition(transition-id: string);
+    callback apply-animation(animation-id: string);
     /// Filters page: lay the look down as a layer at the playhead.
     callback apply-filter(filter-id: string, label: string);
     /// Filters page: a single click shows the look over the whole picture
@@ -1814,6 +1819,7 @@ export component MediaPane inherits Rectangle {
     property <int> text-category;
     property <bool> stickers-open: true;
     property <bool> transitions-open: true;
+    property <bool> animations-open: true;
     property <bool> effects-open: true;
     property <bool> filters-open: true;
     property <bool> adjustments-open: true;
@@ -1953,6 +1959,14 @@ export component MediaPane inherits Rectangle {
                             label: I18n.t("mediaPane.transitions");
                             current: root.tab == 3;
                             clicked => { root.tab = 3; }
+                        }
+                        // Beside Transitions, where CapCut keeps it: the page
+                        // number is the last one handed out, not the place.
+                        LibraryTab {
+                            glyph: Glyph.keyframe;
+                            label: I18n.t("mediaPane.animations");
+                            current: root.tab == 9;
+                            clicked => { root.tab = 9; }
                         }
                         LibraryTab {
                             glyph: Glyph.sparkle;
@@ -2266,6 +2280,25 @@ export component MediaPane inherits Rectangle {
                                 label: label;
                                 current: Library.view(3).group == index;
                                 clicked => { Library.group-changed(3, index); }
+                            }
+                        }
+                    }
+
+                    if root.tab == 9: VerticalLayout {
+                        spacing: 1px;
+                        CategoryHeading {
+                            height: 26px;
+                            title: I18n.t("mediaPane.animations");
+                            open: root.animations-open;
+                            toggled => { root.animations-open = !root.animations-open; }
+                        }
+                        if root.animations-open: VerticalLayout {
+                            spacing: 1px;
+                            for label[index] in root.animation-groups: CategoryRow {
+                                height: 24px;
+                                label: label;
+                                current: Library.view(4).group == index;
+                                clicked => { Library.group-changed(4, index); }
                             }
                         }
                     }
@@ -2666,6 +2699,23 @@ export component MediaPane inherits Rectangle {
                         // Transitions apply directly on single-click — no audition overlay.
                         auditions: false;
                         applied(id, label) => { root.apply-transition(id); }
+                    }
+                }
+
+                if root.tab == 9: VerticalLayout {
+                    padding: 8px;
+
+                    ShelfSearch {
+                        shelf: 4;
+                        placeholder: I18n.t1("common.searchKind", I18n.t("mediaPane.animation"));
+                    }
+                    ShelfGrid {
+                        entries: root.catalogue-animations;
+                        glyph: Glyph.keyframe;
+                        // An animation goes on the selected clip on a click,
+                        // in the slot its shelf names.
+                        auditions: false;
+                        applied(id, label) => { root.apply-animation(id); }
                     }
                 }
 

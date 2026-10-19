@@ -58,5 +58,6 @@ fn effect(uv: vec2<f32>) -> vec4<f32> {
     let hatch = step(0.5, fract((uv.x + uv.y) * frame.size.y / 4.0)) * (1.0 - smoothstep(0.1, 0.5, l)) * 0.3;
     let ink = clamp(1.0 - e * 2.5 - hatch, 0.0, 1.0);
     let paper = vec3<f32>(0.95, 0.93, 0.88) * ink;
-    return vec4<f32>(mix(c.rgb, paper, params.strength / 100.0), c.a);
+    // A highlight past white stays past it on the paper.
+    return vec4<f32>(mix(c.rgb, paper, params.strength / 100.0) + max(c.rgb - vec3<f32>(1.0), vec3<f32>(0.0)), c.a);
 }

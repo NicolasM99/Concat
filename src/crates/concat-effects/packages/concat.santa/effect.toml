@@ -1,0 +1,23 @@
+[effect]
+id = "concat.santa"
+name = "Santa"
+kind = "audio"
+category = "Character"
+order = 48
+intensity = "pitch"
+description = "A deep, warm, jolly voice with a little room."
+
+[[param]]
+key = "pitch"
+label = "Pitch"
+min = -7
+max = -2
+default = -4
+step = 0.5
+unit = "st"
+
+[ffmpeg]
+let = [
+  "ratio = pow(2, pitch / 12)",
+]
+chain = "aresample=48000,asetrate={fixed(48000 * ratio, 6)},aresample=48000,atempo={fixed(1 / ratio, 8)},equalizer=f=150:t=q:w=1:g=4,aecho=0.8:0.6:40:0.2,alimiter=limit=0.94"

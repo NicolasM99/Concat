@@ -2,7 +2,7 @@ format = 2
 
 [effect]
 id = "concat.combo-cube-2-1"
-name = "Cube 2 (1)"
+name = "Cube 2 II"
 kind = "animation"
 category = "Combo"
 order = 49

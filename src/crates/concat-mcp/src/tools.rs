@@ -299,7 +299,7 @@ pub fn catalogue() -> Vec<Tool> {
         command(
             "clip_update",
             "Change a clip",
-            "Changes only the fields given in `patch`: volume (gain, 1 is unchanged, may exceed 1), fadeIn/fadeOut (seconds), opacity (0-1), muted, flipH/flipV, blend, crop (fractions off each edge, null to remove), videoEffects and filters (the whole chain: a list of {id, params}; ids from `effects_list`), transitionIn ({id, duration} on the cut into the clip, null to remove), text (a title's style, null to remove), mask (see `clip_mask`), background (the clip's own background, null to follow the timeline's) and audioStream.",
+            "Changes only the fields given in `patch`: volume (gain, 1 is unchanged, may exceed 1), fadeIn/fadeOut (seconds), opacity (0-1), muted, flipH/flipV, blend, crop (fractions off each edge, null to remove), videoEffects and filters (the whole chain: a list of {id, params}; ids from `effects_list`), transitionIn ({id, duration} on the cut into the clip, null to remove), animations (CapCut-style motion: {in, out, combo, loop}, each {id, duration} with ids from `effects_list` kind \"animation\"; a combo replaces in and out; null to remove all), text (a title's style, null to remove), mask (see `clip_mask`), background (the clip's own background, null to follow the timeline's) and audioStream.",
             "updateClip",
         ),
         Tool {
@@ -390,7 +390,7 @@ pub fn catalogue() -> Vec<Tool> {
         method(
             "effects_list",
             "List effects",
-            "Every effect package this build has - id, name, kind (\"effect\", \"filter\", \"audio\", \"transition\" or \"generator\"), category and each parameter's key, range, default and unit - so an effect chain, a layer or a transition can be built correctly. `kind` narrows the list.",
+            "Every effect package this build has - id, name, kind (\"effect\", \"filter\", \"audio\", \"transition\", \"generator\" or \"animation\"), category and each parameter's key, range, default and unit - so an effect chain, a layer or a transition can be built correctly. `kind` narrows the list.",
             "catalogue.list",
             Raw,
         )

@@ -151,6 +151,9 @@ fn clip_of(clip: &Value) -> Value {
     if let Some(transition) = clip.get("transitionIn").filter(|value| !value.is_null()) {
         out.insert("transitionIn".into(), transition.clone());
     }
+    if let Some(animations) = clip.get("animations").filter(|value| !value.is_null()) {
+        out.insert("animations".into(), animations.clone());
+    }
     if let Some(keys) = clip["keys"].as_array().filter(|keys| !keys.is_empty()) {
         let mut properties: Vec<Value> = Vec::new();
         for key in keys {

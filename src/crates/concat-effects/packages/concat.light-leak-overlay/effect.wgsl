@@ -62,7 +62,7 @@ fn effect(uv: vec2<f32>) -> vec4<f32> {
     let c = sample(uv);
     let t = frame.time * 0.2;
     let band = fbm(vec2<f32>(uv.x * 1.5 + t, uv.y * 0.3));
-    let streak = smoothstep(0.55, 0.85, band) * smoothstep(1.0, 0.2, uv.y + 0.3 * sin(t));
+    let streak = smoothstep(0.35, 0.75, band) * smoothstep(1.2, 0.0, uv.y + 0.3 * sin(t));
     let tint = mix(vec3<f32>(1.0, 0.3, 0.05), vec3<f32>(1.0, 0.8, 0.4), band);
     return vec4<f32>(c.rgb + tint * streak * 1.6 * params.strength / 100.0, c.a);
 }

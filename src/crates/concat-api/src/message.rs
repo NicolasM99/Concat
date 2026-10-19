@@ -162,8 +162,8 @@ pub enum Request {
     /// caller can build a valid chain without reading a manifest.
     #[serde(rename = "catalogue.list")]
     CatalogueList {
-        /// Restrict to one kind: "effect", "filter", "audio", "transition"
-        /// or "generator".
+        /// Restrict to one kind: "effect", "filter", "audio", "transition",
+        /// "generator" or "animation".
         #[serde(default)]
         kind: Option<String>,
     },
@@ -491,7 +491,8 @@ pub struct PackageInfo {
     pub id: String,
     /// What the catalogue card says.
     pub name: String,
-    /// "effect", "filter", "audio", "transition" or "generator".
+    /// "effect", "filter", "audio", "transition", "generator" or
+    /// "animation".
     pub kind: String,
     /// The shelf the card sits on.
     pub category: String,

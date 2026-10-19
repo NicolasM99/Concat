@@ -1,0 +1,13 @@
+[[case]]
+name = "default"
+chain = "chorus=0.7:0.9:55|60:0.4|0.32:0.25|0.4:2|2.3,flanger=delay=3:depth=4.0:speed=0.5,alimiter=limit=0.94"
+
+[[case]]
+name = "minimum"
+at = "min"
+chain = "chorus=0.7:0.9:55|60:0.4|0.32:0.25|0.4:2|2.3,flanger=delay=3:depth=0.8:speed=0.5,alimiter=limit=0.94"
+
+[[case]]
+name = "maximum"
+at = "max"
+chain = "chorus=0.7:0.9:55|60:0.4|0.32:0.25|0.4:2|2.3,flanger=delay=3:depth=8.0:speed=0.5,alimiter=limit=0.94"
